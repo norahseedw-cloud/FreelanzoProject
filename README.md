@@ -24,5 +24,5 @@ Freelanzo is a freelance platform that connects clients with skilled freelancers
 
 ## Documentation
 
- - User Stories: [View PDF](./user_stories.pdf)
+ - User Stories: [View PDF](./User-Story.pdf)
  - UML Diagram: [View PDF](./Freelanzo.UML.pdf)
