@@ -1,0 +1,62 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    
+</head>
+<body>
+    
+<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh; ">
+
+    <div class="card shadow-lg overflow-hidden sign-style">
+        
+        <div class="row g-0  h-100">
+
+            <div class="col-md-6 d-flex align-items-center justify-content-center bg-white">
+
+                <div style="width: 80%;" class="p-4">
+                    <form method="POST">
+                    {% csrf_token %}
+                    <h3 class="mb-4 text-center">Sign In</h3>
+                <div class="mb-4">
+                    <input type="text" class="form-control" placeholder="Username" name="username" required>
+                </div>
+
+                <div class="mb-4">
+                    <input type="password" class="form-control" placeholder="Password" name="password" required>
+                </div>
+
+                <div class="mb-4 text-center link-in">
+                    <a href="#" class="text-linke">Did you forget your password?</a>
+                </div>
+
+                    <button class="btn btn-custom w-100">Sign Up</button>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-md-6 d-flex align-items-center justify-content-center text-white box">
+
+                <div class="text-center p-4">
+                    <h3>New here?</h3>
+                    <p>Create an account to get started</p>
+                    <a href="{%url 'accounts:sign_up_view'%}" class="btn btn-outline-light" >Sign Up</a>
+                </div>
+
+            </div>
+            
+
+        </div>
+    </div>
+
+</div>
+
+
+
+</body>
+</html>
