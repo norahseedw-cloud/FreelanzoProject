@@ -1,1 +1,167 @@
-hi
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}Freelanzo{% endblock %}</title>
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
+</head>
+
+<body>
+    <nav class="main-navbar">
+
+        <!-- Logo -->
+        <a href="" class="nav-logo">
+            <img src="{% static 'images/logo.png' %}" alt="Freelanzo Logo" class="logo-img">
+            <span class="logo-text">Freelanzo</span>
+        </a>
+
+        <!-- Center -->
+        <div class="nav-center">
+            <form class="nav-search">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Search...">
+            </form>
+
+            <ul class="nav-links">
+                <li><a href="#">Home</a></li>
+
+                <li class="dropdown">
+                    <a href="#" class="dropbtn" id="categoryToggle">
+                        Categories <i class="bi bi-chevron-down"></i>
+                    </a>
+
+                    <ul class="dropdown-menu" id="categoryMenu">
+                        <li><a href="#">Graphics & Design</a></li>
+                        <li><a href="#">Programming & Tech</a></li>
+                        <li><a href="#">Digital Marketing</a></li>
+                        <li><a href="#">Video & Animation</a></li>
+                        <li><a href="#">Writing & Translation</a></li>
+                        <li><a href="#">Business</a></li>
+                    </ul>
+                </li>
+
+                <li><a href="#">Projects</a></li>
+                <li><a href="#">Freelancers</a></li>
+                <li><a href="#">Contact Us</a></li>
+            </ul>
+        </div>
+
+        <!-- Right -->
+        <div class="nav-icons">
+
+            <!-- Dark Mode -->
+            <button class="icon-btn theme-toggle" id="themeToggle">
+                <i class="bi bi-sun"></i>
+            </button>
+
+            <a href="#" class="icon-btn">
+                <i class="bi bi-chat-dots"></i>
+            </a>
+
+            <a href="#" class="icon-btn">
+                <i class="bi bi-person"></i>
+            </a>
+
+            <button class="icon-btn menu-toggle" id="menuToggle">
+                <i class="bi bi-list"></i>
+            </button>
+        </div>
+
+
+    </nav>
+
+
+    <main class="main-content">
+        {% block content %}
+        {% endblock %}
+    </main>
+
+
+    <footer class="main-footer">
+
+        <div class="footer-container">
+
+            <!-- Logo + Text -->
+            <div class="footer-brand">
+                <img src="{% static 'images/logo.png' %}" alt="Freelanzo">
+                <h3>Freelanzo</h3>
+                <p>Connecting talent with opportunity. Build your future with confidence.</p>
+            </div>
+
+            <!-- Links -->
+            <div class="footer-links">
+                <h4>Explore</h4>
+                <a href="#">Projects</a>
+                <a href="#">Freelancers</a>
+                <a href="#">Categories</a>
+            </div>
+
+            <div class="footer-links">
+                <h4>Company</h4>
+                <a href="#">About Us</a>
+                <a href="#">Contact</a>
+                <a href="#">Privacy Policy</a>
+            </div>
+
+            <!-- Social -->
+            <div class="footer-social">
+                <h4>Follow Us</h4>
+                <div class="social-icons">
+                    <a href="#"><i class="bi bi-instagram"></i></a>
+                    <a href="#"><i class="bi bi-twitter-x"></i></a>
+                    <a href="#"><i class="bi bi-linkedin"></i></a>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- Bottom -->
+        <div class="footer-bottom">
+            <p>© 2026 Freelanzo. All rights reserved.</p>
+        </div>
+
+    </footer>
+
+    <script>
+        const categoryToggle = document.getElementById("categoryToggle");
+        const categoryMenu = document.getElementById("categoryMenu");
+
+        categoryToggle.addEventListener("click", function (e) {
+            e.preventDefault();
+            categoryMenu.classList.toggle("show");
+        });
+
+        document.addEventListener("click", function (e) {
+            if (!categoryToggle.contains(e.target) && !categoryMenu.contains(e.target)) {
+                categoryMenu.classList.remove("show");
+            }
+        });
+
+        const themeToggle = document.getElementById("themeToggle");
+
+        themeToggle.addEventListener("click", function () {
+            document.body.classList.toggle("dark-mode");
+
+            if (document.body.classList.contains("dark-mode")) {
+                themeToggle.textContent = "🌙";
+            } else {
+                themeToggle.textContent = "☀️";
+            }
+        });
+
+        const menuToggle = document.getElementById("menuToggle");
+        const navCenter = document.querySelector(".nav-center");
+
+        menuToggle.addEventListener("click", function () {
+            navCenter.classList.toggle("show");
+        });
+    </script>
+</body>
+
+</html>
