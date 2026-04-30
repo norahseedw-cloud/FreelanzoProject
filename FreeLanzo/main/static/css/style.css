@@ -1,0 +1,117 @@
+/*Colors*/
+:root{
+    --btn-color: #f8b04a;
+    --color-navy: #26406d;
+    --color-green: #3f8c95;
+    --color-purple: #645a8f;
+    --color-orange: #eb8e79;
+    --h1-size: 40px;
+    --h2-size: 32px;
+    --h3-size: 24px;
+}
+
+/*sign pages*/
+.box{
+    background: linear-gradient(to bottom, #3f8c95, #645a8f) ;
+}
+
+.card.sign-style{
+    max-width: 800px;
+    width: 100%;
+    height: 450px;
+    border-radius: 20px;
+}
+
+.btn.btn-custom{
+    background-color: var(--btn-color);
+    color: white;
+    transition: all 0.3s ease;
+}
+
+.btn.btn-custom:hover{
+    background-color: var(--btn-color);
+    color: white;
+    transform: translateY(-3px);  
+}
+
+.btn.btn-outline-light:hover{
+    background-color: var(--btn-color);
+    color: white;
+    border: none;
+}
+
+.link-in a{
+    color: var(--color-navy);
+    text-decoration: none;
+}
+
+.link-in a:hover{
+    color: #CE2626;
+    -webkit-text-stroke: 1px #CE2626;
+}
+
+.link-up a{
+    color: var(--color-green);
+    text-decoration: none;
+}
+
+.link-up a:hover{
+    color: var(--color-navy);
+    text-decoration: none;
+}
+
+
+@media (max-width: 768px) {
+
+    body {
+        padding: 0 20px;
+    }
+
+    .card.sign-style {
+        margin: 20px auto; 
+    }
+
+
+    .card.sign-style {
+        height: auto !important; 
+        flex-direction: column;
+    }
+
+    .card.sign-style .row {
+        flex-direction: column;
+        height: auto;
+    }
+
+  
+    .box {
+        min-height: 200px;
+        padding: 20px;
+    }
+
+  
+    .card.sign-style .col-md-6 {
+        width: 100%;
+    }
+
+    .card.sign-style form {
+        width: 100% !important;
+    }
+
+    .card.sign-style .p-4 {
+        padding: 15px !important;
+    }
+
+    .row.mb-3 .col {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+
+  
+    h3 {
+        font-size: 20px;
+    }
+
+    p {
+        font-size: 14px;
+    }
+}
