@@ -1,0 +1,71 @@
+{%extends 'main/base.html'%}
+{% load static %}
+
+{% block title %}Projects{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'marketplace/css/projects-style.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+<div class="projects-container">
+
+<div class="project-card">
+
+    <div class="card-header">
+        <h3 class="project-title">Website Design</h3>
+        <span class="status open">Open</span>
+    </div>
+
+    <p class="desc">
+        Need a modern responsive website for a business...
+    </p>
+
+    <div class="info">
+        <span class="budget">from 500$</span>
+        <span class="deadline">
+            <i class="bi bi-calendar"></i> 10 days
+        </span>
+    </div>
+
+    <div class="tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+    </div>
+
+    <a href="{%url 'marketplace:projects_detail_view'%}" class="view-btn">View Details</a>
+
+</div>
+
+<div class="project-card">
+
+    <div class="card-header">
+        <h3 class="project-title">E-commerce Website</h3>
+        <span class="status open">Open</span>
+    </div>
+
+    <p class="desc">
+        Looking for a developer to build an online store with payment integration.
+    </p>
+
+    <div class="info">
+        <span class="budget">from 1200$</span>
+        <span class="deadline">
+            <i class="bi bi-calendar"></i> 20 days
+        </span>
+    </div>
+
+    <div class="tags">
+        <span class="tag">Django</span>
+        <span class="tag">Stripe</span>
+        <span class="tag">JavaScript</span>
+    </div>
+
+    <a href="#" class="view-btn">View Details</a>
+
+</div>
+
+</div>
+
+{% endblock %}
