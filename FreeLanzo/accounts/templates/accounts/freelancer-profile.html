@@ -1,0 +1,455 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Freelancer Profile | Freelanzo{% endblock %}
+
+{% block content %}
+
+<div class="cover-wrapper">
+    <div class="profile-cover">
+        <div class="cover-pattern"></div>
+        <div class="cover-dots"></div>
+    </div>
+</div>
+
+<!--  PROFILE MAIN  -->
+<div class="profile-main">
+
+    <div class="profile-header-card">
+
+        <div class="profile-top">
+
+            <!-- Avatar -->
+            <div class="avatar-wrap">
+                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=240&q=80" alt="Mohammed Ali">
+                <div class="online-badge"></div>
+            </div>
+
+            <!-- Identity -->
+            <div class="profile-identity">
+                <div class="profile-name-row">
+                    <span class="profile-name">Mohammed Ali</span>
+                    <span class="verified-badge">
+                        <i class="bi bi-patch-check-fill"></i> Verified
+                    </span>
+                </div>
+                <p class="profile-role">Senior Full-Stack Developer & UI/UX Designer</p>
+                <div class="profile-meta">
+                    <span class="meta-item">
+                        <i class="bi bi-geo-alt" style="color:var(--teal)"></i>
+                        Riyadh, Saudi Arabia
+                    </span>
+                    <span class="meta-item">
+                        <i class="bi bi-star-fill" style="color:var(--orange)"></i>
+                        <strong>5.0</strong>&nbsp;(98 reviews)
+                    </span>
+                    <span class="meta-item">
+                        <i class="bi bi-clock" style="color:var(--blue)"></i>
+                        Responds in ~2 hours
+                    </span>
+                    <span class="meta-item">
+                        <i class="bi bi-briefcase" style="color:var(--color-purple)"></i>
+                        120+ Projects Done
+                    </span>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="profile-actions">
+                <button class="btn-hire">Hire Me</button>
+                <button class="btn-message">
+                    <i class="bi bi-chat-dots"></i> Message
+                </button>
+                <button class="btn-save"><i class="bi bi-heart"></i></button>
+            </div>
+
+        </div>
+
+        <!-- Stats Row -->
+        <div class="profile-stats-row">
+            <div class="pstat">
+                <i class="bi bi-briefcase-fill stat-icon" style="color:var(--teal)"></i>
+                <strong>120+</strong>
+                <span>Projects Done</span>
+            </div>
+            <div class="pstat">
+                <i class="bi bi-star-fill stat-icon" style="color:var(--orange)"></i>
+                <strong>5.0</strong>
+                <span>Average Rating</span>
+            </div>
+            <div class="pstat">
+                <i class="bi bi-people-fill stat-icon" style="color:var(--blue)"></i>
+                <strong>98</strong>
+                <span>Happy Clients</span>
+            </div>
+            <div class="pstat">
+                <i class="bi bi-clock-history stat-icon" style="color:var(--color-purple)"></i>
+                <strong>4 yrs</strong>
+                <span>Experience</span>
+            </div>
+            <div class="pstat">
+                <i class="bi bi-trophy-fill stat-icon" style="color:var(--btn-color)"></i>
+                <strong>Top Rated</strong>
+                <span>Seller Badge</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="profile-grid">
+
+        <!--  LEFT COLUMN  -->
+        <div>
+
+            <!-- About Me -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-person-lines-fill"></i> About Me
+                </h3>
+                <p class="about-text">
+                    I'm a passionate Full-Stack Developer and UI/UX Designer with over 4 years of experience
+                    building high-quality web applications and digital products. I specialize in Django, React,
+                    and modern frontend frameworks — delivering solutions that are not only functional but
+                    visually polished.
+                </p>
+                <p class="about-text" style="margin-top:12px;">
+                    Whether you need a complete web platform, a stunning landing page, or a robust API backend,
+                    I bring both technical expertise and design sensibility to every project. I take pride in
+                    clear communication, on-time delivery, and results that exceed expectations.
+                </p>
+            </div>
+
+            <!-- Skills & Technologies -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-lightning-charge-fill"></i> Skills & Technologies
+                </h3>
+                <div class="skills-cloud">
+                    <span class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django"> Django
+                    </span>
+                    <span class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"> Python
+                    </span>
+                    <span class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"> JavaScript
+                    </span>
+                    <span class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5"> HTML5
+                    </span>
+                    <span class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3"> CSS3
+                    </span>
+                    <span class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap"> Bootstrap
+                    </span>
+                    <span class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"> PostgreSQL
+                    </span>
+                    <span class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma"> Figma
+                    </span>
+                    <span class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"> GitHub
+                    </span>
+                    <span class="skill-tag">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code"> VS Code
+                    </span>
+                    <span class="skill-tag">
+                        <i class="bi bi-phone" style="color:var(--teal);font-size:14px"></i> REST APIs
+                    </span>
+                    <span class="skill-tag">
+                        <i class="bi bi-server" style="color:var(--blue);font-size:14px"></i> DevOps
+                    </span>
+                </div>
+            </div>
+
+            <!-- Portfolio -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-grid-1x2-fill"></i> Portfolio
+                </h3>
+                <div class="portfolio-grid">
+                    <div class="portfolio-item">
+                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80" alt="E-commerce Platform">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-label">E-commerce Platform</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" alt="Brand Identity">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-label">Brand Identity</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80" alt="Marketing Dashboard">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-label">Marketing Dashboard</span>
+                        </div>
+                    </div>
+                    <div class="portfolio-item">
+                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="SaaS Analytics">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-label">SaaS Analytics App</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Client Reviews -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-chat-quote-fill"></i> Client Reviews
+                </h3>
+
+                <!-- Rating Summary -->
+                <div style="display:flex; gap:30px; align-items:center; margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid rgba(15,23,42,0.07);">
+                    <div style="text-align:center; flex-shrink:0;">
+                        <div style="font-size:52px; font-weight:900; color:var(--main-dark); line-height:1;">5.0</div>
+                        <div style="display:flex; gap:3px; justify-content:center; margin:6px 0;">
+                            <i class="bi bi-star-fill" style="color:var(--orange); font-size:14px;"></i>
+                            <i class="bi bi-star-fill" style="color:var(--orange); font-size:14px;"></i>
+                            <i class="bi bi-star-fill" style="color:var(--orange); font-size:14px;"></i>
+                            <i class="bi bi-star-fill" style="color:var(--orange); font-size:14px;"></i>
+                            <i class="bi bi-star-fill" style="color:var(--orange); font-size:14px;"></i>
+                        </div>
+                        <div style="font-size:12px; color:var(--gray);">98 Reviews</div>
+                    </div>
+                    <div style="flex:1;">
+                        <div class="star-bars">
+                            <div class="star-bar-row">
+                                <span>5★</span>
+                                <div class="star-bar-track">
+                                    <div class="star-bar-fill" style="width:88%"></div>
+                                </div>
+                                <span>86</span>
+                            </div>
+                            <div class="star-bar-row">
+                                <span>4★</span>
+                                <div class="star-bar-track">
+                                    <div class="star-bar-fill" style="width:10%; opacity:0.6"></div>
+                                </div>
+                                <span>10</span>
+                            </div>
+                            <div class="star-bar-row">
+                                <span>3★</span>
+                                <div class="star-bar-track">
+                                    <div class="star-bar-fill" style="width:2%; opacity:0.4"></div>
+                                </div>
+                                <span>2</span>
+                            </div>
+                            <div class="star-bar-row">
+                                <span>2★</span>
+                                <div class="star-bar-track">
+                                    <div class="star-bar-fill" style="width:0%"></div>
+                                </div>
+                                <span>0</span>
+                            </div>
+                            <div class="star-bar-row">
+                                <span>1★</span>
+                                <div class="star-bar-track">
+                                    <div class="star-bar-fill" style="width:0%"></div>
+                                </div>
+                                <span>0</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Review 1 -->
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background:var(--teal);">A</div>
+                        <div>
+                            <div class="reviewer-name">Ahmed Al-Rashid</div>
+                            <div class="review-meta">Startup Founder · 2 weeks ago</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="review-text">
+                        Mohammed delivered exactly what I envisioned — and more. The project was finished 3 days
+                        ahead of schedule. Clean code, beautiful design, and incredible communication throughout.
+                        Highly recommend!
+                    </p>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background:var(--blue);">S</div>
+                        <div>
+                            <div class="reviewer-name">Sara Mohammed</div>
+                            <div class="review-meta">E-commerce Owner · 1 month ago</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="review-text">
+                        Best developer I've ever worked with. He understood my business needs perfectly and built
+                        a platform that has boosted our sales by 40%. Will definitely hire again.
+                    </p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="review-item">
+                    <div class="review-header">
+                        <div class="reviewer-avatar" style="background:var(--color-purple);">K</div>
+                        <div>
+                            <div class="reviewer-name">Khalid Nasser</div>
+                            <div class="review-meta">Tech Lead · 2 months ago</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="review-text">
+                        Mohammed's technical depth is impressive. He solved complex backend challenges with elegant
+                        solutions. Very professional and easy to work with.
+                    </p>
+                </div>
+
+            </div>
+            <!--  END LEFT COLUMN -->
+        </div>
+
+
+        <!--  RIGHT SIDEBAR = -->
+        <div>
+
+            <!-- Pricing Card -->
+            <div class="pricing-card">
+                <div class="pricing-label">Starting From</div>
+                <div class="pricing-amount">$150 <span>/ project</span></div>
+                <p class="pricing-desc">Fixed price or hourly — flexible for your needs</p>
+                <ul class="pricing-features">
+                    <li><i class="bi bi-check-circle-fill"></i> Source code included</li>
+                    <li><i class="bi bi-check-circle-fill"></i> 3 revision rounds</li>
+                    <li><i class="bi bi-check-circle-fill"></i> Responsive design</li>
+                    <li><i class="bi bi-check-circle-fill"></i> 14-day support</li>
+                    <li><i class="bi bi-check-circle-fill"></i> NDA available</li>
+                </ul>
+                <button class="btn-hire-now">Hire Mohammed Now</button>
+            </div>
+
+            <!-- Quick Info -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-info-circle-fill"></i> Quick Info
+                </h3>
+                <div class="info-list">
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-calendar-check" style="color:var(--teal)"></i> Member Since
+                        </span>
+                        <span class="info-val">Jan 2021</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-clock" style="color:var(--blue)"></i> Availability
+                        </span>
+                        <span class="availability-badge">Available Now</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-hourglass-split" style="color:var(--orange)"></i> Response Time
+                        </span>
+                        <span class="info-val">~2 hours</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-globe" style="color:var(--color-purple)"></i> Timezone
+                        </span>
+                        <span class="info-val">GMT+3 (AST)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-geo-alt" style="color:var(--teal)"></i> Location
+                        </span>
+                        <span class="info-val">Riyadh, KSA</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-currency-dollar" style="color:var(--btn-color)"></i> Hourly Rate
+                        </span>
+                        <span class="info-val" style="color:var(--teal); font-weight:800;">$45 / hr</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Languages -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-translate"></i> Languages
+                </h3>
+                <div class="lang-list">
+                    <div class="lang-row">
+                        <span class="lang-name">Arabic</span>
+                        <span class="lang-level" style="color:var(--teal); font-weight:700;">Native</span>
+                    </div>
+                    <div class="lang-row">
+                        <span class="lang-name">English</span>
+                        <span class="lang-level" style="color:var(--blue); font-weight:700;">Fluent</span>
+                    </div>
+                    <div class="lang-row">
+                        <span class="lang-name">French</span>
+                        <span class="lang-level">Conversational</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Similar Freelancers -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-people-fill"></i> Similar Freelancers
+                </h3>
+                <div>
+                    <div class="similar-card">
+                        <img class="similar-av" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah Ahmed">
+                        <div>
+                            <div class="similar-name">Sarah Ahmed</div>
+                            <div class="similar-role">UI/UX Designer</div>
+                        </div>
+                        <span class="similar-rate">$40/hr</span>
+                    </div>
+                    <div class="similar-card">
+                        <img class="similar-av" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&q=80" alt="Omar Khalil">
+                        <div>
+                            <div class="similar-name">Omar Khalil</div>
+                            <div class="similar-role">React Developer</div>
+                        </div>
+                        <span class="similar-rate">$55/hr</span>
+                    </div>
+                    <div class="similar-card">
+                        <img class="similar-av" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" alt="Lina Khalid">
+                        <div>
+                            <div class="similar-name">Lina Khalid</div>
+                            <div class="similar-role">Brand Designer</div>
+                        </div>
+                        <span class="similar-rate">$38/hr</span>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--  END RIGHT SIDEBAR  -->
+
+    </div>
+
+</div>
+{% endblock %}

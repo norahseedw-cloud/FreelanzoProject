@@ -1,4 +1,3 @@
-
 {% load static %}
 
 <!DOCTYPE html>
@@ -11,15 +10,19 @@
 
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block style%}{%endblock%}
+
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+
 </head>
 
 <body>
+    <!-- nav start  -->
     <nav class="main-navbar">
 
         <!-- Logo -->
-        <a href="" class="nav-logo">
+        <a href="{% url 'main:home' %}" class="nav-logo">
             <img src="{% static 'images/logo.png' %}" alt="Freelanzo Logo" class="logo-img">
             <span class="logo-text">Freelanzo</span>
         </a>
@@ -32,7 +35,7 @@
             </form>
 
             <ul class="nav-links">
-                <li><a href="#">Home</a></li>
+                <li><a href="{% url 'main:home' %}">Home</a></li>
 
                 <li class="dropdown">
                     <a href="#" class="dropbtn" id="categoryToggle">
@@ -76,8 +79,8 @@
             </button>
         </div>
 
-
     </nav>
+    <!-- footer end -->
 
 
     <main class="main-content">
@@ -85,7 +88,7 @@
         {% endblock %}
     </main>
 
-
+    <!-- footer start -->
     <footer class="main-footer">
 
         <div class="footer-container">
@@ -130,7 +133,10 @@
         </div>
 
     </footer>
+    <!-- footer end -->
 
     <script src="{% static 'js/main.js' %}"></script>
+
 </body>
+
 </html>
