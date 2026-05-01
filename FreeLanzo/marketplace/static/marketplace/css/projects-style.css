@@ -1,0 +1,236 @@
+
+.projects-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 20px;
+    max-width: 1000px;   
+    margin: 40px auto;   
+    padding: 0 20px;    }
+
+
+.project-card {
+    background: #fff;
+    padding: 20px;
+    border-radius: 16px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.08);
+    transition: 0.3s;
+    max-width: 300px;
+}
+
+.project-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0,0,0,0.12);
+}
+
+.card-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 10px;
+}
+
+.project-title {
+    font-size: 20px;
+    color: var(--color-navy);
+    font-weight: 700;
+}
+
+.desc {
+    color: #555;
+    font-size: 14px;
+    margin-bottom: 15px;
+    line-height: 1.6;
+}
+
+.tags {
+    margin-bottom: 15px;
+}
+
+.tag {
+    background: #f1f5f9;
+    padding: 6px 12px;
+    border-radius: 20px;
+    font-size: 12px;
+    margin-right: 6px;
+    transition: 0.3s;
+}
+
+.tag:hover {
+    background: var(--color-navy);
+    color: #fff;
+}
+
+.info {
+    display: flex;
+    gap: 15px;
+    font-size: 13px;
+    color: #666;
+    margin-bottom: 15px;
+}
+
+.info i {
+    margin-right: 5px;
+}
+
+.status {
+    font-size: 12px;
+    padding: 4px 10px;
+    border-radius: 20px;
+    font-weight: 600;
+}
+
+
+.status.open {
+    background: #e6f9f0;
+    color: #1aa36f;
+}
+
+.view-btn {
+    display: block;
+    text-align: center;
+    background: var(--btn-color);
+    border: none;
+    padding: 12px;
+    width: 100%;
+    border-radius: 12px;
+    cursor: pointer;
+    font-weight: bold;
+    transition: 0.3s;
+    text-decoration: none;
+    color: white;
+}
+
+.view-btn:hover {
+    background: var(--btn-color);
+    transform: scale(1.02);
+}
+
+
+
+/*datails style*/
+
+.project-details-page {
+    max-width: 900px;
+    margin: 40px auto;
+    padding: 0 20px;
+}
+
+
+.details-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.details-title {
+    font-size: 26px;
+    color: var(--color-navy);
+    font-weight: 700;
+}
+
+
+.details-meta {
+    display: flex;
+    gap: 20px;
+    color: #666;
+    margin: 10px 0 20px;
+}
+
+
+.details-desc {
+    line-height: 1.8;
+    color: #444;
+    margin-bottom: 20px;
+}
+
+
+.details-tags {
+    margin-bottom: 25px;
+}
+
+
+.apply-btn {
+    display: inline-block;
+    background: var(--btn-color);
+    padding: 12px 20px;
+    border-radius: 10px;
+    text-decoration: none;
+    color: white;
+    font-weight: bold;
+    transition: 0.3s;
+}
+
+.apply-btn:hover {
+    background: var(--btn-color);
+}
+
+
+.proposal-section {
+    margin-top: 40px;
+}
+
+.proposal-section h4 {
+    margin-bottom: 10px;
+    color: #26406d;
+}
+
+.proposal-section textarea {
+    width: 100%;
+    height: 100px;
+    padding: 12px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+    resize: none;
+    margin-bottom: 10px;
+}
+
+.proposal-actions {
+    display: flex;
+    gap: 10px;
+}
+
+.proposal-actions input {
+    flex: 1;
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ddd;
+}
+
+.submit-btn {
+    background: #26406d;
+    color: white;
+    border: none;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+}
+
+.submit-btn:hover {
+    background: #1d3155;
+}
+
+
+.comments-section {
+    margin-top: 50px;
+}
+
+.comments-section h4 {
+    margin-bottom: 15px;
+    color: #26406d;
+}
+
+.comment {
+    padding: 12px 0;
+    border-bottom: 1px solid #eee;
+}
+
+.comment strong {
+    color: #26406d;
+    display: block;
+    margin-bottom: 5px;
+}
+
+.comment p {
+    color: #555;
+    font-size: 14px;
+}

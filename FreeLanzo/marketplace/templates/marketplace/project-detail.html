@@ -1,0 +1,73 @@
+{%extends 'main/base.html'%}
+{% load static %}
+
+{% block title %}Projects details{% endblock %}
+{% block style %}
+<link rel="stylesheet" href="{% static 'marketplace/css/projects-style.css' %}">
+{% endblock %}
+
+
+
+{% block content %}
+
+<div class="project-details-page">
+
+    <div class="details-header">
+        <h2 class="details-title">Website Design</h2>
+        <span class="status open">Open</span>
+    </div>
+
+    <div class="details-meta">
+        <span><i class="bi bi-cash"></i> 500$</span>
+        <span><i class="bi bi-calendar"></i> 10 days</span>
+        <span><i class="bi bi-clock"></i> Posted 2 days ago</span>
+    </div>
+
+    <hr>
+
+    <div class="details-desc">
+        We are looking for a professional developer to create a modern and responsive website 
+        for our business. The website should include multiple pages and clean UI/UX.
+    </div>
+
+    <div class="details-tags">
+        <span class="tag">HTML</span>
+        <span class="tag">CSS</span>
+        <span class="tag">UI/UX</span>
+    </div>
+
+    <a href="#" class="apply-btn">Apply Now</a>
+<!-- ===== PROPOSAL BOX ===== -->
+<div class="proposal-section">
+
+    <h4>Submit Your Proposal</h4>
+
+    <textarea placeholder="Write your offer..."></textarea>
+
+    <div class="proposal-actions">
+        <input type="number" placeholder="Your price ($)">
+        <button class="submit-btn">Send</button>
+    </div>
+
+</div>
+
+
+<!-- ===== COMMENTS ===== -->
+<div class="comments-section">
+
+    <h4>Comments</h4>
+
+    <div class="comment">
+        <strong>Ahmed</strong>
+        <p>This project looks interesting!</p>
+    </div>
+
+    <div class="comment">
+        <strong>Sarah</strong>
+        <p>Can you share more details about the design?</p>
+    </div>
+
+</div>
+</div>
+
+{% endblock %}

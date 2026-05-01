@@ -1,0 +1,43 @@
+/*sign pages*/
+.box{
+    background: linear-gradient(to bottom, #3f8c95, #645a8f) ;
+}
+
+.card.sign-style{
+    max-width: 800px;
+    width: 100%;
+    height: 450px;
+    border-radius: 20px;
+}
+
+
+.btn.btn-outline-light:hover{
+    background-color: var(--btn-color);
+    color: white;
+    border: none;
+}
+
+.link-in a{
+    color: var(--color-navy);
+    text-decoration: none;
+}
+
+.link-in a:hover{
+    color: #CE2626;
+    -webkit-text-stroke: 1px #CE2626;
+}
+
+.link-up a{
+    color: var(--color-green);
+    text-decoration: none;
+}
+
+.link-up a:hover{
+    color: var(--color-navy);
+    text-decoration: none;
+}
+
+/* Responsive Navbar */
+.menu-toggle {
+    display: none;
+}
