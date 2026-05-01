@@ -1,0 +1,646 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Home | Freelanzo{% endblock %}
+
+{% block content %}
+
+<!--  Hero Section Start -->
+<section class="home-hero reveal">
+
+    <!-- Video Background -->
+    <div class="hero-video-bg">
+        <video autoplay muted loop playsinline>
+            <source src="{% static 'video/header.mp4' %}" type="video/mp4">
+        </video>
+        <div class="hero-overlay"></div>
+    </div>
+
+    <div class="hero-content">
+
+        <span class="hero-label">
+            <i class="bi bi-stars"></i>
+            Freelance Marketplace
+        </span>
+
+        <h1>
+            Find the perfect freelancer for your project.
+        </h1>
+
+        <p>
+            Freelanzo connects clients with skilled freelancers in design,
+            development, marketing, writing, and business services.
+        </p>
+
+        <div class="hero-actions">
+            <a href="#" class="btn-primary-custom">Post a Project</a>
+            <a href="#" class="btn-outline-custom">Browse Freelancers</a>
+        </div>
+
+        <div class="hero-stats">
+            <div>
+                <strong>500+</strong>
+                <span>Freelancers</span>
+            </div>
+            <div>
+                <strong>120+</strong>
+                <span>Projects</span>
+            </div>
+            <div>
+                <strong>6</strong>
+                <span>Categories</span>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- Hero Section End  -->
+
+
+
+<!--  Programs Used Start  -->
+<section class="program-slider-section reveal">
+    <div class="section-heading">
+        <span>Programs Used</span>
+        <h2>Tools & Technologies used in Freelanzo</h2>
+    </div>
+
+    <div class="program-slider">
+        <div class="program-track">
+
+            <!-- set -->
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django">
+                <span>Django</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                <span>Python</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                <span>HTML5</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                <span>CSS3</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                <span>JavaScript</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                <span>Bootstrap</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
+                <span>PostgreSQL</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+                <span>GitHub</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code">
+                <span>VS Code</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
+                <span>Figma</span>
+            </div>
+
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django">
+                <span>Django</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python">
+                <span>Python</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5">
+                <span>HTML5</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3">
+                <span>CSS3</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript">
+                <span>JavaScript</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap">
+                <span>Bootstrap</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL">
+                <span>PostgreSQL</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub">
+                <span>GitHub</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code">
+                <span>VS Code</span>
+            </div>
+            <div class="tool-card">
+                <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma">
+                <span>Figma</span>
+            </div>
+
+        </div>
+    </div>
+</section>
+<!--  Programs Used End  -->
+
+
+<!--  Services Start  -->
+<section class="home-section services-section reveal">
+    <div class="section-heading">
+        <span>Popular Services</span>
+        <h2>Services clients search for most</h2>
+    </div>
+
+    <div class="services-grid-new">
+
+        <a href="/services/web-development/" class="service-card-new">
+            <div class="service-card-top">
+                <h3>Web Development</h3>
+            </div>
+            <div class="service-card-img">
+                <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&q=80" alt="Web Development">
+            </div>
+        </a>
+
+        <a href="/services/graphic-design/" class="service-card-new">
+            <div class="service-card-top">
+                <h3>Graphic Design</h3>
+            </div>
+            <div class="service-card-img">
+                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&q=80" alt="Graphic Design">
+            </div>
+        </a>
+
+        <a href="/services/digital-marketing/" class="service-card-new">
+            <div class="service-card-top">
+                <h3>Digital Marketing</h3>
+            </div>
+            <div class="service-card-img">
+                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&q=80" alt="Digital Marketing">
+            </div>
+        </a>
+
+        <a href="/services/video-editing/" class="service-card-new">
+            <div class="service-card-top">
+                <h3>Video Editing</h3>
+            </div>
+            <div class="service-card-img">
+                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400&q=80" alt="Video Editing">
+            </div>
+        </a>
+
+    </div>
+
+    <div class="services-explore">
+        <a href="/services/" class="btn-explore">Explore more services</a>
+    </div>
+
+</section>
+<!-- Services End -->
+
+
+<!-- How It Works Start  -->
+<section class="how-section reveal">
+    <div class="section-heading">
+        <span>How It Works</span>
+        <h2>Start your project in three steps</h2>
+    </div>
+
+    <div class="steps-timeline">
+
+        <div class="timeline-line"></div>
+
+        <div class="step-item">
+            <div class="step-dot">
+                <span>01</span>
+            </div>
+            <div class="step-content">
+                <div class="step-icon">
+                    <i class="bi bi-send-plus"></i>
+                </div>
+                <h3>Post a Project</h3>
+                <p>Write your project details, budget, and required skills.</p>
+            </div>
+        </div>
+
+        <div class="step-item">
+            <div class="step-dot">
+                <span>02</span>
+            </div>
+            <div class="step-content">
+                <div class="step-icon">
+                    <i class="bi bi-person-check"></i>
+                </div>
+                <h3>Choose a Freelancer</h3>
+                <p>Compare profiles, skills, and proposals before hiring.</p>
+            </div>
+        </div>
+
+        <div class="step-item">
+            <div class="step-dot">
+                <span>03</span>
+            </div>
+            <div class="step-content">
+                <div class="step-icon">
+                    <i class="bi bi-patch-check"></i>
+                </div>
+                <h3>Get Work Done</h3>
+                <p>Communicate, follow progress, and receive your final work.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- How It Works End  -->
+
+
+<!-- Features Start -->
+<section class="features-section reveal">
+
+    <div class="features-text">
+        <span class="features-label">Platform Features</span>
+        <h2>Everything you need to <em>succeed</em></h2>
+        <p>Freelanzo gives clients and freelancers all the tools they need — from posting projects to getting paid, all in one place.</p>
+
+        <div class="features-stats">
+            <div class="fstat">
+                <strong>500+</strong>
+                <span>Active Freelancers</span>
+            </div>
+            <div class="fstat">
+                <strong>98%</strong>
+                <span>Client Satisfaction</span>
+            </div>
+        </div>
+    </div>
+
+    <div class="features-list">
+
+        <div class="feature-item">
+            <div class="feature-line" style="--accent: var(--teal)"></div>
+            <div class="feature-icon" style="--accent: var(--teal)">
+                <i class="bi bi-chat-dots-fill"></i>
+            </div>
+            <div class="feature-body">
+                <h3>Real-time Messaging</h3>
+                <p>Clients and freelancers stay connected with instant, clear communication throughout every project.</p>
+            </div>
+        </div>
+
+        <div class="feature-item">
+            <div class="feature-line" style="--accent: var(--btn-color)"></div>
+            <div class="feature-icon" style="--accent: var(--btn-color)">
+                <i class="bi bi-person-badge-fill"></i>
+            </div>
+            <div class="feature-body">
+                <h3>Smart Freelancer Profiles</h3>
+                <p>Browse rich profiles with portfolios, ratings, and verified skills to find the perfect match.</p>
+            </div>
+        </div>
+
+        <div class="feature-item">
+            <div class="feature-line" style="--accent: var(--color-green)"></div>
+            <div class="feature-icon" style="--accent: var(--color-green)">
+                <i class="bi bi-briefcase-fill"></i>
+            </div>
+            <div class="feature-body">
+                <h3>Easy Project Posting</h3>
+                <p>Post your project in minutes and start receiving competitive proposals from top talent.</p>
+            </div>
+        </div>
+
+        <div class="feature-item" style="--accent: var(--color-orange)">
+            <div class="feature-icon">
+                <i class="bi bi-shield-fill-check"></i>
+            </div>
+            <div class="feature-body">
+                <h3>Secure Payments</h3>
+                <p>Funds are held safely and released only when you're fully satisfied with the delivered work.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!-- Features End  -->
+
+
+<!--  Top Freelancers Start   -->
+<section class="home-section freelancers-section reveal">
+    <div class="section-heading">
+        <span>Top Freelancers</span>
+        <h2>Meet our skilled freelancers</h2>
+    </div>
+
+    <div class="freelancers-grid">
+
+        <div class="freelancer-card">
+            <div class="freelancer-bg" style="--card-color: var(--teal)"></div>
+            <div class="freelancer-avatar">
+                <img src="{% static 'images/avatar/men.jpg' %}" alt="Sarah Ahmed">
+                <div class="freelancer-badge" style="--card-color: var(--teal)">
+                    <i class="bi bi-patch-check-fill"></i>
+                </div>
+            </div>
+            <div class="freelancer-info">
+                <h3>Sarah Ahmed</h3>
+                <p class="freelancer-role">UI/UX Designer</p>
+                <div class="freelancer-tags">
+                    <span>Figma</span>
+                    <span>Prototyping</span>
+                    <span>Branding</span>
+                </div>
+                <div class="freelancer-footer">
+                    <div class="freelancer-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <strong>4.9</strong>
+                        <span>(120 reviews)</span>
+                    </div>
+                    <a href="#" class="freelancer-btn" style="--card-color: var(--teal)">View Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="freelancer-card">
+            <div class="freelancer-bg" style="--card-color: var(--blue)"></div>
+            <div class="freelancer-avatar">
+                <img src="{% static 'images/avatar/wemon.jpg' %}" alt="Mohammed Ali">
+                <div class="freelancer-badge" style="--card-color: var(--blue)">
+                    <i class="bi bi-patch-check-fill"></i>
+                </div>
+            </div>
+            <div class="freelancer-info">
+                <h3>Mohammed Ali</h3>
+                <p class="freelancer-role">Web Developer</p>
+                <div class="freelancer-tags">
+                    <span>Django</span>
+                    <span>React</span>
+                    <span>Python</span>
+                </div>
+                <div class="freelancer-footer">
+                    <div class="freelancer-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <strong>5.0</strong>
+                        <span>(98 reviews)</span>
+                    </div>
+                    <a href="#" class="freelancer-btn" style="--card-color: var(--blue)">View Profile</a>
+                </div>
+            </div>
+        </div>
+
+        <div class="freelancer-card">
+            <div class="freelancer-bg" style="--card-color: var(--color-purple)"></div>
+            <div class="freelancer-avatar">
+                <img src="{% static 'images/avatar/men2.jpg' %}" alt="Lina Khalid">
+                <div class="freelancer-badge" style="--card-color: var(--color-purple)">
+                    <i class="bi bi-patch-check-fill"></i>
+                </div>
+            </div>
+            <div class="freelancer-info">
+                <h3>Lina Khalid</h3>
+                <p class="freelancer-role">Brand Designer</p>
+                <div class="freelancer-tags">
+                    <span>Logo</span>
+                    <span>Identity</span>
+                    <span>Illustrator</span>
+                </div>
+                <div class="freelancer-footer">
+                    <div class="freelancer-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <strong>4.8</strong>
+                        <span>(85 reviews)</span>
+                    </div>
+                    <a href="#" class="freelancer-btn" style="--card-color: var(--color-purple)">View Profile</a>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--  Top Freelancers End  -->
+
+
+<!--  Stats Banner Start  -->
+<section class="stats-banner reveal">
+    <div class="stat-item">
+        <strong>500+</strong>
+        <span>Skilled Freelancers</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+        <strong>120+</strong>
+        <span>Projects Completed</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+        <strong>6</strong>
+        <span>Service Categories</span>
+    </div>
+    <div class="stat-divider"></div>
+    <div class="stat-item">
+        <strong>98%</strong>
+        <span>Client Satisfaction</span>
+    </div>
+</section>
+<!--  Stats Banner End  -->
+
+
+<!--  Categories Start ===== -->
+<section class="home-section categories-section reveal">
+    <div class="section-heading">
+        <span>Browse Categories</span>
+        <h2>Find talent across every field</h2>
+    </div>
+
+    <div class="categories-grid">
+
+        <a href="#" class="category-card" style="--cat-color: var(--teal)">
+            <div class="cat-icon"><i class="bi bi-code-slash"></i></div>
+            <h4>Web Development</h4>
+            <span>48 Freelancers</span>
+        </a>
+
+        <a href="#" class="category-card" style="--cat-color: var(--blue)">
+            <div class="cat-icon"><i class="bi bi-palette2"></i></div>
+            <h4>Graphic Design</h4>
+            <span>72 Freelancers</span>
+        </a>
+
+        <a href="#" class="category-card" style="--cat-color: var(--color-orange)">
+            <div class="cat-icon"><i class="bi bi-megaphone"></i></div>
+            <h4>Digital Marketing</h4>
+            <span>35 Freelancers</span>
+        </a>
+
+        <a href="#" class="category-card" style="--cat-color: var(--btn-color)">
+            <div class="cat-icon"><i class="bi bi-camera-video"></i></div>
+            <h4>Video Editing</h4>
+            <span>29 Freelancers</span>
+        </a>
+
+        <a href="#" class="category-card" style="--cat-color: var(--color-purple)">
+            <div class="cat-icon"><i class="bi bi-pen"></i></div>
+            <h4>Content Writing</h4>
+            <span>41 Freelancers</span>
+        </a>
+
+        <a href="#" class="category-card" style="--cat-color: var(--color-green)">
+            <div class="cat-icon"><i class="bi bi-bar-chart-line"></i></div>
+            <h4>SEO & Analytics</h4>
+            <span>22 Freelancers</span>
+        </a>
+
+    </div>
+</section>
+<!--  Categories End  -->
+
+
+<!--  Testimonials Start  -->
+<section class="testimonials-section reveal">
+    <div class="section-heading">
+        <span>Testimonials</span>
+        <h2>What our clients say</h2>
+    </div>
+
+    <div class="testimonials-grid">
+
+        <div class="testimonial-card">
+            <div class="testimonial-stars">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+            </div>
+            <p>"Freelanzo made it incredibly easy to find a talented designer. Within 24 hours I had 5 proposals and hired the perfect person."</p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: var(--teal)">A</div>
+                <div>
+                    <strong>Ahmed Al-Rashid</strong>
+                    <span>Startup Founder</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card featured">
+            <div class="testimonial-stars">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+            </div>
+            <p>"As a freelancer, Freelanzo gave me access to quality clients I never would have found on my own. My income doubled in 3 months."</p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: var(--blue)">S</div>
+                <div>
+                    <strong>Sara Mohammed</strong>
+                    <span>UI/UX Designer</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="testimonial-card">
+            <div class="testimonial-stars">
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-fill"></i>
+                <i class="bi bi-star-half"></i>
+            </div>
+            <p>"The secure payment system gave me full confidence. I knew my money was safe until I was 100% happy with the work."</p>
+            <div class="testimonial-author">
+                <div class="testimonial-avatar" style="background: var(--color-purple)">K</div>
+                <div>
+                    <strong>Khalid Nasser</strong>
+                    <span>E-commerce Owner</span>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--  Testimonials End  -->
+
+
+<!--  FAQ Start  -->
+<section class="home-section faq-section reveal">
+    <div class="section-heading">
+        <span>FAQ</span>
+        <h2>Frequently asked questions</h2>
+    </div>
+
+    <div class="faq-list">
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>How do I post a project on Freelanzo?</span>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Simply create an account, click "Post a Project", fill in your project details, budget, and required skills — then sit back and receive proposals from top freelancers.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Is it free to join as a freelancer?</span>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Yes! Signing up as a freelancer is completely free. You can create your profile, showcase your portfolio, and start bidding on projects right away.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>How does the payment system work?</span>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Payments are held securely in escrow and only released to the freelancer once you're fully satisfied with the delivered work. Your money is always protected.</p>
+            </div>
+        </div>
+
+        <div class="faq-item">
+            <button class="faq-question">
+                <span>Can I communicate with freelancers before hiring?</span>
+                <i class="bi bi-plus-lg"></i>
+            </button>
+            <div class="faq-answer">
+                <p>Absolutely. You can message any freelancer before making a decision, review their portfolio, and discuss project details to ensure they're the right fit.</p>
+            </div>
+        </div>
+
+    </div>
+</section>
+<!--  FAQ End  -->
+
+
+<!--  CTA Start  -->
+<section class="cta-section reveal">
+    <div class="cta-bg"></div>
+    <div class="cta-content">
+        <span class="cta-label">Get Started Today</span>
+        <h2>Ready to bring your project to life?</h2>
+        <p>Join thousands of clients and freelancers already growing on Freelanzo.</p>
+        <div class="cta-actions">
+            <a href="#" class="cta-btn-primary">Post a Project</a>
+            <a href="#" class="cta-btn-outline">Join as Freelancer</a>
+        </div>
+    </div>
+</section>
+<!--  CTA End  -->
+{% endblock %}

@@ -19,3 +19,13 @@ def terms_conditions_view(request:HttpRequest):
 def privacy_policy_view(request:HttpRequest):
     
     return render(request, "accounts/privacy-policy.html")
+
+
+def freelancer_profile_view(request):
+    return render(request, 'accounts/freelancer-profile.html')
+
+def client_profile_view(request):
+    return render(request, 'accounts/client-profile.html')
+
+def all_freelancer_view(request):
+    return render(request, 'accounts/all-freelancer.html')

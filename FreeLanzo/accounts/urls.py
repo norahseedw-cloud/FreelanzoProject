@@ -7,5 +7,8 @@ urlpatterns=[
     path('sign-up/', views.sign_up_view, name='sign_up_view'),
     path('sign-in/', views.sign_in_view, name='sign_in_view'),
     path('terms-and-conditions/', views.terms_conditions_view, name="terms_conditions_view"),
-    path('privacy-policy/', views.privacy_policy_view, name="privacy_policy_view")
+    path('privacy-policy/', views.privacy_policy_view, name="privacy_policy_view"),
+    path('freelancer/profile/', views.freelancer_profile_view, name='freelancer_profile'),
+    path('client/profile/', views.client_profile_view, name='client_profile'),
+    path('all/freelancer/', views.all_freelancer_view, name='all_freelancer'),
 ]
