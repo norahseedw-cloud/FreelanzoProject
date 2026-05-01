@@ -1,0 +1,446 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Client Profile | Freelanzo{% endblock %}
+
+{% block content %}
+
+<!--  COVER  -->
+<div class="cover-wrapper">
+    <div class="profile-cover">
+        <div class="cover-pattern"></div>
+        <div class="cover-dots"></div>
+    </div>
+</div>
+
+<!--  PROFILE MAIN  -->
+<div class="profile-main">
+
+    <div class="profile-header-card">
+
+        <div class="profile-top">
+
+            <!-- Avatar -->
+            <div class="avatar-wrap">
+                <img src="https://images.unsplash.com/photo-1560250097-0dc05ae24064?w=240&q=80" alt="Khalid Al-Rashid">
+                <div class="client-badge-icon">
+                    <i class="bi bi-building"></i>
+                </div>
+            </div>
+
+            <!-- Identity -->
+            <div class="profile-identity">
+                <div class="profile-name-row">
+                    <span class="profile-name">Khalid Al-Rashid</span>
+                    <span class="client-type-badge">
+                        <i class="bi bi-briefcase-fill"></i> Client
+                    </span>
+                    <span class="verified-badge">
+                        <i class="bi bi-patch-check-fill"></i> Verified
+                    </span>
+                </div>
+                <p class="profile-role">CEO at TechVentures Co. · Serial Entrepreneur</p>
+                <div class="profile-meta">
+                    <span class="meta-item">
+                        <i class="bi bi-geo-alt" style="color:var(--teal)"></i>
+                        Riyadh, Saudi Arabia
+                    </span>
+                    <span class="meta-item">
+                        <i class="bi bi-star-fill" style="color:var(--orange)"></i>
+                        <strong>4.9</strong>&nbsp;(42 reviews given)
+                    </span>
+                    <span class="meta-item">
+                        <i class="bi bi-clock" style="color:var(--blue)"></i>
+                        Member since Jan 2022
+                    </span>
+                    <span class="meta-item">
+                        <i class="bi bi-folder" style="color:var(--color-purple)"></i>
+                        18 Projects Posted
+                    </span>
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="profile-actions">
+                <button class="btn-contact">
+                    <i class="bi bi-chat-dots"></i> Contact
+                </button>
+                <button class="btn-view-projects">
+                    <i class="bi bi-folder2-open"></i> View Projects
+                </button>
+                <button class="btn-save"><i class="bi bi-bookmark"></i></button>
+            </div>
+
+        </div>
+
+        <!-- Stats Row -->
+        <div class="profile-stats-row">
+            <div class="pstat">
+                <i class="bi bi-folder-fill stat-icon" style="color:var(--teal)"></i>
+                <strong>18</strong>
+                <span>Projects Posted</span>
+            </div>
+            <div class="pstat">
+                <i class="bi bi-currency-dollar stat-icon" style="color:var(--btn-color)"></i>
+                <strong>$24K+</strong>
+                <span>Total Spent</span>
+            </div>
+            <div class="pstat">
+                <i class="bi bi-people-fill stat-icon" style="color:var(--blue)"></i>
+                <strong>14</strong>
+                <span>Freelancers Hired</span>
+            </div>
+            <div class="pstat">
+                <i class="bi bi-star-fill stat-icon" style="color:var(--orange)"></i>
+                <strong>4.9</strong>
+                <span>Avg. Rating Given</span>
+            </div>
+            <div class="pstat">
+                <i class="bi bi-trophy-fill stat-icon" style="color:var(--color-purple)"></i>
+                <strong>Top Client</strong>
+                <span>Trusted Badge</span>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="profile-grid">
+
+        <!--  LEFT COLUMN  -->
+        <div>
+
+            <!-- About -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-person-lines-fill"></i> About
+                </h3>
+                <p class="about-text">
+                    I'm the CEO of TechVentures Co., a fast-growing startup based in Riyadh focused on building
+                    SaaS products and digital platforms across the MENA region. We work with talented freelancers
+                    to bring our ideas to life — from web development and design to marketing campaigns.
+                </p>
+                <p class="about-text" style="margin-top:12px;">
+                    I value professionalism, clear communication, and quality above all. I always pay on time,
+                    provide detailed briefs, and give honest, constructive feedback. Looking for long-term
+                    relationships with skilled freelancers who take pride in their work.
+                </p>
+            </div>
+
+            <!-- Active Projects -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-folder2-open"></i> Active & Recent Projects
+                </h3>
+                <div class="project-list">
+
+                    <!-- Project 1 -->
+                    <div class="project-item">
+                        <div class="project-header">
+                            <div>
+                                <div class="project-title">Full E-commerce Website with Dashboard</div>
+                                <div class="project-cat">Web Development</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div class="project-budget">$1,500</div>
+                                <span class="status-badge status-open">Open</span>
+                            </div>
+                        </div>
+                        <p class="project-desc">
+                            Looking for an experienced Django developer to build a full e-commerce platform
+                            with product management, payment integration, and an admin dashboard.
+                        </p>
+                        <div class="project-footer">
+                            <div class="project-tags">
+                                <span class="project-tag">Django</span>
+                                <span class="project-tag">Python</span>
+                                <span class="project-tag">PostgreSQL</span>
+                                <span class="project-tag">Stripe</span>
+                            </div>
+                            <div class="project-meta-right">
+                                <span class="project-deadline">
+                                    <i class="bi bi-calendar3"></i> Due: Jun 30
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 2 -->
+                    <div class="project-item">
+                        <div class="project-header">
+                            <div>
+                                <div class="project-title">Brand Identity & Logo Design</div>
+                                <div class="project-cat">Graphic Design</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div class="project-budget">$400</div>
+                                <span class="status-badge status-inprogress">In Progress</span>
+                            </div>
+                        </div>
+                        <p class="project-desc">
+                            Need a complete brand identity for a new fintech startup including logo, color palette,
+                            typography, and brand guidelines document.
+                        </p>
+                        <div class="project-footer">
+                            <div class="project-tags">
+                                <span class="project-tag">Figma</span>
+                                <span class="project-tag">Illustrator</span>
+                                <span class="project-tag">Branding</span>
+                            </div>
+                            <div class="project-meta-right">
+                                <span class="project-deadline">
+                                    <i class="bi bi-calendar3"></i> Due: May 20
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Project 3 -->
+                    <div class="project-item">
+                        <div class="project-header">
+                            <div>
+                                <div class="project-title">Social Media Marketing Campaign</div>
+                                <div class="project-cat">Digital Marketing</div>
+                            </div>
+                            <div style="text-align:right;">
+                                <div class="project-budget">$800</div>
+                                <span class="status-badge status-closed">Completed</span>
+                            </div>
+                        </div>
+                        <p class="project-desc">
+                            3-month Instagram & LinkedIn campaign for product launch. Included content calendar,
+                            graphics, copywriting, and monthly performance reports.
+                        </p>
+                        <div class="project-footer">
+                            <div class="project-tags">
+                                <span class="project-tag">Instagram</span>
+                                <span class="project-tag">LinkedIn</span>
+                                <span class="project-tag">Content</span>
+                            </div>
+                            <div class="project-meta-right">
+                                <span class="project-deadline">
+                                    <i class="bi bi-calendar3"></i> Delivered: Apr 5
+                                </span>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+            <!-- Reviews Given -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-chat-quote-fill"></i> Reviews Given to Freelancers
+                </h3>
+
+                <!-- Review 1 -->
+                <div class="given-review-item">
+                    <div class="given-review-header">
+                        <img class="freelancer-mini-av" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Mohammed Ali">
+                        <div>
+                            <div class="given-review-name">Mohammed Ali</div>
+                            <div class="given-review-meta">Web Developer · E-commerce Project</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="review-text">
+                        Mohammed is an exceptional developer. He delivered a clean, well-structured codebase
+                        ahead of schedule. We'll definitely be working together again on our next project.
+                    </p>
+                </div>
+
+                <!-- Review 2 -->
+                <div class="given-review-item">
+                    <div class="given-review-header">
+                        <img class="freelancer-mini-av" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah Ahmed">
+                        <div>
+                            <div class="given-review-name">Sarah Ahmed</div>
+                            <div class="given-review-meta">UI/UX Designer · Mobile App Design</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                    </div>
+                    <p class="review-text">
+                        Sarah transformed our rough wireframes into a stunning, intuitive design. Her attention
+                        to detail and understanding of UX principles is outstanding.
+                    </p>
+                </div>
+
+                <!-- Review 3 -->
+                <div class="given-review-item">
+                    <div class="given-review-header">
+                        <img class="freelancer-mini-av" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&q=80" alt="Omar Khalil">
+                        <div>
+                            <div class="given-review-name">Omar Khalil</div>
+                            <div class="given-review-meta">Digital Marketer · Social Campaign</div>
+                        </div>
+                    </div>
+                    <div class="review-stars">
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-fill"></i>
+                        <i class="bi bi-star-half"></i>
+                    </div>
+                    <p class="review-text">
+                        Great communicator and solid marketer. The campaign performed well and Omar was always
+                        responsive. Would hire again for future campaigns.
+                    </p>
+                </div>
+
+            </div>
+
+        </div>
+        <!--  END LEFT COLUMN  -->
+
+
+        <!--  RIGHT SIDEBAR  -->
+        <div>
+
+            <!-- Spending Card -->
+            <div class="spending-card">
+                <div class="spending-label">Total Spent</div>
+                <div class="spending-amount">$24,350 <span>lifetime</span></div>
+                <p class="spending-desc">Across 18 projects with 14 freelancers</p>
+                <div class="spending-breakdown">
+                    <div class="breakdown-row">
+                        <span class="breakdown-label">
+                            <i class="bi bi-code-slash"></i> Web Development
+                        </span>
+                        <span class="breakdown-val">$14,200</span>
+                    </div>
+                    <div class="breakdown-row">
+                        <span class="breakdown-label">
+                            <i class="bi bi-palette2"></i> Design
+                        </span>
+                        <span class="breakdown-val">$5,800</span>
+                    </div>
+                    <div class="breakdown-row">
+                        <span class="breakdown-label">
+                            <i class="bi bi-megaphone"></i> Marketing
+                        </span>
+                        <span class="breakdown-val">$4,350</span>
+                    </div>
+                </div>
+                <button class="btn-post-project">
+                    <i class="bi bi-plus-circle-fill"></i> Post New Project
+                </button>
+            </div>
+
+            <!-- Quick Info -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-info-circle-fill"></i> Quick Info
+                </h3>
+                <div class="info-list">
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-calendar-check" style="color:var(--teal)"></i> Member Since
+                        </span>
+                        <span class="info-val">Jan 2022</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-activity" style="color:var(--blue)"></i> Status
+                        </span>
+                        <span class="active-badge">Active</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-building" style="color:var(--color-purple)"></i> Company
+                        </span>
+                        <span class="info-val">TechVentures Co.</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-globe" style="color:var(--orange)"></i> Timezone
+                        </span>
+                        <span class="info-val">GMT+3 (AST)</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-geo-alt" style="color:var(--teal)"></i> Location
+                        </span>
+                        <span class="info-val">Riyadh, KSA</span>
+                    </div>
+                    <div class="info-row">
+                        <span class="info-key">
+                            <i class="bi bi-check2-circle" style="color:var(--btn-color)"></i> Payment
+                        </span>
+                        <span class="info-val" style="color:#16a34a; font-weight:800;">Verified ✓</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Preferred Categories -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-tags-fill"></i> Preferred Categories
+                </h3>
+                <div class="pref-list">
+                    <span class="pref-tag"><i class="bi bi-code-slash" style="color:var(--teal)"></i> Web Development</span>
+                    <span class="pref-tag"><i class="bi bi-palette2" style="color:var(--blue)"></i> UI/UX Design</span>
+                    <span class="pref-tag"><i class="bi bi-megaphone" style="color:var(--color-orange)"></i> Marketing</span>
+                    <span class="pref-tag"><i class="bi bi-phone" style="color:var(--color-purple)"></i> Mobile Apps</span>
+                    <span class="pref-tag"><i class="bi bi-pen" style="color:var(--btn-color)"></i> Copywriting</span>
+                </div>
+            </div>
+
+            <!-- Top Freelancers Hired -->
+            <div class="profile-card">
+                <h3 class="card-title">
+                    <i class="bi bi-people-fill"></i> Frequently Hired
+                </h3>
+                <div>
+                    <div class="hired-card">
+                        <img class="hired-av" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Mohammed Ali">
+                        <div>
+                            <div class="hired-name">Mohammed Ali</div>
+                            <div class="hired-role">Full-Stack Developer</div>
+                        </div>
+                        <div class="hired-rating">
+                            <i class="bi bi-star-fill"></i> 5.0
+                        </div>
+                    </div>
+                    <div class="hired-card">
+                        <img class="hired-av" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah Ahmed">
+                        <div>
+                            <div class="hired-name">Sarah Ahmed</div>
+                            <div class="hired-role">UI/UX Designer</div>
+                        </div>
+                        <div class="hired-rating">
+                            <i class="bi bi-star-fill"></i> 4.9
+                        </div>
+                    </div>
+                    <div class="hired-card">
+                        <img class="hired-av" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&q=80" alt="Omar Khalil">
+                        <div>
+                            <div class="hired-name">Omar Khalil</div>
+                            <div class="hired-role">Digital Marketer</div>
+                        </div>
+                        <div class="hired-rating">
+                            <i class="bi bi-star-fill"></i> 4.7
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+        <!--  END RIGHT SIDEBAR  -->
+
+    </div>
+
+</div>
+<!--  END PROFILE MAIN  -->
+{% endblock %}
