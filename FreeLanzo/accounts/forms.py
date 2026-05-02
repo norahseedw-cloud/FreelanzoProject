@@ -1,6 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
-from .models import FreelancerProfile,PortfolioProject
+from .models import FreelancerProfile,PortfolioProject,ClientProfile,Project
+
 
 
 class SignUpForm(forms.ModelForm):
@@ -59,4 +60,19 @@ class PortfolioProjectForm(forms.ModelForm):
 
 
 
+class ClientProfileForm(forms.ModelForm):
+    class Meta:
+        model = ClientProfile
+        fields = [
+            'avatar',
+            'company_name',
+            'job_title',
+            'location',
+            'about',
+        ]
 
+
+class ProjectForm(forms.ModelForm):
+    class Meta:
+        model = Project
+        fields = ['title', 'description', 'category', 'budget']

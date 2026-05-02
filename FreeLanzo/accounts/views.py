@@ -1,11 +1,10 @@
 from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
-from .forms import SignUpForm,FreelancerProfileForm,PortfolioProjectForm
-from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage
+from .forms import SignUpForm,FreelancerProfileForm,PortfolioProjectForm,ClientProfileForm,ProjectForm
+from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage,Project
 from django.contrib.auth import login,authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
-
 
 # Create your views here.
 
@@ -110,15 +109,21 @@ def freelancer_profile_view(request):
         "similar_freelancers": similar_freelancers,
     })
 
-def client_profile_view(request):
-    return render(request, 'accounts/client-profile.html')
-
 
 def all_freelancer_view(request):
     freelancers = FreelancerProfile.objects.all()
 
+    category = request.GET.get('category')
+
+    if category:
+        freelancers = freelancers.filter(category=category)
+
+    category_dict = dict(FreelancerProfile.CATEGORY_CHOICES)
+    category_name = category_dict.get(category)
+
     return render(request, 'accounts/all-freelancer.html', {
-        'freelancers': freelancers
+        'freelancers': freelancers,
+        'selected_category': category_name,
     })
 
 
@@ -232,3 +237,84 @@ def delete_portfolio_project(request, project_id):
     })
 
 
+
+@login_required
+def client_profile_view(request):
+    profile, created = ClientProfile.objects.get_or_create(user=request.user)
+    projects = Project.objects.filter(client=profile).order_by('-created_at')
+
+    return render(request, 'accounts/client-profile.html', {
+        'profile': profile,
+        'projects': projects,
+    })
+
+
+@login_required
+def update_client_profile_view(request):
+    profile, created = ClientProfile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = ClientProfileForm(request.POST, request.FILES, instance=profile)
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:client_profile')
+
+    else:
+        form = ClientProfileForm(instance=profile)
+
+    return render(request, 'accounts/update-client-profile.html', {
+        'form': form
+    })
+
+
+@login_required
+def create_project_view(request):
+    profile, created = ClientProfile.objects.get_or_create(user=request.user)
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST)
+
+        if form.is_valid():
+            project = form.save(commit=False)
+            project.client = profile
+            project.save()
+            return redirect('accounts:client_profile')
+    else:
+        form = ProjectForm()
+
+    return render(request, 'accounts/create-project.html', {
+        'form': form
+    })
+
+def all_projects_view(request):
+    projects = Project.objects.all().order_by('-created_at')
+
+    category = request.GET.get('category')
+    search = request.GET.get('search')
+
+    if category:
+        projects = projects.filter(category=category)
+
+    if search:
+        projects = projects.filter(title__icontains=search)
+
+    category_dict = dict(FreelancerProfile.CATEGORY_CHOICES)
+    selected_category_name = category_dict.get(category)
+
+    return render(request, 'marketplace/projects.html', {
+        'projects': projects,
+        'categories': FreelancerProfile.CATEGORY_CHOICES,
+        'selected_category': category,
+        'selected_category_name': selected_category_name,
+        'search': search,
+    })
+
+def project_detail_view(request, project_id):
+    project = get_object_or_404(Project, id=project_id)
+
+    client_projects_count = Project.objects.filter(client=project.client).count()
+
+    return render(request, 'marketplace/project-detail.html', {
+        'project': project,
+        'client_projects_count': client_projects_count,
+    })

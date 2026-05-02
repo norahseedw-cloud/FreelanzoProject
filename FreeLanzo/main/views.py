@@ -15,8 +15,6 @@ def about_view(request:HttpRequest):
     return render(request,'main/about-us.html')
 
 
-
-
 def mode_view(request, mode):
     response = redirect(request.GET.get('next', '/'))
 

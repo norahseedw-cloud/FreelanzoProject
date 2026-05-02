@@ -22,16 +22,25 @@
 
             <!-- Avatar -->
             <div class="avatar-wrap">
-                <img src="https://images.unsplash.com/photo-1560250097-0dc05ae24064?w=240&q=80" alt="Khalid Al-Rashid">
-                <div class="client-badge-icon">
-                    <i class="bi bi-building"></i>
-                </div>
+                {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="{{ profile.user.username }}" class="profile-avatar">
+                {% else %}
+                <img src="{% static 'images/avatar/default.png' %}" alt="{{ profile.user.username }}" class="profile-avatar">
+                {% endif %}
+
+                <div class="online-badge"></div>
             </div>
 
             <!-- Identity -->
             <div class="profile-identity">
                 <div class="profile-name-row">
-                    <span class="profile-name">Khalid Al-Rashid</span>
+                    <span class="profile-name">
+                        {% if request.user.first_name or request.user.last_name %}
+                        {{ request.user.first_name }} {{ request.user.last_name }}
+                        {% else %}
+                        {{ request.user.username }}
+                        {% endif %}
+                    </span>
                     <span class="client-type-badge">
                         <i class="bi bi-briefcase-fill"></i> Client
                     </span>
@@ -39,11 +48,20 @@
                         <i class="bi bi-patch-check-fill"></i> Verified
                     </span>
                 </div>
-                <p class="profile-role">CEO at TechVentures Co. · Serial Entrepreneur</p>
+                <p class="profile-role"> {% if profile.job_title %}
+                    {{ profile.job_title }}
+                    {% else %}
+                    Client
+                    {% endif %}
+
+                    {% if profile.company_name %}
+                    at {{ profile.company_name }}
+                    {% endif %}
+                </p>
                 <div class="profile-meta">
                     <span class="meta-item">
                         <i class="bi bi-geo-alt" style="color:var(--teal)"></i>
-                        Riyadh, Saudi Arabia
+                        {% if profile.location %}{{ profile.location }}{% else %}No location added{% endif %}
                     </span>
                     <span class="meta-item">
                         <i class="bi bi-star-fill" style="color:var(--orange)"></i>
@@ -51,15 +69,17 @@
                     </span>
                     <span class="meta-item">
                         <i class="bi bi-clock" style="color:var(--blue)"></i>
-                        Member since Jan 2022
+                        Member since {{ request.user.date_joined|date:"M Y" }}
                     </span>
                     <span class="meta-item">
                         <i class="bi bi-folder" style="color:var(--color-purple)"></i>
-                        18 Projects Posted
+                        {{ profile.projects_posted }} Projects Posted
                     </span>
                 </div>
             </div>
-
+            <a href="{% url 'accounts:update_client_profile' %}" class="btn-view-projects">
+                <i class="bi bi-pencil-square"></i> Edit Profile
+            </a>
             <!-- Actions -->
             <div class="profile-actions">
                 <button class="btn-contact">
@@ -77,17 +97,17 @@
         <div class="profile-stats-row">
             <div class="pstat">
                 <i class="bi bi-folder-fill stat-icon" style="color:var(--teal)"></i>
-                <strong>18</strong>
+                <strong>{{ profile.projects_posted }}</strong>
                 <span>Projects Posted</span>
             </div>
             <div class="pstat">
                 <i class="bi bi-currency-dollar stat-icon" style="color:var(--btn-color)"></i>
-                <strong>$24K+</strong>
+                <strong>${{ profile.total_spent }}</strong>
                 <span>Total Spent</span>
             </div>
             <div class="pstat">
                 <i class="bi bi-people-fill stat-icon" style="color:var(--blue)"></i>
-                <strong>14</strong>
+                <strong>{{ profile.freelancers_hired }}</strong>
                 <span>Freelancers Hired</span>
             </div>
             <div class="pstat">
@@ -115,9 +135,13 @@
                     <i class="bi bi-person-lines-fill"></i> About
                 </h3>
                 <p class="about-text">
-                  
+                    {% if profile.about %}
+                    {{ profile.about }}
+                    {% else %}
+                    No about information added yet.
+                    {% endif %}
                 <p class="about-text" style="margin-top:12px;">
-                   
+
             </div>
 
             <!-- Active Projects -->
@@ -125,100 +149,33 @@
                 <h3 class="card-title">
                     <i class="bi bi-folder2-open"></i> Active & Recent Projects
                 </h3>
+
                 <div class="project-list">
-
-                    <!-- Project 1 -->
-                    <div class="project-item">
+                    {% for project in projects %}
+                    <a href="{% url 'accounts:project_detail' project.id %}" class="project-item">
                         <div class="project-header">
                             <div>
-                                <div class="project-title">Full E-commerce Website with Dashboard</div>
-                                <div class="project-cat">Web Development</div>
+                                <div class="project-title">{{ project.title }}</div>
+                                <div class="project-cat">{{ project.get_category_display }}</div>
                             </div>
+
                             <div style="text-align:right;">
-                                <div class="project-budget">$1,500</div>
-                                <span class="status-badge status-open">Open</span>
-                            </div>
-                        </div>
-                        <p class="project-desc">
-                            Looking for an experienced Django developer to build a full e-commerce platform
-                            with product management, payment integration, and an admin dashboard.
-                        </p>
-                        <div class="project-footer">
-                            <div class="project-tags">
-                                <span class="project-tag">Django</span>
-                                <span class="project-tag">Python</span>
-                                <span class="project-tag">PostgreSQL</span>
-                                <span class="project-tag">Stripe</span>
-                            </div>
-                            <div class="project-meta-right">
-                                <span class="project-deadline">
-                                    <i class="bi bi-calendar3"></i> Due: Jun 30
+                                <div class="project-budget">${{ project.budget }}</div>
+                                <span class="status-badge status-open">
+                                    {{ project.get_status_display }}
                                 </span>
                             </div>
                         </div>
-                    </div>
 
-                    <!-- Project 2 -->
-                    <div class="project-item">
-                        <div class="project-header">
-                            <div>
-                                <div class="project-title">Brand Identity & Logo Design</div>
-                                <div class="project-cat">Graphic Design</div>
-                            </div>
-                            <div style="text-align:right;">
-                                <div class="project-budget">$400</div>
-                                <span class="status-badge status-inprogress">In Progress</span>
-                            </div>
-                        </div>
                         <p class="project-desc">
-                            Need a complete brand identity for a new fintech startup including logo, color palette,
-                            typography, and brand guidelines document.
+                            {{ project.description|truncatewords:25 }}
                         </p>
-                        <div class="project-footer">
-                            <div class="project-tags">
-                                <span class="project-tag">Figma</span>
-                                <span class="project-tag">Illustrator</span>
-                                <span class="project-tag">Branding</span>
-                            </div>
-                            <div class="project-meta-right">
-                                <span class="project-deadline">
-                                    <i class="bi bi-calendar3"></i> Due: May 20
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
-                    <!-- Project 3 -->
-                    <div class="project-item">
-                        <div class="project-header">
-                            <div>
-                                <div class="project-title">Social Media Marketing Campaign</div>
-                                <div class="project-cat">Digital Marketing</div>
-                            </div>
-                            <div style="text-align:right;">
-                                <div class="project-budget">$800</div>
-                                <span class="status-badge status-closed">Completed</span>
-                            </div>
-                        </div>
-                        <p class="project-desc">
-                            3-month Instagram & LinkedIn campaign for product launch. Included content calendar,
-                            graphics, copywriting, and monthly performance reports.
-                        </p>
-                        <div class="project-footer">
-                            <div class="project-tags">
-                                <span class="project-tag">Instagram</span>
-                                <span class="project-tag">LinkedIn</span>
-                                <span class="project-tag">Content</span>
-                            </div>
-                            <div class="project-meta-right">
-                                <span class="project-deadline">
-                                    <i class="bi bi-calendar3"></i> Delivered: Apr 5
-                                </span>
-                            </div>
-                        </div>
-                    </div>
-
+                    </a>
+                    {% empty %}
+                    <p class="about-text">No projects posted yet.</p>
+                    {% endfor %}
                 </div>
+
             </div>
 
             <!-- Reviews Given -->
@@ -298,33 +255,17 @@
         <div>
 
             <!-- Spending Card -->
+
             <div class="spending-card">
                 <div class="spending-label">Total Spent</div>
-                <div class="spending-amount">$24,350 <span>lifetime</span></div>
-                <p class="spending-desc">Across 18 projects with 14 freelancers</p>
-                <div class="spending-breakdown">
-                    <div class="breakdown-row">
-                        <span class="breakdown-label">
-                            <i class="bi bi-code-slash"></i> Web Development
-                        </span>
-                        <span class="breakdown-val">$14,200</span>
-                    </div>
-                    <div class="breakdown-row">
-                        <span class="breakdown-label">
-                            <i class="bi bi-palette2"></i> Design
-                        </span>
-                        <span class="breakdown-val">$5,800</span>
-                    </div>
-                    <div class="breakdown-row">
-                        <span class="breakdown-label">
-                            <i class="bi bi-megaphone"></i> Marketing
-                        </span>
-                        <span class="breakdown-val">$4,350</span>
-                    </div>
-                </div>
-                <button class="btn-post-project">
+                <div class="spending-amount">${{ profile.total_spent }} <span>lifetime</span></div>
+                <p class="spending-desc">
+                    Across {{ profile.projects_posted }} projects with {{ profile.freelancers_hired }} freelancers
+                </p>
+
+                <a href="{% url 'accounts:create_project' %}" class="btn-post-project">
                     <i class="bi bi-plus-circle-fill"></i> Post New Project
-                </button>
+                </a>
             </div>
 
             <!-- Quick Info -->
@@ -337,7 +278,7 @@
                         <span class="info-key">
                             <i class="bi bi-calendar-check" style="color:var(--teal)"></i> Member Since
                         </span>
-                        <span class="info-val">Jan 2022</span>
+                        <span class="info-val">{{ request.user.date_joined|date:"M Y" }}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-key">
@@ -349,32 +290,27 @@
                         <span class="info-key">
                             <i class="bi bi-building" style="color:var(--color-purple)"></i> Company
                         </span>
-                        <span class="info-val">TechVentures Co.</span>
+                        <span class="info-val"> {% if profile.company_name %}
+                            {{ profile.company_name }}
+                            {% else %}
+                            Not added
+                            {% endif %}</span>
                     </div>
 
                     <div class="info-row">
                         <span class="info-key">
                             <i class="bi bi-geo-alt" style="color:var(--teal)"></i> Location
                         </span>
-                        <span class="info-val">Riyadh, KSA</span>
+                        <span class="info-val"> {% if profile.location %}
+                            {{ profile.location }}
+                            {% else %}
+                            Not added
+                            {% endif %}</span>
                     </div>
 
                 </div>
             </div>
 
-            <!-- Preferred Categories -->
-            <div class="profile-card">
-                <h3 class="card-title">
-                    <i class="bi bi-tags-fill"></i> Preferred Categories
-                </h3>
-                <div class="pref-list">
-                    <span class="pref-tag"><i class="bi bi-code-slash" style="color:var(--teal)"></i> Web Development</span>
-                    <span class="pref-tag"><i class="bi bi-palette2" style="color:var(--blue)"></i> UI/UX Design</span>
-                    <span class="pref-tag"><i class="bi bi-megaphone" style="color:var(--color-orange)"></i> Marketing</span>
-                    <span class="pref-tag"><i class="bi bi-phone" style="color:var(--color-purple)"></i> Mobile Apps</span>
-                    <span class="pref-tag"><i class="bi bi-pen" style="color:var(--btn-color)"></i> Copywriting</span>
-                </div>
-            </div>
 
             <!-- Top Freelancers Hired -->
             <div class="profile-card">

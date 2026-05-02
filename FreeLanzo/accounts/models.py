@@ -38,7 +38,6 @@ class FreelancerProfile(models.Model):
         return self.user.username
 
 
-
 class ClientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
@@ -48,7 +47,7 @@ class ClientProfile(models.Model):
     location = models.CharField(max_length=150, blank=True)
     about = models.TextField(blank=True)
     preferred_categories = models.CharField(max_length=300, blank=True)
-
+    
     def __str__(self):
         return self.user.username
 
@@ -69,3 +68,30 @@ class PortfolioProjectImage(models.Model):
 
     def __str__(self):
         return f"Image for {self.project.title}"
+    
+
+class Project(models.Model):
+    client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
+
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    category = models.CharField(
+        max_length=50,
+        choices=FreelancerProfile.CATEGORY_CHOICES
+    )
+
+    budget = models.DecimalField(max_digits=8, decimal_places=2)
+    status = models.CharField(
+        max_length=20,
+        choices=(
+            ('open', 'Open'),
+            ('in_progress', 'In Progress'),
+            ('completed', 'Completed'),
+        ),
+        default='open'
+    )
+
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.title

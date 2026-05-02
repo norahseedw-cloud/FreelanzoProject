@@ -16,9 +16,8 @@
 
 </head>
 
-<!-- <body id="top" {% if "mode" in request.COOKIES and request.COOKIES.mode == "dark" %} class="dark" {% endif %}> -->
+ <body id="top" {% if "mode" in request.COOKIES and request.COOKIES.mode == "dark" %} class="dark" {% endif %}> 
 
-<body>
     <!-- nav start  -->
     <nav class="main-navbar">
 
@@ -45,12 +44,12 @@
                     </a>
 
                     <ul class="dropdown-menu" id="categoryMenu">
-                        <li><a href="#">Graphics & Design</a></li>
-                        <li><a href="#">Programming & Tech</a></li>
-                        <li><a href="#">Digital Marketing</a></li>
-                        <li><a href="#">Video & Animation</a></li>
-                        <li><a href="#">Writing & Translation</a></li>
-                        <li><a href="#">Business</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=graphics_design">Graphics & Design</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=programming_tech">Programming & Tech</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=digital_marketing">Digital Marketing</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=video_animation">Video & Animation</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=writing_translation">Writing & Translation</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=business">Business</a></li>
                     </ul>
                 </li>
 

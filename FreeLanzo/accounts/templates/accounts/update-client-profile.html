@@ -1,0 +1,78 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Update Client Profile | Freelanzo{% endblock %}
+
+{% block content %}
+<div class="cover-wrapper">
+    <div class="profile-cover">
+        <div class="cover-pattern"></div>
+        <div class="cover-dots"></div>
+    </div>
+</div>
+
+<section class="update-profile-section">
+
+    <div class="update-profile-card">
+
+        <div class="update-profile-header">
+            <h2>Update Client Profile</h2>
+            <p>Complete your client profile to help freelancers understand your business needs.</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" class="update-profile-form">
+            {% csrf_token %}
+
+            <div class="form-avatar-preview">
+                {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="{{ request.user.username }}">
+                {% else %}
+                <img src="{% static 'images/avatar/default.png' %}" alt="{{ request.user.username }}">
+                {% endif %}
+            </div>
+
+            <div class="form-group">
+                <label>Profile Image</label>
+                {{ form.avatar }}
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Company Name</label>
+                    {{ form.company_name }}
+                </div>
+
+                <div class="form-group">
+                    <label>Job Title</label>
+                    {{ form.job_title }}
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label>Location</label>
+                {{ form.location }}
+            </div>
+
+            <div class="form-group">
+                <label>About</label>
+                {{ form.about }}
+            </div>
+
+
+            <div class="form-actions">
+                <a href="{% url 'accounts:client_profile' %}" class="btn-cancel">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn-save-profile">
+                    Save Changes
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

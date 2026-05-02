@@ -4478,7 +4478,6 @@ body.dark .theme-toggle-btn {
 
 }
 
-/* CARD */
 .about-card {
     width: 85%;
     background: #fff;
@@ -4492,7 +4491,6 @@ body.dark .theme-toggle-btn {
     box-shadow: 0 20px 50px rgba(0, 0, 0, 0.15);
 }
 
-/* LEFT */
 .about-left {
     max-width: 400px;
 }
@@ -6008,6 +6006,7 @@ body.dark .theme-toggle-btn {
         height: 220px;
     }
 }
+
 /* ==========================UPDATE END======================================= */
 /* ==========================PROJECT UPDATE START======================================= */
 
@@ -6101,4 +6100,189 @@ body.dark .theme-toggle-btn {
     transform: translateY(-2px);
     box-shadow: 0 10px 25px rgba(59, 130, 246, 0.25);
 }
+
 /* ==========================PROJECT UPDATE END======================================= */
+
+
+.update-profile-section {
+    width: 100%;
+    padding: 70px 20px;
+    background: #f7faf9;
+}
+
+.update-profile-card {
+    width: min(900px, 100%);
+    margin: 0 auto;
+    background: #ffffff;
+    border-radius: 26px;
+    padding: 38px;
+    box-shadow: 0 20px 55px rgba(15, 61, 46, 0.08);
+    border: 1px solid rgba(15, 61, 46, 0.08);
+}
+
+.update-profile-header {
+    text-align: center;
+    margin-bottom: 32px;
+}
+
+.update-profile-header h2 {
+    font-size: 32px;
+    font-weight: 800;
+    color: #12352b;
+    margin-bottom: 8px;
+}
+
+.update-profile-header p {
+    color: #6b7b76;
+    font-size: 15px;
+}
+
+.update-profile-form {
+    display: flex;
+    flex-direction: column;
+    gap: 22px;
+}
+
+.form-avatar-preview {
+    display: flex;
+    justify-content: center;
+    margin-bottom: 8px;
+}
+
+.form-avatar-preview img {
+    width: 125px;
+    height: 125px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #ffffff;
+    box-shadow: 0 12px 30px rgba(15, 61, 46, 0.18);
+}
+
+.form-row {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 22px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 9px;
+}
+
+.form-group label {
+    font-size: 14px;
+    font-weight: 700;
+    color: #193f34;
+}
+
+.form-group input,
+.form-group textarea,
+.form-group select {
+    width: 100%;
+    border: 1px solid #dce7e3;
+    border-radius: 16px;
+    padding: 13px 15px;
+    font-size: 15px;
+    outline: none;
+    background: #fbfdfc;
+    color: #213d35;
+    transition: 0.25s ease;
+}
+
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus {
+    border-color: #0f7a5f;
+    box-shadow: 0 0 0 4px rgba(15, 122, 95, 0.09);
+    background: #ffffff;
+}
+
+.category-checkbox-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 14px;
+}
+
+.category-checkbox {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    background: #f8fbfa;
+    border: 1px solid #dce7e3;
+    padding: 16px 20px;
+    border-radius: 16px;
+    cursor: pointer;
+}
+
+.category-checkbox input[type="checkbox"] {
+    width: 18px;
+    height: 18px;
+    accent-color: #0f3d2e;
+    cursor: pointer;
+}
+
+.category-checkbox span {
+    font-size: 15px;
+    font-weight: 600;
+    color: #08352c;
+}
+
+.category-checkbox:has(input:checked) {
+    border-color: #0f3d2e;
+    background: #eef8f4;
+}
+
+.form-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 14px;
+    margin-top: 12px;
+}
+
+.btn-cancel,
+.btn-save-profile {
+    border: none;
+    text-decoration: none;
+    padding: 13px 24px;
+    border-radius: 999px;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.btn-cancel {
+    background: #edf3f1;
+    color: #29473f;
+}
+
+.btn-save-profile {
+    background: #0f3d2e;
+    color: #ffffff;
+    box-shadow: 0 12px 26px rgba(15, 61, 46, 0.22);
+}
+
+.btn-save-profile:hover {
+    background: #14523f;
+}
+
+@media (max-width: 768px) {
+    .update-profile-card {
+        padding: 26px 20px;
+    }
+
+    .form-row,
+    .category-checkbox-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .form-actions {
+        flex-direction: column;
+    }
+
+    .btn-cancel,
+    .btn-save-profile {
+        width: 100%;
+        text-align: center;
+    }
+}

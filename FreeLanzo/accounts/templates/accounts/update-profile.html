@@ -43,13 +43,16 @@
                         value="{{ form.job_title.value|default:'' }}" class="form-control mb-2">
 
                     <div class="mb-2">
-                        <select name="category" class="form-control">
+                        <select name="preferred_categories" class="form-control">
                             <option value="">Choose Category</option>
-                            {% for value, label in form.category.field.choices %}
-                            <option value="{{ value }}" {% if form.category.value == value %}selected{% endif %}>
+
+                            {% for value, label in form.preferred_categories.field.choices %}
+                            <option value="{{ value }}"
+                                {% if form.preferred_categories.value==value %}selected{% endif %}>
                                 {{ label }}
                             </option>
                             {% endfor %}
+
                         </select>
                     </div>
 

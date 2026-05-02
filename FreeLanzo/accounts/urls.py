@@ -18,12 +18,9 @@ urlpatterns=[
     path('freelancer/<int:user_id>/', views.freelancer_profile_detail, name='freelancer_profile_detail'),
     path('portfolio/<int:project_id>/update/', views.update_portfolio_project, name='update_portfolio_project'),
     path('portfolio/<int:project_id>/delete/', views.delete_portfolio_project, name='delete_portfolio_project'),
-
-
-
-
-
-
-
+    path('client/profile/update/', views.update_client_profile_view, name='update_client_profile'),
+    path('project/create/', views.create_project_view, name='create_project'),
+    path('projects/', views.all_projects_view, name='all_projects'),
+    path('project/<int:project_id>/', views.project_detail_view, name='project_detail'),
 
 ]
