@@ -1,0 +1,55 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Update Project{% endblock %}
+
+{% block content %}
+
+<section class="project-form-page">
+
+    <div class="project-form-card">
+
+        <div class="form-header">
+            <h2>Update Project</h2>
+            <p>Edit your project details and images</p>
+        </div>
+
+        <form method="POST" enctype="multipart/form-data" class="project-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Project Title</label>
+                {{ form.title }}
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                {{ form.description }}
+            </div>
+
+            <div class="form-group">
+                <label>Main Image</label>
+                {{ form.image }}
+            </div>
+
+            <div class="form-group">
+                <label>Add More Images</label>
+                <input type="file" name="images" multiple>
+            </div>
+
+            <div class="form-group">
+                <label>Project Link</label>
+                {{ form.project_url }}
+            </div>
+
+            <button type="submit" class="submit-btn">
+                Save Changes
+            </button>
+
+        </form>
+
+    </div>
+
+</section>
+
+{% endblock %}

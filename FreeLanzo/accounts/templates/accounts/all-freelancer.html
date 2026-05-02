@@ -20,7 +20,6 @@
 
 <div class="page-wrapper">
 
-    <!--  FILTER SIDEBAR  -->
     <aside class="filter-sidebar">
 
         <div class="filter-header">
@@ -28,7 +27,6 @@
             <button class="btn-clear-all" onclick="clearAllFilters()">Clear all</button>
         </div>
 
-        <!-- Search -->
         <div class="filter-group">
             <div class="filter-group-title">Search</div>
             <div class="filter-search">
@@ -37,38 +35,34 @@
             </div>
         </div>
 
-        <!-- Category -->
-        <div class="filter-group">
-            <div class="filter-group-title">Category</div>
-            <div class="cat-pills">
-                <div class="cat-pill active" data-cat="all" onclick="selectCategory(this, 'all')">
-                    <span class="cat-pill-left"><i class="bi bi-grid-fill"></i> All Categories</span>
-                    <span class="cat-count">12</span>
-                </div>
-                <div class="cat-pill" data-cat="web" onclick="selectCategory(this, 'web')">
-                    <span class="cat-pill-left"><i class="bi bi-code-slash" style="color:var(--teal)"></i> Web Development</span>
-                    <span class="cat-count">4</span>
-                </div>
-                <div class="cat-pill" data-cat="design" onclick="selectCategory(this, 'design')">
-                    <span class="cat-pill-left"><i class="bi bi-palette2" style="color:var(--blue)"></i> Graphic Design</span>
-                    <span class="cat-count">3</span>
-                </div>
-                <div class="cat-pill" data-cat="marketing" onclick="selectCategory(this, 'marketing')">
-                    <span class="cat-pill-left"><i class="bi bi-megaphone" style="color:var(--color-orange)"></i> Digital Marketing</span>
-                    <span class="cat-count">2</span>
-                </div>
-                <div class="cat-pill" data-cat="video" onclick="selectCategory(this, 'video')">
-                    <span class="cat-pill-left"><i class="bi bi-camera-video" style="color:var(--btn-color)"></i> Video Editing</span>
-                    <span class="cat-count">1</span>
-                </div>
-                <div class="cat-pill" data-cat="writing" onclick="selectCategory(this, 'writing')">
-                    <span class="cat-pill-left"><i class="bi bi-pen" style="color:var(--color-purple)"></i> Content Writing</span>
-                    <span class="cat-count">2</span>
-                </div>
-            </div>
+        <div class="cat-pill active" data-cat="all" onclick="selectCategory(this, 'all')">
+            <span class="cat-pill-left"><i class="bi bi-grid-fill"></i> All Categories</span>
         </div>
 
-        <!-- Rating -->
+        <div class="cat-pill" data-cat="programming_tech" onclick="selectCategory(this, 'programming_tech')">
+            <span class="cat-pill-left"><i class="bi bi-code-slash"></i> Programming & Tech</span>
+        </div>
+
+        <div class="cat-pill" data-cat="graphics_design" onclick="selectCategory(this, 'graphics_design')">
+            <span class="cat-pill-left"><i class="bi bi-palette2"></i> Graphics & Design</span>
+        </div>
+
+        <div class="cat-pill" data-cat="digital_marketing" onclick="selectCategory(this, 'digital_marketing')">
+            <span class="cat-pill-left"><i class="bi bi-megaphone"></i> Digital Marketing</span>
+        </div>
+
+        <div class="cat-pill" data-cat="video_animation" onclick="selectCategory(this, 'video_animation')">
+            <span class="cat-pill-left"><i class="bi bi-camera-video"></i> Video & Animation</span>
+        </div>
+
+        <div class="cat-pill" data-cat="writing_translation" onclick="selectCategory(this, 'writing_translation')">
+            <span class="cat-pill-left"><i class="bi bi-pen"></i> Writing & Translation</span>
+        </div>
+
+        <div class="cat-pill" data-cat="business" onclick="selectCategory(this, 'business')">
+            <span class="cat-pill-left"><i class="bi bi-briefcase"></i> Business</span>
+        </div>
+
         <div class="filter-group">
             <div class="filter-group-title">Minimum Rating</div>
             <div class="rating-options">
@@ -111,7 +105,7 @@
             </div>
         </div>
 
-        <!-- Hourly Rate -->
+
         <div class="filter-group">
             <div class="filter-group-title">Hourly Rate ($)</div>
             <div class="budget-inputs">
@@ -126,7 +120,7 @@
             </div>
         </div>
 
-        <!-- Availability -->
+
         <div class="filter-group">
             <div class="filter-group-title">Availability</div>
             <div class="toggle-options">
@@ -152,13 +146,10 @@
         </button>
 
     </aside>
-    <!--  END FILTER SIDEBAR  -->
 
 
-    <!--  CONTENT AREA  -->
     <div class="content-area">
 
-        <!-- Toolbar -->
         <div class="content-toolbar">
             <div class="toolbar-left">
                 <span class="toolbar-result-count">
@@ -187,140 +178,80 @@
 
         <div class="freelancers-grid" id="freelancers-grid">
 
-            <!-- CARD 1 -->
-            <a class="fl-card" href="profile.html"
-                data-cat="web" data-rating="5.0" data-rate="45"
-                data-available="true" data-top="true"
-                data-name="Mohammed Ali" data-tags="django react python"
-                style="--card-color: var(--blue)">
+            {% for freelancer in freelancers %}
+            <a class="fl-card"
+                href="{% url 'accounts:freelancer_profile_detail' freelancer.user.id %}"
+                data-cat="{{ freelancer.category }}"
+                data-rating="5"
+                data-rate="{{ freelancer.hourly_rate|default:0 }}" data-available="true"
+                data-top="false"
+                data-name="{{ freelancer.user.first_name }} {{ freelancer.user.last_name }}"
+                data-tags="{{ freelancer.skills }}">
+
                 <div class="fl-card-bar"></div>
+
                 <div class="fl-card-body">
+
                     <div class="fl-avatar-row">
+
                         <div class="fl-avatar-wrap">
-                            <img class="fl-avatar" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=160&q=80" alt="Mohammed Ali">
+                            {% if freelancer.avatar %}
+                            <img class="fl-avatar" src="{{ freelancer.avatar.url }}">
+                            {% else %}
+                            <img class="fl-avatar" src="{% static 'images/avatar/default.png' %}">
+                            {% endif %}
                             <div class="fl-online-dot"></div>
                         </div>
+
                         <div class="fl-identity">
-                            <div class="fl-name">Mohammed Ali</div>
-                            <div class="fl-role">Full-Stack Developer</div>
+                            <div class="fl-name">
+                                {{ freelancer.user.first_name }} {{ freelancer.user.last_name }}
+                            </div>
+
+                            <div class="fl-role">
+                                {{ freelancer.job_title }}
+                            </div>
+
                             <div class="fl-rating">
                                 <i class="bi bi-star-fill"></i> 5.0
-                                <span>(98 reviews)</span>
-                                <span class="top-rated-badge">Top Rated</span>
+                                <span>(0 reviews)</span>
                             </div>
                         </div>
-                    </div>
-                    <div class="fl-tags">
-                        <span class="fl-tag">Django</span>
-                        <span class="fl-tag">React</span>
-                        <span class="fl-tag">Python</span>
-                    </div>
-                    <div class="fl-card-footer">
-                        <div>
-                            <div class="fl-rate">$45<span>/hr</span></div>
-                            <div class="fl-location"><i class="bi bi-geo-alt"></i> Riyadh, KSA</div>
-                        </div>
-                        <span class="btn-view-profile">View Profile</span>
-                    </div>
-                </div>
-            </a>
 
-            <!-- CARD 2 -->
-            <a class="fl-card" href="profile.html"
-                data-cat="design" data-rating="4.9" data-rate="40"
-                data-available="true" data-top="true"
-                data-name="Sarah Ahmed" data-tags="figma prototyping branding"
-                style="--card-color: var(--teal)">
-                <div class="fl-card-bar"></div>
-                <div class="fl-card-body">
-                    <div class="fl-avatar-row">
-                        <div class="fl-avatar-wrap">
-                            <img class="fl-avatar" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=160&q=80" alt="Sarah Ahmed">
-                            <div class="fl-online-dot"></div>
-                        </div>
-                        <div class="fl-identity">
-                            <div class="fl-name">Sarah Ahmed</div>
-                            <div class="fl-role">UI/UX Designer</div>
-                            <div class="fl-rating">
-                                <i class="bi bi-star-fill"></i> 4.9
-                                <span>(120 reviews)</span>
-                                <span class="top-rated-badge">Top Rated</span>
-                            </div>
-                        </div>
                     </div>
-                    <div class="fl-tags">
-                        <span class="fl-tag">Figma</span>
-                        <span class="fl-tag">Prototyping</span>
-                        <span class="fl-tag">Branding</span>
-                    </div>
-                    <div class="fl-card-footer">
-                        <div>
-                            <div class="fl-rate">$40<span>/hr</span></div>
-                            <div class="fl-location"><i class="bi bi-geo-alt"></i> Dubai, UAE</div>
-                        </div>
-                        <span class="btn-view-profile">View Profile</span>
-                    </div>
-                </div>
-            </a>
 
-            <!-- CARD 3 -->
-            <a class="fl-card" href="profile.html"
-                data-cat="design" data-rating="4.8" data-rate="38"
-                data-available="false" data-top="false"
-                data-name="Lina Khalid" data-tags="logo identity illustrator"
-                style="--card-color: var(--color-purple)">
-                <div class="fl-card-bar"></div>
-                <div class="fl-card-body">
-                    <div class="fl-avatar-row">
-                        <div class="fl-avatar-wrap">
-                            <img class="fl-avatar" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=160&q=80" alt="Lina Khalid">
-                            <div class="fl-offline-dot"></div>
-                        </div>
-                        <div class="fl-identity">
-                            <div class="fl-name">Lina Khalid</div>
-                            <div class="fl-role">Brand Designer</div>
-                            <div class="fl-rating">
-                                <i class="bi bi-star-fill"></i> 4.8
-                                <span>(85 reviews)</span>
-                            </div>
-                        </div>
-                    </div>
                     <div class="fl-tags">
-                        <span class="fl-tag">Logo</span>
-                        <span class="fl-tag">Identity</span>
-                        <span class="fl-tag">Illustrator</span>
+                        {% for skill in freelancer.skills.split %}
+                        <span class="fl-tag">{{ skill }}</span>
+                        {% endfor %}
                     </div>
+
                     <div class="fl-card-footer">
                         <div>
-                            <div class="fl-rate">$38<span>/hr</span></div>
-                            <div class="fl-location"><i class="bi bi-geo-alt"></i> Cairo, Egypt</div>
+                            <div class="fl-rate">
+                                ${{ freelancer.hourly_rate|default:"0" }}<span>/hr</span>
+                            </div>
+
+                            <div class="fl-location">
+                                <i class="bi bi-geo-alt"></i> {{ freelancer.location }}
+                            </div>
                         </div>
+
                         <span class="btn-view-profile">View Profile</span>
                     </div>
+
                 </div>
             </a>
+            {% endfor %}
 
         </div>
 
-        <!-- No Results -->
         <div class="no-results" id="no-results">
             <i class="bi bi-search"></i>
             <h3>No freelancers found</h3>
             <p>Try adjusting your filters or search query.</p>
         </div>
 
-        <!-- Pagination -->
-        <div class="pagination" id="pagination">
-            <button class="page-btn arrow" onclick="changePage(-1)">
-                <i class="bi bi-chevron-left"></i>
-            </button>
-            <button class="page-btn active" onclick="goPage(1)">1</button>
-            <button class="page-btn" onclick="goPage(2)">2</button>
-            <button class="page-btn" onclick="goPage(3)">3</button>
-            <button class="page-btn arrow" onclick="changePage(1)">
-                <i class="bi bi-chevron-right"></i>
-            </button>
-        </div>
 
     </div>
 

@@ -1,0 +1,25 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Delete Project{% endblock %}
+
+{% block content %}
+
+<div class="profile-main">
+    <div class="profile-card" style="max-width:600px; margin:auto;">
+        <h3 class="card-title">Delete Project</h3>
+
+        <p class="about-text">
+            Are you sure you want to delete "{{ project.title }}"?
+        </p>
+
+        <form method="POST">
+            {% csrf_token %}
+            <button type="submit" class="btn-hire">Yes, Delete</button>
+            <a href="{% url 'accounts:portfolio_project_detail' project.id %}" class="btn-message">
+                Cancel
+            </a>
+        </form>
+    </div>
+</div>
+
+{% endblock %}

@@ -1,5 +1,7 @@
 from django import forms
 from django.contrib.auth.models import User
+from .models import FreelancerProfile,PortfolioProject
+
 
 class SignUpForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
@@ -30,3 +32,31 @@ class SignUpForm(forms.ModelForm):
         if len(password) < 6:
             raise forms.ValidationError("Password must be at least 6 characters")
         return password
+    
+
+
+class FreelancerProfileForm(forms.ModelForm):
+    class Meta:
+        model = FreelancerProfile
+        fields = [
+            'avatar',
+            'job_title',
+            'location',
+            'category',
+            'about',
+            'skills',
+            'hourly_rate',
+            'availability',
+            'languages'
+        ]
+
+
+
+class PortfolioProjectForm(forms.ModelForm):
+    class Meta:
+        model = PortfolioProject
+        fields = ['title', 'description', 'image', 'project_url']
+
+
+
+
