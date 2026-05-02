@@ -18,8 +18,8 @@
             <div class="col-md-6 d-flex align-items-center justify-content-center bg-white">
 
                 <div style="width: 80%;" class="p-4">
-                    <form method="POST">
-                    {% csrf_token %}
+                    <form method="POST" action="{%url 'accounts:sign_in_view'%}">
+                         {% csrf_token %}
                     <h3 class="mb-4 text-center">Sign In</h3>
                 <div class="mb-4">
                     <input type="text" class="form-control" placeholder="Username" name="username" required>
@@ -33,7 +33,7 @@
                     <a href="#" class="text-linke">Did you forget your password?</a>
                 </div>
 
-                    <button class="btn btn-custom w-100">Sign Up</button>
+                    <button type="submit" class="btn btn-custom w-100">Sign in</button>
                     </form>
                 </div>
 

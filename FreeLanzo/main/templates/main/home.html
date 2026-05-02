@@ -4,6 +4,43 @@
 {% block title %}Home | Freelanzo{% endblock %}
 
 {% block content %}
+{% if request.session.show_complete_profile %}
+
+<div class="modal fade show" id="profileModal" style="display:block;" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content p-4 text-center">
+
+      <h5 class="mb-2">
+        {% if request.user.usertype.role == 'freelancer' %}
+          Complete your freelancer profile
+        {% else %}
+          Complete your client profile
+        {% endif %}
+      </h5>
+
+      <p class="text-muted">
+        {% if request.user.usertype.role == 'freelancer' %}
+          Add your skills to get hired faster.
+        {% else %}
+          Tell us what you need to find the right talent.
+        {% endif %}
+      </p>
+
+      {% if request.user.usertype.role == 'freelancer' %}
+        <a href="{% url 'accounts:freelancer_profile' %}" class="btn btn-primary">Complete</a>
+      {% else %}
+        <a href="{% url 'accounts:client_profile' %}" class="btn btn-primary">Complete</a>
+      {% endif %}
+
+      <button class="btn btn-link mt-2" data-bs-dismiss="modal">Skip</button>
+
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop fade show"></div>
+
+{% endif %}
 
 <!--  Hero Section Start -->
 <section class="home-hero reveal">

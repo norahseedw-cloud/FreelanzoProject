@@ -30,7 +30,8 @@
             <div class="col-md-6 d-flex align-items-center justify-content-center bg-white">
 
                 <div style="width: 80%;" class="p-4">
-                    <form action="" method="post">
+                    <form action="{%url 'accounts:sign_up_view'%}" method="post" id="signupForm">
+                        {% csrf_token %}
                     <h3 class="mb-4 text-center">Create Account</h3>
                     
                     <div class="row mb-3">
@@ -51,6 +52,7 @@
                 <div class="mb-3">
                     <input type="password" class="form-control" placeholder="Password" name="password" required>
                 </div>
+                <input type="hidden" name="role" id="roleInput">
                 <div class="mb-3">
                     <div class="form-check mt-3 text-center">
                     <label class="form-check-label link-up" for="agreeTerms">
@@ -66,7 +68,7 @@
                     </div>
                 </div> 
 
-                    <button class="btn btn-custom w-100">Sign Up</button>
+                    <button type="submit" class="btn btn-custom w-100">Sign Up</button>
                     </form>
                 </div>
 
@@ -95,11 +97,6 @@
   </div>
 </div>
 
-<form method="POST">
-  {% csrf_token %}
-  <input type="hidden" name="role" id="roleInput">
 
-  <button type="submit">Sign Up</button>
-</form>
 
 {% endblock %}
