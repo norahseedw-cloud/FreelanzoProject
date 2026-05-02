@@ -1,6 +1,10 @@
 /*sign pages*/
+.place{
+    margin-top: -80px;
+}
+
 .box{
-    background: linear-gradient(to bottom, #3f8c95, #645a8f) ;
+    background:  linear-gradient(135deg, var(--main-dark) 0%, var(--blue) 60%, var(--teal) 100%);
 }
 
 .card.sign-style{
@@ -40,4 +44,50 @@
 /* Responsive Navbar */
 .menu-toggle {
     display: none;
+}
+
+.role-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0,0,0,0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 999;
+}
+
+.role-modal-content {
+  background: white;
+  padding: 40px;
+  border-radius: 20px;
+  text-align: center;
+  width: 350px;
+}
+
+.role-options {
+  margin-top: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+.role-btn {
+  padding: 12px;
+  border: none;
+  border-radius: 10px;
+  font-size: 16px;
+  cursor: pointer;
+}
+
+.freelancer {
+  background: #3f8c95;
+  color: white;
+}
+
+.client {
+  background: #645a8f;
+  color: white;
 }

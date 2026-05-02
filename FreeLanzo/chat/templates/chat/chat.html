@@ -1,0 +1,97 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Chat{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'chat/css/chat.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<div class="chat-page">
+
+    <div class="chat-container" id="chatContainer">
+
+  
+        <div class="overlay"></div>
+
+ 
+        <div class="chat-sidebar">
+
+            <h3>Messages</h3>
+
+            <div class="chat-user active">
+                <div class="avatar">N</div>
+                <div class="user-info">
+                    <span class="name">Norah</span>
+                    <span class="last-msg">Hey, are you available?</span>
+                </div>
+            </div>
+
+            <div class="chat-user">
+                <div class="avatar">A</div>
+                <div class="user-info">
+                    <span class="name">Ahmed</span>
+                    <span class="last-msg">I sent the files</span>
+                </div>
+            </div>
+
+        </div>
+
+        <div class="chat-area">
+
+            <div class="chat-header">
+
+
+                <button class="menu-btn">
+                    <i class="bi bi-list"></i>
+                </button>
+
+                <div class="avatar big">N</div>
+
+                <div>
+                    <h4>Norah</h4>
+                    <span>Online</span>
+                </div>
+
+            </div>
+
+           
+            <div class="chat-messages">
+
+                <div class="message other">
+                    Hello! 👋
+                </div>
+
+                <div class="message you">
+                    Hi! How are you?
+                </div>
+
+                <div class="message other">
+                    I'm good, working on the project.
+                </div>
+
+                <div class="message you">
+                    Nice! Send me updates.
+                </div>
+
+            </div>
+
+            
+            <div class="chat-input">
+                <input type="text" placeholder="Type a message...">
+
+                <button>
+                    <i class="bi bi-send-fill"></i>
+                </button>
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+{% endblock %}

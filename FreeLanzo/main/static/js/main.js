@@ -82,3 +82,34 @@ faqButtons.forEach(function (button) {
         faqItem.classList.toggle("active");
     });
 });
+
+  window.onload = function() {
+    document.getElementById("roleModal").style.display = "flex";
+  }
+
+  function selectRole(role) {
+    // نحفظ الاختيار
+    document.getElementById("roleInput").value = role;
+
+    // نخفي المودال
+    document.getElementById("roleModal").style.display = "none";
+  }
+
+  document.querySelector("form").addEventListener("submit", function(e){
+  if(!document.getElementById("roleInput").value){
+    e.preventDefault();
+    alert("Please choose a role first");
+  }
+});
+
+const menuBtn = document.querySelector('.menu-btn');
+    const container = document.getElementById('chatContainer');
+    const overlay = document.querySelector('.overlay');
+
+    menuBtn.addEventListener('click', () => {
+        container.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', () => {
+        container.classList.remove('active');
+    });

@@ -9,7 +9,7 @@
 
 {% block content %}
 
-<div class="d-flex justify-content-center align-items-center" style="min-height: 100vh;">
+<div class="d-flex justify-content-center align-items-center place" style="min-height: 100vh;">
 
     <div class="card shadow-lg overflow-hidden sign-style">
         
@@ -77,5 +77,29 @@
     </div>
 
 </div>
+
+<div id="roleModal" class="role-modal">
+  <div class="role-modal-content">
+    <h2>Choose your role</h2>
+    <p>How do you want to use the platform?</p>
+
+    <div class="role-options">
+      <button onclick="selectRole('freelancer')" class="role-btn freelancer">
+        I'm a Freelancer
+      </button>
+
+      <button onclick="selectRole('client')" class="role-btn client">
+        I'm a Client
+      </button>
+    </div>
+  </div>
+</div>
+
+<form method="POST">
+  {% csrf_token %}
+  <input type="hidden" name="role" id="roleInput">
+
+  <button type="submit">Sign Up</button>
+</form>
 
 {% endblock %}

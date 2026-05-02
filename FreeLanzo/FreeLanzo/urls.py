@@ -22,5 +22,6 @@ urlpatterns = [
     path('',include('main.urls')),
     path('accounts/', include('accounts.urls')),
     path('',include('marketplace.urls')),
+    path('',include('chat.urls')),
 
 ]

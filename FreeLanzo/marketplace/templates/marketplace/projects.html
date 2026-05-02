@@ -1,71 +1,209 @@
-{%extends 'main/base.html'%}
+{% extends 'main/base.html' %}
 {% load static %}
 
 {% block title %}Projects{% endblock %}
+
 {% block style %}
 <link rel="stylesheet" href="{% static 'marketplace/css/projects-style.css' %}">
 {% endblock %}
 
-
-
 {% block content %}
-<div class="projects-container">
 
-<div class="project-card">
 
-    <div class="card-header">
-        <h3 class="project-title">Website Design</h3>
-        <span class="status open">Open</span>
-    </div>
-
-    <p class="desc">
-        Need a modern responsive website for a business...
-    </p>
-
-    <div class="info">
-        <span class="budget">from 500$</span>
-        <span class="deadline">
-            <i class="bi bi-calendar"></i> 10 days
+<div class="projects-hero">
+    <div class="projects-hero-inner">
+        <span class="projects-hero-label">
+            <i class="bi bi-kanban-fill"></i> Browse Projects
         </span>
+        <h1>Find the perfect<br>project to work on</h1>
+        <p>Explore available projects in development, design, and more.</p>
+        <div class="projects-hero-count">
+            Showing <span>2</span> projects
+        </div>
     </div>
-
-    <div class="tags">
-        <span class="tag">HTML</span>
-        <span class="tag">CSS</span>
-    </div>
-
-    <a href="{%url 'marketplace:projects_detail_view'%}" class="view-btn">View Details</a>
-
 </div>
 
-<div class="project-card">
+<div class="projects-wrapper">
 
-    <div class="card-header">
-        <h3 class="project-title">E-commerce Website</h3>
-        <span class="status open">Open</span>
+
+    <aside class="projects-sidebar">
+
+        <div class="projects-filter-header">
+            <h3><i class="bi bi-sliders"></i> Filters</h3>
+            <button class="projects-clear">Clear all</button>
+        </div>
+
+    
+        <div class="projects-filter-group">
+            <div class="projects-filter-title">Search</div>
+            <div class="projects-search">
+                <i class="bi bi-search"></i>
+                <input type="text" placeholder="Project name, skill...">
+            </div>
+        </div>
+
+        <!-- Category -->
+        <div class="projects-filter-group">
+            <div class="projects-filter-title">Category</div>
+            <div class="projects-cat-pills">
+
+                <div class="projects-cat-pill active">
+                    <span class="projects-cat-left">
+                        <i class="bi bi-grid-fill"></i> All Categories
+                    </span>
+                    <span class="projects-cat-count">12</span>
+                </div>
+
+                <div class="projects-cat-pill">
+                    <span class="projects-cat-left">
+                        <i class="bi bi-code-slash" style="color: var(--teal);"></i>
+                        Web Development
+                    </span>
+                    <span class="projects-cat-count">4</span>
+                </div>
+
+                <div class="projects-cat-pill">
+                    <span class="projects-cat-left">
+                        <i class="bi bi-palette2" style="color: var(--blue);"></i>
+                        Graphic Design
+                    </span>
+                    <span class="projects-cat-count">3</span>
+                </div>
+
+                <div class="projects-cat-pill">
+                    <span class="projects-cat-left">
+                        <i class="bi bi-megaphone" style="color: var(--color-orange);"></i>
+                        Digital Marketing
+                    </span>
+                    <span class="projects-cat-count">2</span>
+                </div>
+
+                <div class="projects-cat-pill">
+                    <span class="projects-cat-left">
+                        <i class="bi bi-camera-video" style="color: var(--btn-color);"></i>
+                        Video Editing
+                    </span>
+                    <span class="projects-cat-count">1</span>
+                </div>
+
+                <div class="projects-cat-pill">
+                    <span class="projects-cat-left">
+                        <i class="bi bi-pen" style="color: var(--color-purple);"></i>
+                        Content Writing
+                    </span>
+                    <span class="projects-cat-count">2</span>
+                </div>
+
+            </div>
+        </div>
+
+        <!-- Budget -->
+        <div class="projects-filter-group">
+            <div class="projects-filter-title">Budget ($)</div>
+            <div class="projects-budget-inputs">
+                <div class="projects-budget-input-wrap">
+                    <span>$</span>
+                    <input type="number" placeholder="Min">
+                </div>
+                <div class="projects-budget-input-wrap">
+                    <span>$</span>
+                    <input type="number" placeholder="Max">
+                </div>
+            </div>
+        </div>
+
+        <button class="projects-btn-apply">
+            <i class="bi bi-check2-circle"></i> Apply Filters
+        </button>
+
+    </aside>
+
+    <!-- CONTENT -->
+    <div class="projects-content">
+
+        <!-- TOOLBAR -->
+        <div class="projects-toolbar">
+            <div class="projects-toolbar-left">
+                <span class="projects-count">
+                    <span>2</span> projects found
+                </span>
+            </div>
+
+            <div class="projects-toolbar-right">
+                <select class="projects-sort">
+                    <option>Sort: Featured</option>
+                    <option>Budget: Low to High</option>
+                    <option>Budget: High to Low</option>
+                </select>
+
+                <div class="projects-view-toggle">
+                    <button class="active"><i class="bi bi-grid-3x3-gap-fill"></i></button>
+                    <button><i class="bi bi-list-ul"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <!-- GRID -->
+        <div class="projects-grid">
+
+
+            <div class="project-card">
+                <div class="card-header">
+                    <h3 class="project-title">Website Design</h3>
+                    <span class="status open">Open</span>
+                </div>
+
+                <p class="desc">
+                    Need a modern responsive website for a business...
+                </p>
+
+                <div class="info">
+                    <span class="budget">from 500$</span>
+                    <span class="deadline">
+                        <i class="bi bi-calendar"></i> 10 days
+                    </span>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">HTML</span>
+                    <span class="tag">CSS</span>
+                </div>
+
+                <a href="{% url 'marketplace:projects_detail_view' %}" class="view-btn">
+                    View Details
+                </a>
+            </div>
+
+
+            <div class="project-card">
+                <div class="card-header">
+                    <h3 class="project-title">E-commerce Website</h3>
+                    <span class="status open">Open</span>
+                </div>
+
+                <p class="desc">
+                    Looking for a developer to build an online store with payment integration.
+                </p>
+
+                <div class="info">
+                    <span class="budget">from 1200$</span>
+                    <span class="deadline">
+                        <i class="bi bi-calendar"></i> 20 days
+                    </span>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">Django</span>
+                    <span class="tag">Stripe</span>
+                    <span class="tag">JavaScript</span>
+                </div>
+
+                <a href="#" class="view-btn">View Details</a>
+            </div>
+
+        </div>
+
     </div>
-
-    <p class="desc">
-        Looking for a developer to build an online store with payment integration.
-    </p>
-
-    <div class="info">
-        <span class="budget">from 1200$</span>
-        <span class="deadline">
-            <i class="bi bi-calendar"></i> 20 days
-        </span>
-    </div>
-
-    <div class="tags">
-        <span class="tag">Django</span>
-        <span class="tag">Stripe</span>
-        <span class="tag">JavaScript</span>
-    </div>
-
-    <a href="#" class="view-btn">View Details</a>
-
-</div>
-
 </div>
 
 {% endblock %}

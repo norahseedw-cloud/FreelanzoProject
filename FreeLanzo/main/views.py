@@ -9,7 +9,11 @@ def home_view(request:HttpRequest):
     return render(request,'main/home.html')
 
 
-def contact_view(request:HttpRequest):
+def about_view(request:HttpRequest):
 
-    return render(request,'main/contact-us.html')
+
+    return render(request,'main/about-us.html')
+
+
+
 

@@ -1,0 +1,47 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Projects{% endblock %}
+
+{% block style %}
+<link rel="stylesheet" href="{% static 'chat/css/chat.css' %}">
+{% endblock %}
+
+{% block content %}
+
+<!-- HERO -->
+<div class="contact-hero">
+    <div class="contact-hero-inner">
+        <span class="contact-hero-label">
+            <i class="bi bi-chat-dots-fill"></i> Contact Us
+        </span>
+
+        <h1>Let's talk 👋</h1>
+
+        <p>Have a question, idea, or project in mind? Send us a message.</p>
+
+        <div class="contact-hero-box">
+            We usually reply within <span>24 hours</span>
+        </div>
+    </div>
+</div>
+
+<!-- FORM -->
+<div class="contact-wrapper">
+    <div class="contact-card">
+
+        <h2>Send Message</h2>
+
+        <form>
+            <textarea placeholder="Write your message here..."></textarea>
+
+            <button type="submit">
+                <i class="bi bi-send-fill"></i>
+                Send Message
+            </button>
+        </form>
+
+    </div>
+</div>
+
+{% endblock %}

@@ -53,8 +53,9 @@
                 </li>
 
                 <li><a href="{%url 'marketplace:projects_view'%}">Projects</a></li>
-                <li><a href="#">Freelancers</a></li>
-                <li><a href="{%url 'main:contact_view'%}">Contact Us</a></li>
+                <li><a href="{%url 'accounts:all_freelancer'%}">Freelancers</a></li>
+                <li><a href="{%url 'chat:contact_view'%}">Contact Us</a></li>
+                <li><a href="{%url 'main:about_view'%}">About Us</a></li>
             </ul>
         </div>
 
@@ -66,11 +67,11 @@
                 <i class="bi bi-sun"></i>
             </button>
 
-            <a href="#" class="icon-btn">
+            <a href="{% url 'chat:chat_view' %}" class="icon-btn">
                 <i class="bi bi-chat-dots"></i>
             </a>
 
-            <a href="{%url 'accounts:sign_up_view'%}" class="icon-btn">
+            <a href="{%url 'accounts:sign_in_view'%}" class="icon-btn">
                 <i class="bi bi-person"></i>
             </a>
 
