@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
+from django.contrib.auth.models import User
 from .models import Conversation, Message
 from django.db.models import Q, Max, Count
 
@@ -47,3 +48,19 @@ def delete_conversation(request, conversation_id):
         conversation.delete()
 
     return redirect('chat:chat_view')
+
+def start_chat(request, user_id):
+    other_user = User.objects.get(id=user_id)
+
+    conversation = Conversation.objects.filter(
+        Q(user1=request.user, user2=other_user) |
+        Q(user1=other_user, user2=request.user)
+    ).first()
+
+    if not conversation:
+        conversation = Conversation.objects.create(
+            user1=request.user,
+            user2=other_user
+        )
+
+    return redirect('chat:chat_view', conversation.id)

@@ -4,7 +4,7 @@
 {% block title %}Home | Freelanzo{% endblock %}
 
 {% block content %}
-{% if request.session.show_complete_profile %}
+{% if request.user.is_authenticated and request.session.show_complete_profile %}
 
 <div class="modal fade show" id="profileModal" style="display:block;" tabindex="-1">
   <div class="modal-dialog modal-dialog-centered">
@@ -32,13 +32,13 @@
         <a href="{% url 'accounts:client_profile' %}" class="btn btn-primary">Complete</a>
       {% endif %}
 
-      <button class="btn btn-link mt-2" data-bs-dismiss="modal">Skip</button>
+      <button class="btn btn-link mt-2" onclick="closeModal()">Skip</button>
 
     </div>
   </div>
 </div>
 
-<div class="modal-backdrop fade show"></div>
+
 
 {% endif %}
 
@@ -70,8 +70,23 @@
         </p>
 
         <div class="hero-actions">
-            <a href="#" class="btn-primary-custom">Post a Project</a>
-            <a href="#" class="btn-outline-custom">Browse Freelancers</a>
+            {% if request.user.is_authenticated %}
+
+                {% if request.user.usertype and request.user.usertype.role == 'client' %}
+                    <a href="{% url 'accounts:create_project' %}" class="btn-primary-custom">
+                        Post a Project
+                    </a>
+                {% endif %}
+
+            {% else %}
+                <a href="{% url 'accounts:sign_in_view' %}?next={{ request.path }}" class="btn-primary-custom">
+                    Post a Project
+                </a>
+            {% endif %}
+            
+            
+
+            <a href="{% url 'accounts:all_freelancer'%}" class="btn-outline-custom">Browse Freelancers</a>
         </div>
 
         <div class="hero-stats">
@@ -667,6 +682,7 @@
 
 
 <!--  CTA Start  -->
+  {% if not request.user.is_authenticated %}
 <section class="cta-section reveal">
     <div class="cta-bg"></div>
     <div class="cta-content">
@@ -674,10 +690,19 @@
         <h2>Ready to bring your project to life?</h2>
         <p>Join thousands of clients and freelancers already growing on Freelanzo.</p>
         <div class="cta-actions">
-            <a href="#" class="cta-btn-primary">Post a Project</a>
-            <a href="#" class="cta-btn-outline">Join as Freelancer</a>
+            <a href="{% url 'accounts:sign_up_view' %}" class="cta-btn-primary">Post a Project</a>
+            <a href="{% url 'accounts:sign_up_view' %}" class="cta-btn-outline">Join as Freelancer</a>
         </div>
     </div>
 </section>
+{%endif%}
 <!--  CTA End  -->
+  <script>
+function closeModal() {
+  document.getElementById('profileModal').style.display = 'none';
+
+  const backdrop = document.querySelector('.modal-backdrop');
+  if (backdrop) backdrop.remove();
+}
+</script>
 {% endblock %}

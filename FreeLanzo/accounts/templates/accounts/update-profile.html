@@ -48,7 +48,7 @@
 
                             {% for value, label in form.preferred_categories.field.choices %}
                             <option value="{{ value }}"
-                                {% if form.preferred_categories.value==value %}selected{% endif %}>
+                                {% if form.preferred_categories.value == value %}selected{% endif %}>
                                 {{ label }}
                             </option>
                             {% endfor %}

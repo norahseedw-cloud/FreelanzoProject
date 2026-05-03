@@ -1,7 +1,7 @@
 from django.contrib import admin
 
 # Register your models here.
-from .models import PortfolioProject, PortfolioProjectImage
+from .models import PortfolioProject, PortfolioProjectImage, FreelancerProfile, ClientProfile
 
 class PortfolioProjectImageInline(admin.TabularInline):
     model = PortfolioProjectImage
@@ -11,3 +11,5 @@ class PortfolioProjectAdmin(admin.ModelAdmin):
     inlines = [PortfolioProjectImageInline]
 
 admin.site.register(PortfolioProject, PortfolioProjectAdmin)
+admin.site.register(FreelancerProfile)
+admin.site.register(ClientProfile)

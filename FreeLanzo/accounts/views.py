@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
-
 from .forms import SignUpForm,FreelancerProfileForm,PortfolioProjectForm,ClientProfileForm,ProjectForm
 from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage,Project
 from django.contrib.auth import login,authenticate, logout
@@ -36,30 +35,6 @@ def sign_up_view(request):
         form = SignUpForm()
 
     return render(request, "accounts/sign-up.html", {"form": form})
-
-
-
-
-
-
-# def sign_in_view(request:HttpRequest):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-
-            request.session['show_complete_profile'] = True
-
-            return redirect("main:home")
-
-        else:
-            print("Login failed")
-
-    return render(request, "accounts/sign-in.html")
 
 
 def sign_in_view(request):
