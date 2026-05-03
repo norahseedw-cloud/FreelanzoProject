@@ -1,0 +1,68 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Saved Freelancers{% endblock %}
+
+{% block content %}
+
+<section class="saved-page">
+    <div class="saved-header">
+        <span>Saved List</span>
+        <h1>Freelancers You Liked</h1>
+        <p>All freelancers you saved will appear here.</p>
+    </div>
+
+    <div class="freelancers-grid">
+        {% for item in favorites %}
+        <div class="fl-card">
+
+            <div class="fl-img-box">
+                {% if item.freelancer.avatar %}
+                <img src="{{ item.freelancer.avatar.url }}" alt="Freelancer">
+                {% else %}
+                <img src="{% static 'images/avatar/default.png' %}" alt="Freelancer">
+                {% endif %}
+            </div>
+
+            <div class="fl-content">
+                <h3>
+                    {{ item.freelancer.user.first_name }} {{ item.freelancer.user.last_name }}
+                </h3>
+
+                <p>
+                    {% if item.freelancer.job_title %}
+                    {{ item.freelancer.job_title }}
+                    {% else %}
+                    Not added yet
+                    {% endif %}
+                </p>
+
+                <div class="fl-meta">
+                    <span>
+                        <i class="bi bi-geo-alt"></i>
+                        {% if item.freelancer.location %}
+                        {{ item.freelancer.location }}
+                        {% else %}
+                        No location
+                        {% endif %}
+                    </span>
+                </div>
+
+                <a href="{% url 'accounts:freelancer_profile_detail' item.freelancer.user.id %}" class="view-profile-btn">
+                    View Profile
+                </a>
+            </div>
+
+        </div>
+        {% empty %}
+        <div class="empty-saved">
+            <i class="bi bi-heart"></i>
+            <h3>No saved freelancers yet</h3>
+            <p>Start exploring freelancers and save the ones you like.</p>
+            <a href="{% url 'accounts:all_freelancer' %}">Browse Freelancers</a>
+        </div>
+        {% endfor %}
+    </div>
+</section>
+
+{% endblock %}

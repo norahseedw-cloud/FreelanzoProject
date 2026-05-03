@@ -79,7 +79,17 @@
                 <a class="btn-message" href="{% url 'chat:start_chat' profile.user.id %}">
                     <i class="bi bi-chat-dots"></i> Message
                 </a>
-                <button class="btn-save"><i class="bi bi-heart"></i></button>
+
+                {% if request.user.is_authenticated %}
+                {% if request.user.usertype.role == 'client' %}
+                <form method="POST" action="{% url 'accounts:toggle_favorite_freelancer' profile.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button class="btn-save" type="submit">
+                        <i class="bi {% if is_liked %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                    </button>
+                </form>
+                {% endif %}
+                {% endif %}
             </div>
 
         </div>

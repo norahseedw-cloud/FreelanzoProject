@@ -1,10 +1,11 @@
 from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
 from .forms import SignUpForm,FreelancerProfileForm,PortfolioProjectForm,ClientProfileForm,ProjectForm
-from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage,Project,Category
+from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage,Project,Category,FavoriteFreelancer
 from django.contrib.auth import login,authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
+from django.db.models import Q
 
 # Create your views here.
 
@@ -197,10 +198,23 @@ def freelancer_profile_detail(request, user_id):
         skills__in=profile.skills.all()
     ).exclude(user=profile.user).distinct()[:3]
 
+    is_liked = False
+
+    if request.user.is_authenticated:
+        client_profile = ClientProfile.objects.filter(user=request.user).first()
+
+        if client_profile:
+            is_liked = FavoriteFreelancer.objects.filter(
+                client=client_profile,
+                freelancer=profile
+            ).exists()
+
     return render(request, "accounts/freelancer-profile.html", {
         "profile": profile,
         "projects": projects,
         "similar_freelancers": similar_freelancers,
+        "is_liked": is_liked
+
     })
 @login_required
 def update_portfolio_project(request, project_id):
@@ -280,8 +294,20 @@ def create_project_view(request):
         if form.is_valid():
             project = form.save(commit=False)
             project.client = profile
+
+            skills = form.cleaned_data.get('skills')
+
+            if skills:
+                first_skill = skills.first()
+                project.category = first_skill.categories.first()
+
             project.save()
+            form.save_m2m()
+
             return redirect('accounts:client_profile')
+        else:
+            print(form.errors)
+
     else:
         form = ProjectForm()
 
@@ -289,7 +315,7 @@ def create_project_view(request):
         'form': form
     })
 
-from django.db.models import Q
+
 
 def all_projects_view(request):
     projects = Project.objects.all().order_by('-created_at')
@@ -338,4 +364,40 @@ def project_detail_view(request, project_id):
     return render(request, 'marketplace/project-detail.html', {
         'project': project,
         'client_projects_count': client_projects_count,
+    })
+
+
+@login_required
+def toggle_favorite_freelancer(request, freelancer_id):
+    freelancer = get_object_or_404(FreelancerProfile, id=freelancer_id)
+
+    client_profile = ClientProfile.objects.filter(user=request.user).first()
+
+    if not client_profile:
+        return redirect('accounts:all_freelancer')
+
+    favorite, created = FavoriteFreelancer.objects.get_or_create(
+        client=client_profile,
+        freelancer=freelancer
+    )
+
+    if not created:
+        favorite.delete()
+
+    return redirect(request.META.get('HTTP_REFERER', 'accounts:all_freelancer'))
+
+
+@login_required
+def favorite_freelancers_view(request):
+    client_profile = ClientProfile.objects.filter(user=request.user).first()
+
+    if not client_profile:
+        return redirect('accounts:all_freelancer')
+
+    favorites = FavoriteFreelancer.objects.filter(
+        client=client_profile
+    ).select_related('freelancer__user')
+
+    return render(request, 'accounts/favorite_freelancers.html', {
+        'favorites': favorites
     })

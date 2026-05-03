@@ -132,7 +132,15 @@
 
                 <div class="info">
                     <span class="budget">${{ project.budget }}</span>
-                    <span class="category">{{ project.category.name }}</span>
+
+                    <div class="skills-list">
+                        {% for skill in project.skills.all %}
+                        <span class="skill-tag">{{ skill.name }}</span>
+                        {% empty %}
+                        <span class="no-skill">No skills</span>
+                        {% endfor %}
+                    </div>
+
                 </div>
 
                 <a href="{% url 'accounts:project_detail' project.id %}" class="view-btn">

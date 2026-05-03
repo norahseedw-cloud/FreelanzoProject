@@ -13,11 +13,11 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
-    
+
 
 </head>
 
- <body id="top" {% if "mode" in request.COOKIES and request.COOKIES.mode == "dark" %} class="dark" {% endif %}> 
+<body id="top" {% if "mode" in request.COOKIES and request.COOKIES.mode == "dark" %} class="dark" {% endif %}>
 
     <!-- nav start  -->
     <nav class="main-navbar">
@@ -45,21 +45,28 @@
                     </a>
 
                     <ul class="dropdown-menu" id="categoryMenu">
-<li><a href="{% url 'accounts:all_freelancer' %}?category=1">Graphics & Design</a></li>
-<li><a href="{% url 'accounts:all_freelancer' %}?category=2">Programming & Tech</a></li>
-<li><a href="{% url 'accounts:all_freelancer' %}?category=3">Digital Marketing</a></li>
-<li><a href="{% url 'accounts:all_freelancer' %}?category=4">Writing & Translation</a></li>
-<li><a href="{% url 'accounts:all_freelancer' %}?category=5">Video & Animation</a></li>
-<li><a href="{% url 'accounts:all_freelancer' %}?category=6">Business</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=1">Graphics & Design</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=2">Programming & Tech</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=3">Digital Marketing</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=4">Writing & Translation</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=5">Video & Animation</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=6">Business</a></li>
                     </ul>
                 </li>
 
                 <li><a href="{%url 'marketplace:projects_view'%}">Projects</a></li>
                 <li><a href="{%url 'accounts:all_freelancer'%}">Freelancers</a></li>
+
+                {% if request.user.is_authenticated and request.user.usertype.role == 'client' %}
+                <a href="{% url 'accounts:favorite_freelancers' %}" class="nav-link">
+                    Favorites
+                </a>
+                {% endif %}
+                
                 <li><a href="{%url 'chat:contact_view'%}">Contact Us</a></li>
 
                 <li><a href="{%url 'main:about_view'%}">About Us</a></li>
-                
+
 
             </ul>
         </div>
@@ -163,9 +170,9 @@
 
     </footer>
     <!-- footer end -->
-    
+
     <script src="{% static 'js/main.js' %}"></script>
-    
+
 </body>
 
 </html>

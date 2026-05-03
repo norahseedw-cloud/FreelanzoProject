@@ -47,7 +47,7 @@
 
         <div class="client-top">
             <div class="avatar big">
-                \ {% if project.client.avatar %}
+                {% if project.client.avatar %}
                 <img src="{{ project.client.avatar.url }}" class="avatar big">
                 {% else %}
                 <img src="{% static 'images/avatar/default.png' %}" class="avatar big">

@@ -36,15 +36,6 @@ class FreelancerProfile(models.Model):
     availability = models.CharField(max_length=100, blank=True)
     languages = models.CharField(max_length=200, blank=True)
 
-    # CATEGORY_CHOICES = (
-    #     ('graphics_design', 'Graphics & Design'),
-    #     ('programming_tech', 'Programming & Tech'),
-    #     ('digital_marketing', 'Digital Marketing'),
-    #     ('video_animation', 'Video & Animation'),
-    #     ('writing_translation', 'Writing & Translation'),
-    #     ('business', 'Business'),
-    # )
-    # category = models.CharField(max_length=50, choices=CATEGORY_CHOICES, blank=True)
 
     def __str__(self):
         return self.user.username
@@ -88,6 +79,7 @@ class Project(models.Model):
     description = models.TextField()
     category = models.ForeignKey(Category, on_delete=models.CASCADE)
     budget = models.DecimalField(max_digits=8, decimal_places=2)
+    skills = models.ManyToManyField(Skill, blank=True)
     status = models.CharField(
         max_length=20,
         choices=(
@@ -102,3 +94,15 @@ class Project(models.Model):
 
     def __str__(self):
         return self.title
+    
+
+class FavoriteFreelancer(models.Model):
+    client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE, related_name="favorite_freelancers")
+    freelancer = models.ForeignKey(FreelancerProfile, on_delete=models.CASCADE, related_name="liked_by_clients")
+    created_at = models.DateTimeField(auto_now_add=True)
+
+    class Meta:
+        unique_together = ('client', 'freelancer')
+
+    def __str__(self):
+        return f"{self.client.user.username} liked {self.freelancer.user.username}"
