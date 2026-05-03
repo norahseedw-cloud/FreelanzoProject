@@ -9,7 +9,6 @@
 
 {% block content %}
 
-
 <div class="projects-hero">
     <div class="projects-hero-inner">
         <span class="projects-hero-label">
@@ -18,104 +17,113 @@
         <h1>Find the perfect<br>project to work on</h1>
         <p>Explore available projects in development, design, and more.</p>
         <div class="projects-hero-count">
-            Showing <span>{{ projects|length }}</span> projects </div>
+            Showing <span>{{ projects|length }}</span> projects
+        </div>
     </div>
 </div>
 
 <div class="projects-wrapper">
 
+    <form method="GET">
+        <aside class="filter-sidebar">
 
-    <aside class="projects-sidebar">
+            <div class="filter-header">
+                <h3><i class="bi bi-sliders"></i> Filters</h3>
+                <a href="{% url 'accounts:all_projects' %}" class="btn-clear-all">Clear all</a>
+            </div>
 
-        <div class="projects-filter-header">
-            <h3><i class="bi bi-sliders"></i> Filters</h3>
-            <a href="{% url 'accounts:all_projects' %}" class="projects-clear">Clear all</a>
-        </div>
-
-
-        <!-- Category -->
-        <form method="GET">
-
+            <!-- Search -->
             <div class="filter-group">
                 <div class="filter-group-title">Search</div>
                 <div class="filter-search">
                     <i class="bi bi-search"></i>
-                    <input type="text" name="search" placeholder="Name, skill, keyword..."
+                    <input type="text" name="search"
+                        placeholder="Project title..."
                         value="{{ search|default:'' }}">
                 </div>
             </div>
 
-            <a href="{% url 'accounts:all_projects' %}"
-                class="cat-pill {% if not selected_category %}active{% endif %}">
-                <span class="cat-pill-left"><i class="bi bi-grid-fill"></i> All Categories</span>
-            </a>
+            <!-- Categories -->
+            <div class="filter-group categories-group">
+                <div class="filter-group-title">Categories</div>
 
-            {% for category in categories %}
-            <a href="{% url 'accounts:all_projects' %}?category={{ category.id }}"
-                class="cat-pill {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
-                <span class="cat-pill-left">{{ category.name }}</span>
-            </a>
-            {% endfor %}
+                <a href="{% url 'accounts:all_projects' %}"
+                    class="cat-pill {% if not selected_category %}active{% endif %}">
+                    <i class="bi bi-grid-fill"></i>
+                    <span>All Categories</span>
+                </a>
 
-            <button class="projects-btn-apply" type="submit">
+                {% for category in categories %}
+                <a href="?category={{ category.id }}"
+                    class="cat-pill {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
+                    <i class="bi bi-tag"></i>
+                    <span>{{ category.name }}</span>
+                </a>
+                {% endfor %}
+            </div>
+
+            <!-- Budget -->
+            <div class="filter-group">
+                <div class="filter-group-title">Budget ($)</div>
+
+                <div class="budget-inputs">
+                    <div class="budget-input-wrap">
+                        <span>$</span>
+                        <input type="number" name="min_budget" placeholder="Min"
+                            value="{{ min_budget|default:'' }}">
+                    </div>
+
+                    <div class="budget-input-wrap">
+                        <span>$</span>
+                        <input type="number" name="max_budget" placeholder="Max"
+                            value="{{ max_budget|default:'' }}">
+                    </div>
+                </div>
+            </div>
+
+            <!-- Sort -->
+            <div class="filter-group">
+                <div class="filter-group-title">Sort</div>
+
+                <select name="sort" class="sort-select">
+                    <option value="">Sort: Featured</option>
+                    <option value="low" {% if sort == "low" %}selected{% endif %}>
+                        Budget: Low to High
+                    </option>
+                    <option value="high" {% if sort == "high" %}selected{% endif %}>
+                        Budget: High to Low
+                    </option>
+                </select>
+            </div>
+
+            {% if selected_category %}
+            <input type="hidden" name="category" value="{{ selected_category }}">
+            {% endif %}
+
+            <button type="submit" class="btn-apply-filter">
                 <i class="bi bi-check2-circle"></i> Apply Filters
             </button>
 
-        </form>
-
-        <!-- Budget -->
-        <div class="projects-filter-group">
-            <div class="projects-filter-title">Budget ($)</div>
-            <div class="projects-budget-inputs">
-                <div class="projects-budget-input-wrap">
-                    <span>$</span>
-                    <input type="number" placeholder="Min">
-                </div>
-                <div class="projects-budget-input-wrap">
-                    <span>$</span>
-                    <input type="number" placeholder="Max">
-                </div>
-            </div>
-        </div>
-
-        <button class="projects-btn-apply">
-            <i class="bi bi-check2-circle"></i> Apply Filters
-        </button>
-
-    </aside>
+        </aside>
+    </form>
 
     <!-- CONTENT -->
     <div class="projects-content">
 
-        <!-- TOOLBAR -->
         <div class="projects-toolbar">
-            <div class="projects-toolbar-left">
-                <span class="projects-count">
-                    <span>{{ projects|length }}</span> projects found </span>
-            </div>
-
-            <div class="projects-toolbar-right">
-                <select class="projects-sort">
-                    <option>Sort: Featured</option>
-                    <option>Budget: Low to High</option>
-                    <option>Budget: High to Low</option>
-                </select>
-
-                <div class="projects-view-toggle">
-                    <button class="active"><i class="bi bi-grid-3x3-gap-fill"></i></button>
-                    <button><i class="bi bi-list-ul"></i></button>
-                </div>
-            </div>
+            <span class="projects-count">
+                <span>{{ projects|length }}</span> projects found
+            </span>
         </div>
 
-        <!-- GRID -->
         <div class="projects-grid">
 
             {% for project in projects %}
             <div class="project-card">
+
                 <div class="card-header">
-                    <h3 class="project-title">{{ project.title }}</h3>
-                    <span class="status open">{{ project.get_status_display }}</span>
+                    <h3>{{ project.title }}</h3>
+                    <span class="status">{{ project.get_status_display }}</span>
                 </div>
 
                 <p class="desc">
@@ -123,19 +131,14 @@
                 </p>
 
                 <div class="info">
-                    <span class="budget">from ${{ project.budget }}</span>
-                    <span class="deadline">
-                        <i class="bi bi-tag"></i> {{ project.category.name }}
-                    </span>
-                </div>
-
-                <div class="tags">
-                    <span class="tag">{{ project.category.name }}</span>
+                    <span class="budget">${{ project.budget }}</span>
+                    <span class="category">{{ project.category.name }}</span>
                 </div>
 
                 <a href="{% url 'accounts:project_detail' project.id %}" class="view-btn">
                     View Details
                 </a>
+
             </div>
             {% empty %}
             <p>No projects found.</p>
@@ -144,6 +147,7 @@
         </div>
 
     </div>
+
 </div>
 
 {% endblock %}

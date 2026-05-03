@@ -35,28 +35,30 @@
                 <div class="filter-search">
                     <i class="bi bi-search"></i>
                     <input type="text"
-                           name="search"
-                           placeholder="Name, skill, keyword..."
-                           value="{{ search|default:'' }}">
+                        name="search"
+                        placeholder="Name, skill, keyword..."
+                        value="{{ search|default:'' }}">
                 </div>
             </div>
 
             <!-- Categories -->
-            <a href="{% url 'accounts:all_freelancer' %}"
-               class="cat-pill {% if not selected_category %}active{% endif %}">
-                <span class="cat-pill-left">
-                    <i class="bi bi-grid-fill"></i> All Categories
-                </span>
-            </a>
+            <div class="filter-group categories-group">
+                <div class="filter-group-title">Categories</div>
 
-            {% for category in categories %}
-            <a href="?category={{ category.id }}"
-               class="cat-pill {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
-                <span class="cat-pill-left">
-                    <i class="bi bi-tag"></i> {{ category.name }}
-                </span>
-            </a>
-            {% endfor %}
+                <a href="{% url 'accounts:all_projects' %}"
+                    class="cat-pill {% if not selected_category %}active{% endif %}">
+                    <i class="bi bi-grid-fill"></i>
+                    <span>All Categories</span>
+                </a>
+
+                {% for category in categories %}
+                <a href="?category={{ category.id }}"
+                    class="cat-pill {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
+                    <i class="bi bi-tag"></i>
+                    <span>{{ category.name }}</span>
+                </a>
+                {% endfor %}
+            </div>
 
             <!-- Hourly Rate -->
             <div class="filter-group">
@@ -66,17 +68,17 @@
                     <div class="budget-input-wrap">
                         <span>$</span>
                         <input type="number"
-                               name="min_rate"
-                               placeholder="Min"
-                               value="{{ min_rate|default:'' }}">
+                            name="min_rate"
+                            placeholder="Min"
+                            value="{{ min_rate|default:'' }}">
                     </div>
 
                     <div class="budget-input-wrap">
                         <span>$</span>
                         <input type="number"
-                               name="max_rate"
-                               placeholder="Max"
-                               value="{{ max_rate|default:'' }}">
+                            name="max_rate"
+                            placeholder="Max"
+                            value="{{ max_rate|default:'' }}">
                     </div>
                 </div>
             </div>
@@ -123,7 +125,7 @@
 
             {% for freelancer in freelancers %}
             <a class="fl-card"
-               href="{% url 'accounts:freelancer_profile_detail' freelancer.user.id %}">
+                href="{% url 'accounts:freelancer_profile_detail' freelancer.user.id %}">
 
                 <div class="fl-card-bar"></div>
 

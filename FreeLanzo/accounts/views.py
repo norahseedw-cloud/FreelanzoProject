@@ -289,12 +289,17 @@ def create_project_view(request):
         'form': form
     })
 
+from django.db.models import Q
+
 def all_projects_view(request):
     projects = Project.objects.all().order_by('-created_at')
     categories = Category.objects.all()
 
     category_id = request.GET.get('category')
     search = request.GET.get('search')
+    min_budget = request.GET.get('min_budget')
+    max_budget = request.GET.get('max_budget')
+    sort = request.GET.get('sort')
 
     if category_id and category_id.isdigit():
         projects = projects.filter(category_id=int(category_id))
@@ -304,20 +309,26 @@ def all_projects_view(request):
     if search:
         projects = projects.filter(title__icontains=search)
 
-    selected_category_name = None
-    if category_id:
-        selected_category = Category.objects.filter(id=category_id).first()
-        if selected_category:
-            selected_category_name = selected_category.name
+    if min_budget:
+        projects = projects.filter(budget__gte=min_budget)
+
+    if max_budget:
+        projects = projects.filter(budget__lte=max_budget)
+
+    if sort == "low":
+        projects = projects.order_by("budget")
+    elif sort == "high":
+        projects = projects.order_by("-budget")
 
     return render(request, 'marketplace/projects.html', {
         'projects': projects,
         'categories': categories,
         'selected_category': category_id,
-        'selected_category_name': selected_category_name,
         'search': search,
+        'min_budget': min_budget,
+        'max_budget': max_budget,
+        'sort': sort,
     })
-
 
 def project_detail_view(request, project_id):
     project = get_object_or_404(Project, id=project_id)
