@@ -8,16 +8,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Freelanzo{% endblock %}</title>
 
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
     {% block style%}{%endblock%}
-
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css">
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 
 </head>
 
-<body>
+ <body id="top" {% if "mode" in request.COOKIES and request.COOKIES.mode == "dark" %} class="dark" {% endif %}> 
+
     <!-- nav start  -->
     <nav class="main-navbar">
 
@@ -35,6 +35,7 @@
             </form>
 
             <ul class="nav-links">
+
                 <li><a href="{% url 'main:home' %}">Home</a></li>
 
                 <li class="dropdown">
@@ -43,36 +44,60 @@
                     </a>
 
                     <ul class="dropdown-menu" id="categoryMenu">
-                        <li><a href="#">Graphics & Design</a></li>
-                        <li><a href="#">Programming & Tech</a></li>
-                        <li><a href="#">Digital Marketing</a></li>
-                        <li><a href="#">Video & Animation</a></li>
-                        <li><a href="#">Writing & Translation</a></li>
-                        <li><a href="#">Business</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=graphics_design">Graphics & Design</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=programming_tech">Programming & Tech</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=digital_marketing">Digital Marketing</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=video_animation">Video & Animation</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=writing_translation">Writing & Translation</a></li>
+                        <li><a href="{% url 'accounts:all_freelancer' %}?category=business">Business</a></li>
                     </ul>
                 </li>
 
                 <li><a href="{%url 'marketplace:projects_view'%}">Projects</a></li>
                 <li><a href="{%url 'accounts:all_freelancer'%}">Freelancers</a></li>
                 <li><a href="{%url 'chat:contact_view'%}">Contact Us</a></li>
+
                 <li><a href="{%url 'main:about_view'%}">About Us</a></li>
-                <li><a href="{%url 'accounts:log_out_view'%}">Log out</a></li>
+                
+
             </ul>
         </div>
 
         <!-- Right -->
         <div class="nav-icons">
-
-            <!-- Dark Mode -->
-            <button class="icon-btn theme-toggle" id="themeToggle">
-                <i class="bi bi-sun"></i>
-            </button>
+            <a href="{% url 'main:mode_view' 'toggle' %}?next={{request.path}}" class="theme-toggle-btn">
+                {% if request.COOKIES.mode == "dark" %}
+                <span class="material-symbols-outlined">dark_mode</span>
+                {% else %}
+                <span class="material-symbols-outlined">light_mode</span>
+                {% endif %}
+            </a>
 
             <!--  -->
 
-            <a href="{%url 'accounts:sign_in_view'%}" class="icon-btn">
+            {% if request.user.is_authenticated %}
+
+            {% if request.user.usertype.role == 'freelancer' %}
+            <a href="{% url 'accounts:freelancer_profile' %}" class="icon-btn" title="Profile">
                 <i class="bi bi-person"></i>
             </a>
+            {% else %}
+            <a href="{% url 'accounts:client_profile' %}" class="icon-btn" title="Profile">
+                <i class="bi bi-person"></i>
+            </a>
+            {% endif %}
+
+            <a href="{% url 'accounts:logout_view' %}" class="icon-btn" title="Logout">
+                <i class="bi bi-box-arrow-right"></i>
+            </a>
+
+            {% else %}
+
+            <a href="{% url 'accounts:sign_in_view' %}" class="icon-btn" title="Sign in">
+                <i class="bi bi-person"></i>
+            </a>
+
+            {% endif %}
 
             <button class="icon-btn menu-toggle" id="menuToggle">
                 <i class="bi bi-list"></i>

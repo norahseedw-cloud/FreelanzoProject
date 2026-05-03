@@ -12,28 +12,33 @@
 <div class="d-flex justify-content-center align-items-center place" style="min-height: 100vh; ">
 
     <div class="card shadow-lg overflow-hidden sign-style">
-        
+
         <div class="row g-0  h-100">
 
             <div class="col-md-6 d-flex align-items-center justify-content-center bg-white">
 
                 <div style="width: 80%;" class="p-4">
                     <form method="POST" action="{%url 'accounts:sign_in_view'%}">
-                         {% csrf_token %}
-                    <h3 class="mb-4 text-center">Sign In</h3>
-                <div class="mb-4">
-                    <input type="text" class="form-control" placeholder="Username" name="username" required>
-                </div>
+                        {% csrf_token %}
+                        <h3 class="mb-4 text-center">Sign In</h3>
+                        {% if error %}
+                        <div class="alert alert-danger">
+                            {{ error }}
+                        </div>
+                        {% endif %}
+                        <div class="mb-4">
+                            <input type="text" class="form-control" placeholder="Username" name="username" required>
+                        </div>
 
-                <div class="mb-4">
-                    <input type="password" class="form-control" placeholder="Password" name="password" required>
-                </div>
+                        <div class="mb-4">
+                            <input type="password" class="form-control" placeholder="Password" name="password" required>
+                        </div>
 
-                <div class="mb-4 text-center link-in">
-                    <a href="#" class="text-linke">Did you forget your password?</a>
-                </div>
+                        <div class="mb-4 text-center link-in">
+                            <a href="#" class="text-linke">Did you forget your password?</a>
+                        </div>
 
-                    <button type="submit" class="btn btn-custom w-100">Sign in</button>
+                        <button type="submit" class="btn btn-custom w-100">Sign in</button>
                     </form>
                 </div>
 
@@ -43,11 +48,11 @@
                 <div class="text-center p-4">
                     <h3>New here?</h3>
                     <p>Create an account to get started</p>
-                    <a href="{%url 'accounts:sign_up_view'%}" class="btn btn-outline-light" >Sign Up</a>
+                    <a href="{%url 'accounts:sign_up_view'%}" class="btn btn-outline-light">Sign Up</a>
                 </div>
 
             </div>
-            
+
 
         </div>
     </div>

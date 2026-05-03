@@ -1,0 +1,117 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Projects{% endblock %}
+
+{% block content %}
+
+<div class="projects-hero">
+    <div class="projects-hero-inner">
+        <span class="projects-hero-label">
+            <i class="bi bi-kanban-fill"></i> Browse Projects
+        </span>
+
+        <h1>
+            {% if selected_category_name %}
+            {{ selected_category_name }} Projects
+            {% else %}
+            Find the perfect<br>project to work on
+            {% endif %}
+        </h1>
+
+        <p>Explore available projects in development, design, and more.</p>
+
+        <div class="projects-hero-count">
+            Showing <span>{{ projects|length }}</span> projects
+        </div>
+    </div>
+</div>
+
+<div class="projects-wrapper">
+
+    <aside class="projects-sidebar">
+
+        <div class="projects-filter-header">
+            <h3><i class="bi bi-sliders"></i> Filters</h3>
+            <a href="{% url 'accounts:all_projects' %}" class="projects-clear">Clear all</a>
+        </div>
+
+        <form method="GET">
+
+            <div class="projects-filter-group">
+                <div class="projects-filter-title">Search</div>
+                <div class="projects-search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" name="search" placeholder="Project name..." value="{{ search|default:'' }}">
+                </div>
+            </div>
+
+            <div class="projects-filter-group">
+                <div class="projects-filter-title">Category</div>
+
+                <select name="category" class="form-control">
+                    <option value="">All Categories</option>
+                    {% for value, label in categories %}
+                    <option value="{{ value }}" {% if selected_category==value %}selected{% endif %}>
+                        {{ label }}
+                    </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <button class="projects-btn-apply" type="submit">
+                <i class="bi bi-check2-circle"></i> Apply Filters
+            </button>
+
+        </form>
+
+    </aside>
+
+    <div class="projects-content">
+
+        <div class="projects-toolbar">
+            <div class="projects-toolbar-left">
+                <span class="projects-count">
+                    <span>{{ projects|length }}</span> projects found
+                </span>
+            </div>
+        </div>
+
+        <div class="projects-grid">
+
+            {% for project in projects %}
+            <div class="project-card">
+                <div class="card-header">
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <span class="status open">{{ project.get_status_display }}</span>
+                </div>
+
+                <p class="desc">
+                    {{ project.description|truncatewords:18 }}
+                </p>
+
+                <div class="info">
+                    <span class="budget">from ${{ project.budget }}</span>
+                    <span class="deadline">
+                        <i class="bi bi-tag"></i> {{ project.get_category_display }}
+                    </span>
+                </div>
+
+                <div class="tags">
+                    <span class="tag">{{ project.get_category_display }}</span>
+                </div>
+
+                <a href="{% url 'accounts:project_detail' project.id %}" class="view-btn">
+                    View Details
+                </a>
+            </div>
+            {% empty %}
+            <p>No projects found.</p>
+            {% endfor %}
+
+        </div>
+
+    </div>
+</div>
+
+{% endblock %}

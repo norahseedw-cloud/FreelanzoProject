@@ -18,8 +18,7 @@
         <h1>Find the perfect<br>project to work on</h1>
         <p>Explore available projects in development, design, and more.</p>
         <div class="projects-hero-count">
-            Showing <span>2</span> projects
-        </div>
+            Showing <span>{{ projects|length }}</span> projects </div>
     </div>
 </div>
 
@@ -30,72 +29,39 @@
 
         <div class="projects-filter-header">
             <h3><i class="bi bi-sliders"></i> Filters</h3>
-            <button class="projects-clear">Clear all</button>
+            <a href="{% url 'accounts:all_projects' %}" class="projects-clear">Clear all</a>
         </div>
 
-    
-        <div class="projects-filter-group">
-            <div class="projects-filter-title">Search</div>
-            <div class="projects-search">
-                <i class="bi bi-search"></i>
-                <input type="text" placeholder="Project name, skill...">
-            </div>
-        </div>
 
         <!-- Category -->
-        <div class="projects-filter-group">
-            <div class="projects-filter-title">Category</div>
-            <div class="projects-cat-pills">
+        <form method="GET">
 
-                <div class="projects-cat-pill active">
-                    <span class="projects-cat-left">
-                        <i class="bi bi-grid-fill"></i> All Categories
-                    </span>
-                    <span class="projects-cat-count">12</span>
+            <div class="filter-group">
+                <div class="filter-group-title">Search</div>
+                <div class="filter-search">
+                    <i class="bi bi-search"></i>
+                    <input type="text" name="search" placeholder="Name, skill, keyword..."
+                        value="{{ search|default:'' }}">
                 </div>
-
-                <div class="projects-cat-pill">
-                    <span class="projects-cat-left">
-                        <i class="bi bi-code-slash" style="color: var(--teal);"></i>
-                        Web Development
-                    </span>
-                    <span class="projects-cat-count">4</span>
-                </div>
-
-                <div class="projects-cat-pill">
-                    <span class="projects-cat-left">
-                        <i class="bi bi-palette2" style="color: var(--blue);"></i>
-                        Graphic Design
-                    </span>
-                    <span class="projects-cat-count">3</span>
-                </div>
-
-                <div class="projects-cat-pill">
-                    <span class="projects-cat-left">
-                        <i class="bi bi-megaphone" style="color: var(--color-orange);"></i>
-                        Digital Marketing
-                    </span>
-                    <span class="projects-cat-count">2</span>
-                </div>
-
-                <div class="projects-cat-pill">
-                    <span class="projects-cat-left">
-                        <i class="bi bi-camera-video" style="color: var(--btn-color);"></i>
-                        Video Editing
-                    </span>
-                    <span class="projects-cat-count">1</span>
-                </div>
-
-                <div class="projects-cat-pill">
-                    <span class="projects-cat-left">
-                        <i class="bi bi-pen" style="color: var(--color-purple);"></i>
-                        Content Writing
-                    </span>
-                    <span class="projects-cat-count">2</span>
-                </div>
-
             </div>
-        </div>
+
+            <a href="{% url 'accounts:all_projects' %}"
+                class="cat-pill {% if not selected_category %}active{% endif %}">
+                <span class="cat-pill-left"><i class="bi bi-grid-fill"></i> All Categories</span>
+            </a>
+
+            {% for value, label in categories %}
+            <a href="{% url 'accounts:all_projects' %}?category={{ value }}"
+                class="cat-pill {% if selected_category == value %}active{% endif %}">
+                <span class="cat-pill-left">{{ label }}</span>
+            </a>
+            {% endfor %}
+
+            <button class="projects-btn-apply" type="submit">
+                <i class="bi bi-check2-circle"></i> Apply Filters
+            </button>
+
+        </form>
 
         <!-- Budget -->
         <div class="projects-filter-group">
@@ -125,8 +91,7 @@
         <div class="projects-toolbar">
             <div class="projects-toolbar-left">
                 <span class="projects-count">
-                    <span>2</span> projects found
-                </span>
+                    <span>{{ projects|length }}</span> projects found </span>
             </div>
 
             <div class="projects-toolbar-right">
@@ -146,60 +111,35 @@
         <!-- GRID -->
         <div class="projects-grid">
 
-
+            {% for project in projects %}
             <div class="project-card">
                 <div class="card-header">
-                    <h3 class="project-title">Website Design</h3>
-                    <span class="status open">Open</span>
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <span class="status open">{{ project.get_status_display }}</span>
                 </div>
 
                 <p class="desc">
-                    Need a modern responsive website for a business...
+                    {{ project.description|truncatewords:18 }}
                 </p>
 
                 <div class="info">
-                    <span class="budget">from 500$</span>
+                    <span class="budget">from ${{ project.budget }}</span>
                     <span class="deadline">
-                        <i class="bi bi-calendar"></i> 10 days
+                        <i class="bi bi-tag"></i> {{ project.get_category_display }}
                     </span>
                 </div>
 
                 <div class="tags">
-                    <span class="tag">HTML</span>
-                    <span class="tag">CSS</span>
+                    <span class="tag">{{ project.get_category_display }}</span>
                 </div>
 
-                <a href="{% url 'marketplace:projects_detail_view' %}" class="view-btn">
+                <a href="{% url 'accounts:project_detail' project.id %}" class="view-btn">
                     View Details
                 </a>
             </div>
-
-
-            <div class="project-card">
-                <div class="card-header">
-                    <h3 class="project-title">E-commerce Website</h3>
-                    <span class="status open">Open</span>
-                </div>
-
-                <p class="desc">
-                    Looking for a developer to build an online store with payment integration.
-                </p>
-
-                <div class="info">
-                    <span class="budget">from 1200$</span>
-                    <span class="deadline">
-                        <i class="bi bi-calendar"></i> 20 days
-                    </span>
-                </div>
-
-                <div class="tags">
-                    <span class="tag">Django</span>
-                    <span class="tag">Stripe</span>
-                    <span class="tag">JavaScript</span>
-                </div>
-
-                <a href="#" class="view-btn">View Details</a>
-            </div>
+            {% empty %}
+            <p>No projects found.</p>
+            {% endfor %}
 
         </div>
 

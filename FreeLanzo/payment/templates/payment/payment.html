@@ -1,0 +1,411 @@
+{% extends 'main/base.html' %}
+{% load static %}
+
+{% block title %}Payment | Freelanzo{% endblock %}
+
+{% block content %}
+
+<section class="page-hero">
+    <div class="hero-inner">
+        <span class="hero-label">
+            <i class="bi bi-shield-lock-fill"></i>
+            Secure Checkout
+        </span>
+        <h1>Complete Your Payment</h1>
+        <p>Your payment is protected with end-to-end encryption. Funds are held in escrow until you approve the work.</p>
+    </div>
+</section>
+
+<div class="payment-wrapper">
+
+    <!-- LEFT: Payment Form -->
+    <div class="payment-left">
+
+        <div class="pay-steps">
+            <div class="pay-step completed">
+                <div class="pay-step-dot"><i class="bi bi-check-lg"></i></div>
+                <span>Project Details</span>
+            </div>
+            <div class="pay-step-line completed"></div>
+            <div class="pay-step completed">
+                <div class="pay-step-dot"><i class="bi bi-check-lg"></i></div>
+                <span>Review Proposal</span>
+            </div>
+            <div class="pay-step-line"></div>
+            <div class="pay-step active">
+                <div class="pay-step-dot">3</div>
+                <span>Payment</span>
+            </div>
+        </div>
+
+        <div class="pay-card freelancer-summary-card">
+            <div class="freelancer-summary-left">
+                <div class="fs-avatar-wrap">
+                    <img src="{% static 'images/avatar/men.jpg' %}" alt="Mohammed Ali">
+                    <span class="fs-online-dot"></span>
+                </div>
+                <div class="fs-info">
+                    <div class="fs-name-row">
+                        <h3>Mohammed Ali</h3>
+                        <span class="verified-badge"><i class="bi bi-patch-check-fill"></i> Verified</span>
+                    </div>
+                    <p class="fs-role">Web Developer · Django & React</p>
+                    <div class="fs-rating">
+                        <i class="bi bi-star-fill"></i>
+                        <strong>5.0</strong>
+                        <span>(98 reviews)</span>
+                    </div>
+                </div>
+            </div>
+            <div class="freelancer-summary-right">
+                <div class="project-badge">
+                    <i class="bi bi-briefcase-fill"></i>
+                    E-Commerce Website
+                </div>
+                <div class="fs-delivery">
+                    <i class="bi bi-clock"></i>
+                    Delivery in <strong>14 days</strong>
+                </div>
+            </div>
+        </div>
+
+        <div class="pay-card">
+            <h2 class="pay-card-title">
+                <i class="bi bi-credit-card-fill"></i>
+                Payment Method
+            </h2>
+
+            <div class="pay-methods">
+                <label class="pay-method-opt active" id="method-card">
+                    <input type="radio" name="pay_method" value="card" checked>
+                    <div class="pay-method-inner">
+                        <div class="pay-method-icon">
+                            <i class="bi bi-credit-card-2-front-fill"></i>
+                        </div>
+                        <span>Credit / Debit Card</span>
+                    </div>
+                    <div class="pay-method-brands">
+                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/chrome/chrome-original.svg" alt="Visa" style="display:none">
+                        <span class="brand-pill visa">VISA</span>
+                        <span class="brand-pill mc">MC</span>
+                        <span class="brand-pill amex">AMEX</span>
+                    </div>
+                </label>
+
+                <label class="pay-method-opt" id="method-paypal">
+                    <input type="radio" name="pay_method" value="paypal">
+                    <div class="pay-method-inner">
+                        <div class="pay-method-icon paypal-icon">
+                            <i class="bi bi-paypal"></i>
+                        </div>
+                        <span>PayPal</span>
+                    </div>
+                    <span class="method-tag">Fast & Secure</span>
+                </label>
+
+                <label class="pay-method-opt" id="method-bank">
+                    <input type="radio" name="pay_method" value="bank">
+                    <div class="pay-method-inner">
+                        <div class="pay-method-icon bank-icon">
+                            <i class="bi bi-bank2"></i>
+                        </div>
+                        <span>Bank Transfer</span>
+                    </div>
+                    <span class="method-tag">IBAN / SWIFT</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="pay-card" id="card-form-section">
+            <h2 class="pay-card-title">
+                <i class="bi bi-lock-fill"></i>
+                Card Details
+            </h2>
+
+            <div class="card-preview">
+                <div class="card-preview-inner" id="card-preview">
+                    <div class="card-preview-front">
+                        <div class="card-chip"></div>
+                        <div class="card-number-display" id="card-num-display">•••• •••• •••• ••••</div>
+                        <div class="card-bottom-row">
+                            <div class="card-holder-display">
+                                <span class="card-label-sm">Card Holder</span>
+                                <span id="card-holder-display">YOUR NAME</span>
+                            </div>
+                            <div class="card-expiry-display">
+                                <span class="card-label-sm">Expires</span>
+                                <span id="card-expiry-display">MM/YY</span>
+                            </div>
+                            <div class="card-brand-logo">
+                                <i class="bi bi-credit-card-fill"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Form Fields -->
+            <div class="card-form">
+                <div class="form-group full-width">
+                    <label class="form-label">Cardholder Name</label>
+                    <div class="input-wrap">
+                        <i class="bi bi-person-fill input-icon"></i>
+                        <input type="text" class="pay-input" id="card-holder" placeholder="e.g. Mohammed Al-Ali" autocomplete="cc-name">
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">Card Number</label>
+                    <div class="input-wrap">
+                        <i class="bi bi-credit-card-fill input-icon"></i>
+                        <input type="text" class="pay-input" id="card-number" placeholder="1234 5678 9012 3456" maxlength="19" autocomplete="cc-number">
+                        <div class="card-type-indicator" id="card-type-indicator"></div>
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">Expiry Date</label>
+                        <div class="input-wrap">
+                            <i class="bi bi-calendar3 input-icon"></i>
+                            <input type="text" class="pay-input" id="card-expiry" placeholder="MM / YY" maxlength="7" autocomplete="cc-exp">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">
+                            CVV
+                            <span class="cvv-tooltip" title="3-digit code on back of card">
+                                <i class="bi bi-question-circle-fill"></i>
+                            </span>
+                        </label>
+                        <div class="input-wrap">
+                            <i class="bi bi-shield-lock-fill input-icon"></i>
+                            <input type="password" class="pay-input" id="card-cvv" placeholder="•••" maxlength="4" autocomplete="cc-csc">
+                        </div>
+                    </div>
+                </div>
+
+                <label class="save-card-toggle">
+                    <div class="toggle-switch">
+                        <input type="checkbox" id="save-card-checkbox">
+                        <span class="toggle-slider"></span>
+                    </div>
+                    <span class="save-card-text">Save card for future payments</span>
+                </label>
+            </div>
+        </div>
+
+        <div class="pay-card">
+            <h2 class="pay-card-title">
+                <i class="bi bi-geo-alt-fill"></i>
+                Billing Address
+            </h2>
+            <div class="card-form">
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">First Name</label>
+                        <div class="input-wrap">
+                            <input type="text" class="pay-input" placeholder="Ahmed">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Last Name</label>
+                        <div class="input-wrap">
+                            <input type="text" class="pay-input" placeholder="Al-Rashid">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">Country</label>
+                    <div class="input-wrap select-wrap">
+                        <i class="bi bi-globe2 input-icon"></i>
+                        <select class="pay-input pay-select">
+                            <option value="sa" selected>🇸🇦 Saudi Arabia</option>
+                            <option value="ae">🇦🇪 United Arab Emirates</option>
+                            <option value="kw">🇰🇼 Kuwait</option>
+                            <option value="eg">🇪🇬 Egypt</option>
+                            <option value="jo">🇯🇴 Jordan</option>
+                            <option value="us">🇺🇸 United States</option>
+                            <option value="gb">🇬🇧 United Kingdom</option>
+                        </select>
+                        <i class="bi bi-chevron-down select-arrow"></i>
+                    </div>
+                </div>
+
+                <div class="form-group full-width">
+                    <label class="form-label">Street Address</label>
+                    <div class="input-wrap">
+                        <i class="bi bi-house-fill input-icon"></i>
+                        <input type="text" class="pay-input" placeholder="123 King Fahd Road">
+                    </div>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label class="form-label">City</label>
+                        <div class="input-wrap">
+                            <input type="text" class="pay-input" placeholder="Riyadh">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="form-label">Postal Code</label>
+                        <div class="input-wrap">
+                            <input type="text" class="pay-input" placeholder="12345">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Order Summary -->
+    <div class="payment-right">
+
+        <div class="summary-card">
+            <div class="summary-header">
+                <h3><i class="bi bi-receipt"></i> Order Summary</h3>
+            </div>
+
+            <div class="summary-project-info">
+                <div class="spi-label">Project</div>
+                <div class="spi-title">E-Commerce Website Development</div>
+                <div class="spi-meta">
+                    <span><i class="bi bi-calendar-check"></i> 14 Days</span>
+                    <span><i class="bi bi-arrow-repeat"></i> 3 Revisions</span>
+                </div>
+            </div>
+
+            <div class="summary-breakdown">
+                <div class="breakdown-item">
+                    <span class="bi-label">Project Fee</span>
+                    <span class="bi-val">$480.00</span>
+                </div>
+                <div class="breakdown-item">
+                    <span class="bi-label">Service Fee <span class="fee-info" title="Platform fee to support Freelanzo services"><i class="bi bi-info-circle-fill"></i></span></span>
+                    <span class="bi-val">$24.00</span>
+                </div>
+                <div class="breakdown-item discount-row">
+                    <span class="bi-label">Promo Discount</span>
+                    <span class="bi-val discount-val">−$20.00</span>
+                </div>
+                <div class="breakdown-item tax-row">
+                    <span class="bi-label">VAT (15%)</span>
+                    <span class="bi-val">$72.60</span>
+                </div>
+            </div>
+
+            <div class="summary-divider"></div>
+
+            <div class="summary-total">
+                <span>Total</span>
+                <strong>$556.60</strong>
+            </div>
+
+
+            <div class="promo-section">
+                <div class="promo-input-wrap">
+                    <i class="bi bi-tag-fill promo-icon"></i>
+                    <input type="text" class="promo-input" placeholder="Enter promo code" id="promo-input">
+                    <button class="btn-apply-promo" id="promo-btn">Apply</button>
+                </div>
+                <div class="promo-success" id="promo-success">
+                    <i class="bi bi-check-circle-fill"></i> Code <strong>SAVE20</strong> applied — $20 off!
+                </div>
+            </div>
+
+
+            <div class="escrow-info">
+                <div class="escrow-icon">
+                    <i class="bi bi-safe2-fill"></i>
+                </div>
+                <div class="escrow-text">
+                    <strong>Protected by Escrow</strong>
+                    <p>Funds are held securely and only released to the freelancer once you're fully satisfied.</p>
+                </div>
+            </div>
+
+            <button class="btn-pay-now" id="pay-btn" onclick="handlePayment()">
+                <i class="bi bi-lock-fill"></i>
+                Pay $556.60 Securely
+            </button>
+
+
+            <div class="trust-badges">
+                <div class="trust-badge">
+                    <i class="bi bi-shield-fill-check"></i>
+                    <span>SSL Secured</span>
+                </div>
+                <div class="trust-badge">
+                    <i class="bi bi-patch-check-fill"></i>
+                    <span>Verified</span>
+                </div>
+                <div class="trust-badge">
+                    <i class="bi bi-arrow-counterclockwise"></i>
+                    <span>Refundable</span>
+                </div>
+            </div>
+
+            <p class="pay-terms">
+                By completing this payment, you agree to Freelanzo's
+                <a href="#">Terms of Service</a> and <a href="#">Refund Policy</a>.
+            </p>
+        </div>
+
+        <div class="saved-cards-card">
+            <h3 class="saved-title"><i class="bi bi-wallet2"></i> Saved Cards</h3>
+            <div class="saved-list">
+                <label class="saved-card-item">
+                    <input type="radio" name="saved_card">
+                    <div class="saved-card-info">
+                        <div class="saved-card-icon visa-bg">VISA</div>
+                        <div>
+                            <div class="saved-card-num">•••• •••• •••• 4242</div>
+                            <div class="saved-card-exp">Expires 08/27</div>
+                        </div>
+                    </div>
+                    <span class="saved-card-default">Default</span>
+                </label>
+                <label class="saved-card-item">
+                    <input type="radio" name="saved_card">
+                    <div class="saved-card-info">
+                        <div class="saved-card-icon mc-bg">MC</div>
+                        <div>
+                            <div class="saved-card-num">•••• •••• •••• 9871</div>
+                            <div class="saved-card-exp">Expires 03/26</div>
+                        </div>
+                    </div>
+                </label>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+
+<div class="pay-modal-overlay" id="pay-modal">
+    <div class="pay-modal">
+        <div class="pay-modal-icon">
+            <i class="bi bi-check-lg"></i>
+        </div>
+        <h2>Payment Successful!</h2>
+        <p>Your payment of <strong>$556.60</strong> has been securely held in escrow. Mohammed Ali has been notified and will begin working on your project.</p>
+        <div class="pay-modal-meta">
+            <div class="modal-meta-item">
+                <span>Transaction ID</span>
+                <strong>#TXN-2024-78341</strong>
+            </div>
+            <div class="modal-meta-item">
+                <span>Estimated Delivery</span>
+                <strong>May 15, 2026</strong>
+            </div>
+        </div>
+        <div class="pay-modal-actions">
+            <a href="#" class="btn-modal-primary">View Project Dashboard</a>
+            <a href="#" class="btn-modal-outline">Download Receipt</a>
+        </div>
+    </div>
+</div>
+
+{% endblock %}

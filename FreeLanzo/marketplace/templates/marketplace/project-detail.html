@@ -1,14 +1,13 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}Project Details{% endblock %}
+{% block title %}{{ project.title }} | Project Details{% endblock %}
 
 {% block style %}
 <link rel="stylesheet" href="{% static 'marketplace/css/projects-style.css' %}">
 {% endblock %}
 
 {% block content %}
-
 
 <div class="pd-hero">
     <div class="pd-hero-inner">
@@ -17,12 +16,12 @@
             <i class="bi bi-kanban-fill"></i> Project Details
         </span>
 
-        <h1>Website Design</h1>
+        <h1>{{ project.title }}</h1>
 
-        <p>Build a modern responsive website with clean UI.</p>
+        <p>{{ project.description|truncatewords:15 }}</p>
 
         <div class="pd-hero-box">
-            Status: <span>Open</span>
+            Status: <span>{{ project.get_status_display }}</span>
         </div>
 
     </div>
@@ -34,25 +33,32 @@
         <h2>About Project</h2>
 
         <p class="pd-desc">
-            Need a modern responsive website for a business with clean UI and fast performance.
-            The project includes homepage, dashboard, and admin panel.
+            {{ project.description }}
         </p>
 
         <div class="pd-meta">
-            <span><i class="bi bi-cash"></i> 500$</span>
-            <span><i class="bi bi-calendar"></i> 10 days</span>
-            <span class="status open">Open</span>
+            <span><i class="bi bi-cash"></i> ${{ project.budget }}</span>
+            <span><i class="bi bi-tag"></i> {{ project.get_category_display }}</span>
+            <span class="status open">{{ project.get_status_display }}</span>
         </div>
     </div>
 
     <div class="pd-card client-advanced">
 
         <div class="client-top">
-            <div class="avatar big">C</div>
+            <div class="avatar big">
+                {{ project.client.user.username|first|upper }}
+            </div>
 
             <div class="client-info">
                 <div class="client-name-row">
-                    <span class="client-name">Khalid</span>
+                    <span class="client-name">
+                        {% if project.client.user.first_name or project.client.user.last_name %}
+                        {{ project.client.user.first_name }} {{ project.client.user.last_name }}
+                        {% else %}
+                        {{ project.client.user.username }}
+                        {% endif %}
+                    </span>
 
                     <span class="badge client">
                         <i class="bi bi-briefcase-fill"></i> Client
@@ -63,12 +69,21 @@
                     </span>
                 </div>
 
-                <p class="client-role">CEO · Tech Company</p>
+                <p class="client-role">
+                    {% if project.client.job_title %}
+                    {{ project.client.job_title }}
+                    {% else %}
+                    Client
+                    {% endif %}
+
+                    {% if project.client.company_name %}
+                    · {{ project.client.company_name }}
+                    {% endif %}
+                </p>
 
                 <div class="client-meta">
-                    <span><i class="bi bi-geo-alt"></i> Riyadh</span>
-                    <span><i class="bi bi-star-fill"></i> 4.9</span>
-                    <span><i class="bi bi-folder"></i> 18 Projects</span>
+                    <span><i class="bi bi-geo-alt"></i> {{ project.client.location|default:"No location" }}</span>
+                    <span><i class="bi bi-folder"></i> {{ client_projects_count }} Projects</span>
                 </div>
             </div>
 
@@ -77,9 +92,9 @@
                     <i class="bi bi-chat-dots"></i> Contact
                 </button>
 
-                <button class="btn-outline">
+                <a href="{% url 'accounts:client_profile' %}" class="btn-outline">
                     View Profile
-                </button>
+                </a>
             </div>
         </div>
 
@@ -94,25 +109,11 @@
     </div>
 
     <div class="pd-card">
+        <h3>Apply for this Project</h3>
 
-        <h3>Submit Proposal</h3>
-
-        <form class="proposal-form">
-
-            <textarea placeholder="Write your proposal..."></textarea>
-
-            <div class="proposal-row">
-                <input type="number" placeholder="Your Price ($)">
-                <input type="text" placeholder="Duration (e.g. 7 days)">
-            </div>
-
-            <button class="submit-btn">
-                <i class="bi bi-send-fill"></i>
-                Submit Proposal
-            </button>
-
-        </form>
-
+        <div class="delivery-box">
+            Proposal system coming soon.
+        </div>
     </div>
 
 </div>

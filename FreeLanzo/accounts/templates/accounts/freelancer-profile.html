@@ -21,43 +21,57 @@
 
             <!-- Avatar -->
             <div class="avatar-wrap">
-                <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=240&q=80" alt="Mohammed Ali">
+                {% if profile.avatar %}
+                <img src="{{ profile.avatar.url }}" alt="{{ profile.user.username }}" class="profile-avatar">
+                {% else %}
+                <img src="{% static 'images/avatar/default.png' %}" alt="{{ profile.user.username }}" class="profile-avatar">
+                {% endif %}
+
                 <div class="online-badge"></div>
             </div>
 
-            <!-- Identity -->
             <div class="profile-identity">
                 <div class="profile-name-row">
-                    <span class="profile-name">Mohammed Ali</span>
+
+                    <span class="profile-name"> {{ profile.user.first_name }} {{ profile.user.last_name }}</span>
+
                     <span class="verified-badge">
                         <i class="bi bi-patch-check-fill"></i> Verified
                     </span>
                 </div>
-                <p class="profile-role">Senior Full-Stack Developer & UI/UX Designer</p>
+                <p class="profile-role">
+                    {% if profile.job_title %}
+                    {{ profile.job_title }}
+                    {% else %}
+                    Not added yet
+                    {% endif %}
+                </p>
                 <div class="profile-meta">
                     <span class="meta-item">
-                        <i class="bi bi-geo-alt" style="color:var(--teal)"></i>
-                        Riyadh, Saudi Arabia
+                        <i class="bi bi-geo-alt"></i>
+                        {% if profile.location %}
+                        {{ profile.location }}
+                        {% else %}
+                        Not added yet
+                        {% endif %}
                     </span>
                     <span class="meta-item">
-                        <i class="bi bi-star-fill" style="color:var(--orange)"></i>
-                        <strong>5.0</strong>&nbsp;(98 reviews)
+                        <i class="bi bi-tags"></i>
+                        {% if profile.category %}
+                        {{ profile.get_category_display }}
+                        {% else %}
+                        Not added yet
+                        {% endif %}
                     </span>
-                    <span class="meta-item">
-                        <i class="bi bi-clock" style="color:var(--blue)"></i>
-                        Responds in ~2 hours
-                    </span>
-                    <span class="meta-item">
-                        <i class="bi bi-briefcase" style="color:var(--color-purple)"></i>
-                        120+ Projects Done
-                    </span>
+
+
                 </div>
             </div>
 
-            <!-- Actions -->
             <div class="profile-actions">
-                <button class="btn-hire">Hire Me</button>
-                <button class="btn-message">
+                <a href="{% url 'accounts:update_freelancer_profile' %}" class="btn-hire">
+                    Update Profile
+                </a> <button class="btn-message">
                     <i class="bi bi-chat-dots"></i> Message
                 </button>
                 <button class="btn-save"><i class="bi bi-heart"></i></button>
@@ -69,23 +83,19 @@
         <div class="profile-stats-row">
             <div class="pstat">
                 <i class="bi bi-briefcase-fill stat-icon" style="color:var(--teal)"></i>
-                <strong>120+</strong>
-                <span>Projects Done</span>
+                <strong>Not added yet</strong> <span>Projects Done</span>
             </div>
             <div class="pstat">
                 <i class="bi bi-star-fill stat-icon" style="color:var(--orange)"></i>
-                <strong>5.0</strong>
-                <span>Average Rating</span>
+                <strong>Not added yet</strong> <span>Average Rating</span>
             </div>
             <div class="pstat">
                 <i class="bi bi-people-fill stat-icon" style="color:var(--blue)"></i>
-                <strong>98</strong>
-                <span>Happy Clients</span>
+                <strong>Not added yet</strong> <span>Happy Clients</span>
             </div>
             <div class="pstat">
                 <i class="bi bi-clock-history stat-icon" style="color:var(--color-purple)"></i>
-                <strong>4 yrs</strong>
-                <span>Experience</span>
+                <strong>Not added yet</strong> <span>Experience</span>
             </div>
             <div class="pstat">
                 <i class="bi bi-trophy-fill stat-icon" style="color:var(--btn-color)"></i>
@@ -107,15 +117,11 @@
                     <i class="bi bi-person-lines-fill"></i> About Me
                 </h3>
                 <p class="about-text">
-                    I'm a passionate Full-Stack Developer and UI/UX Designer with over 4 years of experience
-                    building high-quality web applications and digital products. I specialize in Django, React,
-                    and modern frontend frameworks — delivering solutions that are not only functional but
-                    visually polished.
-                </p>
-                <p class="about-text" style="margin-top:12px;">
-                    Whether you need a complete web platform, a stunning landing page, or a robust API backend,
-                    I bring both technical expertise and design sensibility to every project. I take pride in
-                    clear communication, on-time delivery, and results that exceed expectations.
+                    {% if profile.about %}
+                    {{ profile.about }}
+                    {% else %}
+                    Not added yet
+                    {% endif %}
                 </p>
             </div>
 
@@ -125,42 +131,13 @@
                     <i class="bi bi-lightning-charge-fill"></i> Skills & Technologies
                 </h3>
                 <div class="skills-cloud">
-                    <span class="skill-tag">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" alt="Django"> Django
-                    </span>
-                    <span class="skill-tag">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" alt="Python"> Python
-                    </span>
-                    <span class="skill-tag">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" alt="JavaScript"> JavaScript
-                    </span>
-                    <span class="skill-tag">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg" alt="HTML5"> HTML5
-                    </span>
-                    <span class="skill-tag">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg" alt="CSS3"> CSS3
-                    </span>
-                    <span class="skill-tag">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg" alt="Bootstrap"> Bootstrap
-                    </span>
-                    <span class="skill-tag">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" alt="PostgreSQL"> PostgreSQL
-                    </span>
-                    <span class="skill-tag">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" alt="Figma"> Figma
-                    </span>
-                    <span class="skill-tag">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg" alt="GitHub"> GitHub
-                    </span>
-                    <span class="skill-tag">
-                        <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg" alt="VS Code"> VS Code
-                    </span>
-                    <span class="skill-tag">
-                        <i class="bi bi-phone" style="color:var(--teal);font-size:14px"></i> REST APIs
-                    </span>
-                    <span class="skill-tag">
-                        <i class="bi bi-server" style="color:var(--blue);font-size:14px"></i> DevOps
-                    </span>
+                    {% if profile.skills %}
+                    {% for skill in profile.skills.split %}
+                    <span class="skill-tag">{{ skill }}</span>
+                    {% endfor %}
+                    {% else %}
+                    <span class="skill-tag">Not added yet</span>
+                    {% endif %}
                 </div>
             </div>
 
@@ -169,34 +146,28 @@
                 <h3 class="card-title">
                     <i class="bi bi-grid-1x2-fill"></i> Portfolio
                 </h3>
-                <div class="portfolio-grid">
-                    <div class="portfolio-item">
-                        <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=600&q=80" alt="E-commerce Platform">
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-label">E-commerce Platform</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=600&q=80" alt="Brand Identity">
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-label">Brand Identity</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=600&q=80" alt="Marketing Dashboard">
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-label">Marketing Dashboard</span>
-                        </div>
-                    </div>
-                    <div class="portfolio-item">
-                        <img src="https://images.unsplash.com/photo-1460925895917-afdab827c52f?w=600&q=80" alt="SaaS Analytics">
-                        <div class="portfolio-overlay">
-                            <span class="portfolio-label">SaaS Analytics App</span>
-                        </div>
-                    </div>
-                </div>
-            </div>
 
+                <div class="portfolio-grid">
+                    {% for project in projects %}
+                    <a href="{% url 'accounts:portfolio_project_detail' project.id %}" class="portfolio-item">
+                        {% if project.image %}
+                        <img src="{{ project.image.url }}" alt="{{ project.title }}">
+                        {% endif %}
+
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-label">{{ project.title }}</span>
+                        </div>
+                    </a>
+                    {% empty %}
+                    <div class="portfolio-item">
+                        <div class="portfolio-overlay">
+                            <span class="portfolio-label">Not added yet</span>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+
+            </div>
             <!-- Client Reviews -->
             <div class="profile-card">
                 <h3 class="card-title">
@@ -274,9 +245,7 @@
                         <i class="bi bi-star-fill"></i>
                     </div>
                     <p class="review-text">
-                        Mohammed delivered exactly what I envisioned — and more. The project was finished 3 days
-                        ahead of schedule. Clean code, beautiful design, and incredible communication throughout.
-                        Highly recommend!
+
                     </p>
                 </div>
 
@@ -297,8 +266,6 @@
                         <i class="bi bi-star-fill"></i>
                     </div>
                     <p class="review-text">
-                        Best developer I've ever worked with. He understood my business needs perfectly and built
-                        a platform that has boosted our sales by 40%. Will definitely hire again.
                     </p>
                 </div>
 
@@ -319,8 +286,6 @@
                         <i class="bi bi-star-fill"></i>
                     </div>
                     <p class="review-text">
-                        Mohammed's technical depth is impressive. He solved complex backend challenges with elegant
-                        solutions. Very professional and easy to work with.
                     </p>
                 </div>
 
@@ -335,16 +300,14 @@
             <!-- Pricing Card -->
             <div class="pricing-card">
                 <div class="pricing-label">Starting From</div>
-                <div class="pricing-amount">$150 <span>/ project</span></div>
-                <p class="pricing-desc">Fixed price or hourly — flexible for your needs</p>
-                <ul class="pricing-features">
-                    <li><i class="bi bi-check-circle-fill"></i> Source code included</li>
-                    <li><i class="bi bi-check-circle-fill"></i> 3 revision rounds</li>
-                    <li><i class="bi bi-check-circle-fill"></i> Responsive design</li>
-                    <li><i class="bi bi-check-circle-fill"></i> 14-day support</li>
-                    <li><i class="bi bi-check-circle-fill"></i> NDA available</li>
-                </ul>
-                <button class="btn-hire-now">Hire Mohammed Now</button>
+
+                <div class="pricing-amount">
+                    {% if profile.hourly_rate %}
+                    ${{ profile.hourly_rate }} <span>/ hr</span>
+                    {% else %}
+                    Not added yet
+                    {% endif %}
+                </div>
             </div>
 
             <!-- Quick Info -->
@@ -363,32 +326,28 @@
                         <span class="info-key">
                             <i class="bi bi-clock" style="color:var(--blue)"></i> Availability
                         </span>
-                        <span class="availability-badge">Available Now</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-key">
-                            <i class="bi bi-hourglass-split" style="color:var(--orange)"></i> Response Time
+                        <span class="availability-badge">
+                            {% if profile.availability %}
+                            {{ profile.availability }}
+                            {% else %}
+                            Not added yet
+                            {% endif %}
                         </span>
-                        <span class="info-val">~2 hours</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-key">
-                            <i class="bi bi-globe" style="color:var(--color-purple)"></i> Timezone
-                        </span>
-                        <span class="info-val">GMT+3 (AST)</span>
                     </div>
                     <div class="info-row">
                         <span class="info-key">
                             <i class="bi bi-geo-alt" style="color:var(--teal)"></i> Location
                         </span>
-                        <span class="info-val">Riyadh, KSA</span>
-                    </div>
-                    <div class="info-row">
-                        <span class="info-key">
-                            <i class="bi bi-currency-dollar" style="color:var(--btn-color)"></i> Hourly Rate
+                        <span class="info-val">
+                            {% if profile.location %}
+                            {{ profile.location }}
+                            {% else %}
+                            Not added yet
+                            {% endif %}
                         </span>
-                        <span class="info-val" style="color:var(--teal); font-weight:800;">$45 / hr</span>
                     </div>
+
+
                 </div>
             </div>
 
@@ -399,17 +358,15 @@
                 </h3>
                 <div class="lang-list">
                     <div class="lang-row">
-                        <span class="lang-name">Arabic</span>
-                        <span class="lang-level" style="color:var(--teal); font-weight:700;">Native</span>
+                        <span class="lang-name">
+                            {% if profile.languages %}
+                            {{ profile.languages }}
+                            {% else %}
+                            Not added yet
+                            {% endif %}
+                        </span>
                     </div>
-                    <div class="lang-row">
-                        <span class="lang-name">English</span>
-                        <span class="lang-level" style="color:var(--blue); font-weight:700;">Fluent</span>
-                    </div>
-                    <div class="lang-row">
-                        <span class="lang-name">French</span>
-                        <span class="lang-level">Conversational</span>
-                    </div>
+
                 </div>
             </div>
 
@@ -418,31 +375,40 @@
                 <h3 class="card-title">
                     <i class="bi bi-people-fill"></i> Similar Freelancers
                 </h3>
+
                 <div>
-                    <div class="similar-card">
-                        <img class="similar-av" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah Ahmed">
+                    {% for similar in similar_freelancers %}
+                    <a href="{% url 'accounts:freelancer_profile_detail' similar.user.id %}" class="similar-card">
+                        {% if similar.avatar %}
+                        <img class="similar-av" src="{{ similar.avatar.url }}" alt="{{ similar.user.username }}">
+                        {% else %}
+                        <img class="similar-av" src="{% static 'images/avatar/default.png' %}" alt="{{ similar.user.username }}">
+                        {% endif %}
+
                         <div>
-                            <div class="similar-name">Sarah Ahmed</div>
-                            <div class="similar-role">UI/UX Designer</div>
+                            <div class="similar-name">
+                                {{ similar.user.first_name }} {{ similar.user.last_name }}
+                            </div>
+                            <div class="similar-role">
+                                {% if similar.job_title %}
+                                {{ similar.job_title }}
+                                {% else %}
+                                Not added yet
+                                {% endif %}
+                            </div>
                         </div>
-                        <span class="similar-rate">$40/hr</span>
-                    </div>
-                    <div class="similar-card">
-                        <img class="similar-av" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&q=80" alt="Omar Khalil">
-                        <div>
-                            <div class="similar-name">Omar Khalil</div>
-                            <div class="similar-role">React Developer</div>
-                        </div>
-                        <span class="similar-rate">$55/hr</span>
-                    </div>
-                    <div class="similar-card">
-                        <img class="similar-av" src="https://images.unsplash.com/photo-1517841905240-472988babdf9?w=100&q=80" alt="Lina Khalid">
-                        <div>
-                            <div class="similar-name">Lina Khalid</div>
-                            <div class="similar-role">Brand Designer</div>
-                        </div>
-                        <span class="similar-rate">$38/hr</span>
-                    </div>
+
+                        <span class="similar-rate">
+                            {% if similar.hourly_rate %}
+                            ${{ similar.hourly_rate }}/hr
+                            {% else %}
+                            -
+                            {% endif %}
+                        </span>
+                    </a>
+                    {% empty %}
+                    <p class="about-text">No similar freelancers yet</p>
+                    {% endfor %}
                 </div>
             </div>
 
