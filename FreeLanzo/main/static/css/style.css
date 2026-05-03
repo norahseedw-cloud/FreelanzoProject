@@ -4449,7 +4449,40 @@ body.dark .theme-toggle-btn {
         align-items: flex-start;
     }
 }
+.search-bar-wrap {
+    margin-bottom: 20px;
+}
 
+.search-bar {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    background: #fff;
+    padding: 10px 14px;
+    border-radius: 14px;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.05);
+}
+
+.search-bar i {
+    font-size: 18px;
+    color: #888;
+}
+
+.search-bar input {
+    border: none;
+    outline: none;
+    flex: 1;
+    font-size: 14px;
+}
+
+.search-bar button {
+    background: #0F3D2E;
+    color: #fff;
+    border: none;
+    padding: 8px 14px;
+    border-radius: 10px;
+    cursor: pointer;
+}
 /* ==========================ALL FREELANCER END================================ */
 /* ==========================PAYMENT START======================================= */
 .page-hero {

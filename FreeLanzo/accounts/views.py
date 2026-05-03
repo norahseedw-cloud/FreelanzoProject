@@ -77,8 +77,8 @@ def freelancer_profile_view(request):
     projects = profile.portfolio_projects.all()
 
     similar_freelancers = FreelancerProfile.objects.filter(
-        category=profile.category,
-    ).exclude(user=request.user)[:3]
+        skills__in=profile.skills.all()
+    ).exclude(user=request.user).distinct()[:3]
 
     return render(request, "accounts/freelancer-profile.html", {
         "profile": profile,
@@ -92,15 +92,47 @@ def all_freelancer_view(request):
     categories = Category.objects.all()
 
     category_id = request.GET.get('category')
+    search = request.GET.get('search')
+    min_rate = request.GET.get('min_rate')
+    max_rate = request.GET.get('max_rate')
+    sort = request.GET.get('sort')
 
-    if category_id:
-        freelancers = freelancers.filter(skills__categories__id=category_id).distinct()
+    if category_id and category_id.isdigit():
+        freelancers = freelancers.filter(
+            skills__categories__id=int(category_id)
+        ).distinct()
 
+    if search:
+        freelancers = freelancers.filter(
+            user__first_name__icontains=search
+        ) | freelancers.filter(
+            user__last_name__icontains=search
+        ) | freelancers.filter(
+            job_title__icontains=search
+        ) | freelancers.filter(
+            skills__name__icontains=search
+        )
+        freelancers = freelancers.distinct()
+
+    if min_rate:
+        freelancers = freelancers.filter(hourly_rate__gte=min_rate)
+
+    if max_rate:
+        freelancers = freelancers.filter(hourly_rate__lte=max_rate)
+
+    if sort == "low":
+        freelancers = freelancers.order_by("hourly_rate")
+    elif sort == "high":
+        freelancers = freelancers.order_by("-hourly_rate")
 
     return render(request, 'accounts/all-freelancer.html', {
         'freelancers': freelancers,
         'categories': categories,
         'selected_category': category_id,
+        'search': search,
+        'min_rate': min_rate,
+        'max_rate': max_rate,
+        'sort': sort,
     })
 
 
@@ -161,22 +193,15 @@ def freelancer_profile_detail(request, user_id):
     profile = get_object_or_404(FreelancerProfile, user__id=user_id)
     projects = profile.portfolio_projects.all()
 
-    if profile.category:
-        similar_freelancers = FreelancerProfile.objects.filter(
-            category=profile.category
-        ).exclude(user=profile.user)[:3]
-    else:
-        similar_freelancers = FreelancerProfile.objects.exclude(
-            user=profile.user
-        )[:3]
+    similar_freelancers = FreelancerProfile.objects.filter(
+        skills__in=profile.skills.all()
+    ).exclude(user=profile.user).distinct()[:3]
 
     return render(request, "accounts/freelancer-profile.html", {
         "profile": profile,
         "projects": projects,
         "similar_freelancers": similar_freelancers,
     })
-
-
 @login_required
 def update_portfolio_project(request, project_id):
     project = get_object_or_404(PortfolioProject, id=project_id, freelancer__user=request.user)
@@ -266,26 +291,33 @@ def create_project_view(request):
 
 def all_projects_view(request):
     projects = Project.objects.all().order_by('-created_at')
+    categories = Category.objects.all()
 
-    category = request.GET.get('category')
+    category_id = request.GET.get('category')
     search = request.GET.get('search')
 
-    if category:
-        projects = projects.filter(category=category)
+    if category_id and category_id.isdigit():
+        projects = projects.filter(category_id=int(category_id))
+    else:
+        category_id = None
 
     if search:
         projects = projects.filter(title__icontains=search)
 
-    category_dict = dict(FreelancerProfile.CATEGORY_CHOICES)
-    selected_category_name = category_dict.get(category)
+    selected_category_name = None
+    if category_id:
+        selected_category = Category.objects.filter(id=category_id).first()
+        if selected_category:
+            selected_category_name = selected_category.name
 
     return render(request, 'marketplace/projects.html', {
         'projects': projects,
-        'categories': FreelancerProfile.CATEGORY_CHOICES,
-        'selected_category': category,
+        'categories': categories,
+        'selected_category': category_id,
         'selected_category_name': selected_category_name,
         'search': search,
     })
+
 
 def project_detail_view(request, project_id):
     project = get_object_or_404(Project, id=project_id)

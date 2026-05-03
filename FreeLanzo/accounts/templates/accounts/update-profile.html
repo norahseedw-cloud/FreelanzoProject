@@ -43,17 +43,8 @@
                         value="{{ form.job_title.value|default:'' }}" class="form-control mb-2">
 
                     <div class="mb-2">
-                        <select name="preferred_categories" class="form-control">
-                            <option value="">Choose Category</option>
-
-                            {% for value, label in form.preferred_categories.field.choices %}
-                            <option value="{{ value }}"
-                                {% if form.preferred_categories.value == value %}selected{% endif %}>
-                                {{ label }}
-                            </option>
-                            {% endfor %}
-
-                        </select>
+                        <label>Skills</label>
+                        {{ form.skills }}
                     </div>
 
 
@@ -83,13 +74,6 @@
                         placeholder="Write about yourself">{{ form.about.value|default:'' }}</textarea>
                 </div>
 
-                <!-- Skills -->
-                <div class="profile-card">
-                    <h3 class="card-title">Skills</h3>
-                    <input type="text" name="skills" class="form-control"
-                        placeholder="Python Django HTML CSS"
-                        value="{{ form.skills.value|default:'' }}">
-                </div>
                 <a href="{% url 'accounts:add_portfolio_project' %}" class="btn-hire" style="display:inline-block; margin-bottom:20px;">
                     Add Project
                 </a>

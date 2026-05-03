@@ -50,10 +50,10 @@
                 <span class="cat-pill-left"><i class="bi bi-grid-fill"></i> All Categories</span>
             </a>
 
-            {% for value, label in categories %}
-            <a href="{% url 'accounts:all_projects' %}?category={{ value }}"
-                class="cat-pill {% if selected_category == value %}active{% endif %}">
-                <span class="cat-pill-left">{{ label }}</span>
+            {% for category in categories %}
+            <a href="{% url 'accounts:all_projects' %}?category={{ category.id }}"
+                class="cat-pill {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
+                <span class="cat-pill-left">{{ category.name }}</span>
             </a>
             {% endfor %}
 
@@ -125,12 +125,12 @@
                 <div class="info">
                     <span class="budget">from ${{ project.budget }}</span>
                     <span class="deadline">
-                        <i class="bi bi-tag"></i> {{ project.get_category_display }}
+                        <i class="bi bi-tag"></i> {{ project.category.name }}
                     </span>
                 </div>
 
                 <div class="tags">
-                    <span class="tag">{{ project.get_category_display }}</span>
+                    <span class="tag">{{ project.category.name }}</span>
                 </div>
 
                 <a href="{% url 'accounts:project_detail' project.id %}" class="view-btn">

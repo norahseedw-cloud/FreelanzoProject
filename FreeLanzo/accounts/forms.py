@@ -49,6 +49,10 @@ class FreelancerProfileForm(forms.ModelForm):
             'availability',
             'languages'
         ]
+        
+        widgets = {
+            'skills': forms.CheckboxSelectMultiple(),
+        }
 
 
 

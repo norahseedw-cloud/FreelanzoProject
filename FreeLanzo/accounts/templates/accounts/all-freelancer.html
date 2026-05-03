@@ -4,164 +4,118 @@
 {% block title %}All Freelancer | Freelanzo{% endblock %}
 
 {% block content %}
-<!--   HERO  -->
+
 <div class="page-hero">
     <div class="hero-inner">
         <span class="hero-label">
             <i class="bi bi-people-fill"></i> Browse Talent
         </span>
         <h1>Find the perfect<br>freelancer for your project</h1>
-        <p>Explore 500+ verified freelancers across design, development, marketing, and more.</p>
+        <p>Explore verified freelancers across design, development, marketing, and more.</p>
         <div class="hero-count">
-            Showing <span id="result-count">3</span> freelancers
+            Showing <span>{{ freelancers|length }}</span> freelancers
         </div>
     </div>
 </div>
 
 <div class="page-wrapper">
 
-    <aside class="filter-sidebar">
+    <!-- Sidebar Filters -->
+    <form method="GET">
+        <aside class="filter-sidebar">
 
-        <div class="filter-header">
-            <h3><i class="bi bi-sliders"></i> Filters</h3>
-            <button class="btn-clear-all" onclick="clearAllFilters()">Clear all</button>
-        </div>
-
-        <div class="filter-group">
-            <div class="filter-group-title">Search</div>
-            <div class="filter-search">
-                <i class="bi bi-search"></i>
-                <input type="text" id="search-input" placeholder="Name, skill, keyword..." oninput="applyFilters()">
+            <div class="filter-header">
+                <h3><i class="bi bi-sliders"></i> Filters</h3>
+                <a href="{% url 'accounts:all_freelancer' %}" class="btn-clear-all">Clear all</a>
             </div>
-        </div>
 
-        <a href="{% url 'accounts:all_freelancer' %}"
-            class="cat-pill {% if not selected_category %}active{% endif %}">
-            <span class="cat-pill-left">
-                <i class="bi bi-grid-fill"></i> All Categories
-            </span>
-        </a>
-
-        {% for category in categories %}
-        <a href="?category={{ category.id }}"
-            class="cat-pill {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
-            <span class="cat-pill-left">
-                <i class="bi bi-tag"></i> {{ category.name }}
-            </span>
-        </a>
-        {% endfor %}
-
-
-        <div class="filter-group">
-            <div class="filter-group-title">Minimum Rating</div>
-            <div class="rating-options">
-                <label class="rating-opt">
-                    <input type="radio" name="rating" value="0" checked onchange="applyFilters()">
-                    <div class="rating-stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                    </div>
-                    <span class="rating-label">Any Rating</span>
-                </label>
-                <label class="rating-opt">
-                    <input type="radio" name="rating" value="4" onchange="applyFilters()">
-                    <div class="rating-stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star empty"></i>
-                    </div>
-                    <span class="rating-label">4.0 & up</span>
-                </label>
-                <label class="rating-opt">
-                    <input type="radio" name="rating" value="4.5" onchange="applyFilters()">
-                    <div class="rating-stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-half"></i>
-                    </div>
-                    <span class="rating-label">4.5 & up</span>
-                </label>
-                <label class="rating-opt">
-                    <input type="radio" name="rating" value="5" onchange="applyFilters()">
-                    <div class="rating-stars">
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i><i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                    </div>
-                    <span class="rating-label">5.0 only</span>
-                </label>
-            </div>
-        </div>
-
-
-        <div class="filter-group">
-            <div class="filter-group-title">Hourly Rate ($)</div>
-            <div class="budget-inputs">
-                <div class="budget-input-wrap">
-                    <span>$</span>
-                    <input type="number" id="min-rate" placeholder="Min" oninput="applyFilters()">
-                </div>
-                <div class="budget-input-wrap">
-                    <span>$</span>
-                    <input type="number" id="max-rate" placeholder="Max" oninput="applyFilters()">
+            <!-- Search -->
+            <div class="filter-group">
+                <div class="filter-group-title">Search</div>
+                <div class="filter-search">
+                    <i class="bi bi-search"></i>
+                    <input type="text"
+                           name="search"
+                           placeholder="Name, skill, keyword..."
+                           value="{{ search|default:'' }}">
                 </div>
             </div>
-        </div>
 
+            <!-- Categories -->
+            <a href="{% url 'accounts:all_freelancer' %}"
+               class="cat-pill {% if not selected_category %}active{% endif %}">
+                <span class="cat-pill-left">
+                    <i class="bi bi-grid-fill"></i> All Categories
+                </span>
+            </a>
 
-        <div class="filter-group">
-            <div class="filter-group-title">Availability</div>
-            <div class="toggle-options">
-                <div class="toggle-row">
-                    <span>Available Now</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="toggle-available" onchange="applyFilters()">
-                        <span class="toggle-slider"></span>
-                    </label>
-                </div>
-                <div class="toggle-row">
-                    <span>Top Rated Only</span>
-                    <label class="toggle-switch">
-                        <input type="checkbox" id="toggle-top" onchange="applyFilters()">
-                        <span class="toggle-slider"></span>
-                    </label>
+            {% for category in categories %}
+            <a href="?category={{ category.id }}"
+               class="cat-pill {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
+                <span class="cat-pill-left">
+                    <i class="bi bi-tag"></i> {{ category.name }}
+                </span>
+            </a>
+            {% endfor %}
+
+            <!-- Hourly Rate -->
+            <div class="filter-group">
+                <div class="filter-group-title">Hourly Rate ($)</div>
+
+                <div class="budget-inputs">
+                    <div class="budget-input-wrap">
+                        <span>$</span>
+                        <input type="number"
+                               name="min_rate"
+                               placeholder="Min"
+                               value="{{ min_rate|default:'' }}">
+                    </div>
+
+                    <div class="budget-input-wrap">
+                        <span>$</span>
+                        <input type="number"
+                               name="max_rate"
+                               placeholder="Max"
+                               value="{{ max_rate|default:'' }}">
+                    </div>
                 </div>
             </div>
-        </div>
 
-        <button class="btn-apply-filter" onclick="applyFilters()">
-            <i class="bi bi-check2-circle"></i> Apply Filters
-        </button>
+            <!-- Sort -->
+            <div class="filter-group">
+                <div class="filter-group-title">Sort By</div>
 
-    </aside>
+                <select name="sort" class="sort-select">
+                    <option value="">Sort: Featured</option>
+                    <option value="low" {% if sort == "low" %}selected{% endif %}>
+                        Price: Low to High
+                    </option>
+                    <option value="high" {% if sort == "high" %}selected{% endif %}>
+                        Price: High to Low
+                    </option>
+                </select>
+            </div>
 
+            <!-- Keep category when applying filters -->
+            {% if selected_category %}
+            <input type="hidden" name="category" value="{{ selected_category }}">
+            {% endif %}
 
+            <button type="submit" class="btn-apply-filter">
+                <i class="bi bi-check2-circle"></i> Apply Filters
+            </button>
+
+        </aside>
+    </form>
+
+    <!-- Content -->
     <div class="content-area">
 
         <div class="content-toolbar">
             <div class="toolbar-left">
                 <span class="toolbar-result-count">
-                    <span id="toolbar-count">3</span> freelancers found
+                    <span>{{ freelancers|length }}</span> freelancers found
                 </span>
-                <div class="active-filter-tags" id="active-tags"></div>
-            </div>
-            <div class="toolbar-right">
-                <select class="sort-select" id="sort-select" onchange="applyFilters()">
-                    <option value="default">Sort: Featured</option>
-                    <option value="rating-high">Rating: High to Low</option>
-                    <option value="rate-low">Rate: Low to High</option>
-                    <option value="rate-high">Rate: High to Low</option>
-                    <option value="reviews">Most Reviews</option>
-                </select>
-                <div class="view-toggle">
-                    <button class="view-btn active" id="btn-grid" onclick="setView('grid')" title="Grid View">
-                        <i class="bi bi-grid-3x3-gap-fill"></i>
-                    </button>
-                    <button class="view-btn" id="btn-list" onclick="setView('list')" title="List View">
-                        <i class="bi bi-list-ul"></i>
-                    </button>
-                </div>
             </div>
         </div>
 
@@ -169,12 +123,8 @@
 
             {% for freelancer in freelancers %}
             <a class="fl-card"
-                href="{% url 'accounts:freelancer_profile_detail' freelancer.user.id %}"
-                data-rating="5"
-                data-rate="{{ freelancer.hourly_rate|default:0 }}" data-available="true"
-                data-top="false"
-                data-name="{{ freelancer.user.first_name }} {{ freelancer.user.last_name }}"
-                data-tags="{% for skill in freelancer.skills.all %}{{ skill.name }} {% endfor %}">
+               href="{% url 'accounts:freelancer_profile_detail' freelancer.user.id %}">
+
                 <div class="fl-card-bar"></div>
 
                 <div class="fl-card-body">
@@ -196,7 +146,11 @@
                             </div>
 
                             <div class="fl-role">
+                                {% if freelancer.job_title %}
                                 {{ freelancer.job_title }}
+                                {% else %}
+                                Not added yet
+                                {% endif %}
                             </div>
 
                             <div class="fl-rating">
@@ -222,7 +176,8 @@
                             </div>
 
                             <div class="fl-location">
-                                <i class="bi bi-geo-alt"></i> {{ freelancer.location }}
+                                <i class="bi bi-geo-alt"></i>
+                                {{ freelancer.location|default:"No location" }}
                             </div>
                         </div>
 
@@ -231,16 +186,16 @@
 
                 </div>
             </a>
+
+            {% empty %}
+            <div class="no-results" style="display:block;">
+                <i class="bi bi-search"></i>
+                <h3>No freelancers found</h3>
+                <p>Try adjusting your filters or search query.</p>
+            </div>
             {% endfor %}
 
         </div>
-
-        <div class="no-results" id="no-results">
-            <i class="bi bi-search"></i>
-            <h3>No freelancers found</h3>
-            <p>Try adjusting your filters or search query.</p>
-        </div>
-
 
     </div>
 

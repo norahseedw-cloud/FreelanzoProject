@@ -38,7 +38,7 @@
 
         <div class="pd-meta">
             <span><i class="bi bi-cash"></i> ${{ project.budget }}</span>
-            <span><i class="bi bi-tag"></i> {{ project.get_category_display }}</span>
+            <span><i class="bi bi-tag"></i> {{ project.category.name }}</span>
             <span class="status open">{{ project.get_status_display }}</span>
         </div>
     </div>
@@ -47,7 +47,11 @@
 
         <div class="client-top">
             <div class="avatar big">
+                \ {% if project.client.avatar %}
                 <img src="{{ project.client.avatar.url }}" class="avatar big">
+                {% else %}
+                <img src="{% static 'images/avatar/default.png' %}" class="avatar big">
+                {% endif %}
             </div>
 
             <div class="client-info">
@@ -64,7 +68,7 @@
                         <i class="bi bi-briefcase-fill"></i> Client
                     </span>
 
-                    
+
                 </div>
 
                 <p class="client-role">
