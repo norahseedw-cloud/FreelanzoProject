@@ -84,9 +84,10 @@ faqButtons.forEach(function (button) {
 });
 
 const menuBtn = document.querySelector('.menu-btn');
-    const container = document.getElementById('chatContainer');
-    const overlay = document.querySelector('.overlay');
+const container = document.getElementById('chatContainer');
+const overlay = document.querySelector('.overlay');
 
+if (menuBtn && container && overlay) {
     menuBtn.addEventListener('click', () => {
         container.classList.toggle('active');
     });
@@ -94,6 +95,7 @@ const menuBtn = document.querySelector('.menu-btn');
     overlay.addEventListener('click', () => {
         container.classList.remove('active');
     });
+}
 
 
 document.addEventListener("DOMContentLoaded", function () {

@@ -17,6 +17,7 @@
 }
 
 
+
 .contact-hero::after {
     content: '';
     position: absolute;
@@ -353,6 +354,32 @@
 
 .overlay {
     display: none;
+}
+
+.seen {
+    font-size: 12px;
+    margin-left: 5px;
+    color: gray;
+}
+
+
+.seen.read {
+    color: blue;
+}
+
+.delete-btn {
+    color: red;
+    font-size: 14px;
+    text-decoration: none;
+    transition: 0.2s ease;
+    margin-top:-18px ;
+    margin-left: 150px;
+    font-weight: bold;
+}
+
+.delete-btn:hover {
+    color: red;
+    transform: scale(1.2);
 }
 
 @media (max-width: 768px) {

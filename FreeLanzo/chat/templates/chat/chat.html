@@ -19,31 +19,53 @@
  
         <div class="chat-sidebar">
 
-            <h3>Messages</h3>
+    <h3>Messages</h3>
 
-            <div class="chat-user active">
-                <div class="avatar">N</div>
-                <div class="user-info">
-                    <span class="name">Norah</span>
-                    <span class="last-msg">Hey, are you available?</span>
-                </div>
-            </div>
+    {% for conver in conversations %}
+    <a href="{% url 'chat:chat_view' conver.id %}">
 
-            <div class="chat-user">
-                <div class="avatar">A</div>
-                <div class="user-info">
-                    <span class="name">Ahmed</span>
-                    <span class="last-msg">I sent the files</span>
-                </div>
+        <div class="chat-user {% if conver.id == conversation.id %}active{% endif %}">
+
+            <div class="avatar">N</div>
+
+            <div class="user-info">
+
+                <span class="name">
+                    {% if conver.user1 == request.user %}
+                        {{ conver.user2.first_name }}
+                    {% else %}
+                        {{ conver.user1.first_name }}
+                    {% endif %}
+
+                    {% if conver.unread_count > 0 %}
+                        <span class="badge">{{ conver.unread_count }}</span>
+                    {% endif %}
+                </span>
+                <a href="{% url 'chat:delete_conversation' conversation.id %}"class="delete-btn">
+                    Delete
+                </a>
+
+                <span class="last-msg">
+                    {% if conver.message_set.all.last %}
+                        {{ conver.message_set.all.last.content }}
+                    {% else %}
+                        No messages yet
+                    {% endif %}
+                </span>
+
             </div>
 
         </div>
 
+    </a>
+    {% endfor %}
+
+</div>
+
         <div class="chat-area">
 
             <div class="chat-header">
-
-
+                
                 <button class="menu-btn">
                     <i class="bi bi-list"></i>
                 </button>
@@ -51,43 +73,62 @@
                 <div class="avatar big">N</div>
 
                 <div>
-                    <h4>Norah</h4>
-                    <span>Online</span>
+                    <h4>
+                        {% if conversation.user1 == request.user %}
+                            {{ conversation.user2.first_name }}
+                        {% else %}
+                            {{ conversation.user1.first_name }}
+                        {% endif %}
+                    </h4>
+                    
                 </div>
 
             </div>
-
-           
             <div class="chat-messages">
+                {% if conversation %}
 
-                <div class="message other">
-                    Hello! 👋
-                </div>
+                {%for message in messages%}
 
-                <div class="message you">
-                    Hi! How are you?
-                </div>
-
-                <div class="message other">
-                    I'm good, working on the project.
-                </div>
+                {%if message.sender == request.user%}
 
                 <div class="message you">
-                    Nice! Send me updates.
+                    {{message.content}}
+                    {% if message.is_read %}
+            <span class="seen read">✓✓</span>
+        {% else %}
+            <span class="seen">✓</span>
+        {% endif %}
                 </div>
+
+                {%else%}
+                <div class="message other">
+                    {{message.content}}
+                </div>
+
+                {%endif%}
+                {%endfor%}
 
             </div>
 
-            
+            <form action="{%url 'chat:chat_view' conversation.id%}" method="post">
+                {% csrf_token %}
             <div class="chat-input">
-                <input type="text" placeholder="Type a message...">
+                <input type="text" placeholder="Type a message..." name="content">
 
-                <button>
+                <button type="submit">
                     <i class="bi bi-send-fill"></i>
                 </button>
             </div>
+            </form>
+            {% else %}
 
+                <div class="empty-chat">
+                    <p>Select a conversation to start chatting</p>
+                </div>
+
+            {% endif %}
         </div>
+        
 
     </div>
 

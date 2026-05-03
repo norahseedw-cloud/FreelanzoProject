@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
 from .forms import SignUpForm
 from .models import UserType, FreelancerProfile, ClientProfile
-from django.contrib.auth import login,authenticate
+from django.contrib.auth import login,authenticate,logout
 
 
 # Create your views here.
@@ -51,6 +51,10 @@ def sign_in_view(request:HttpRequest):
             print("Login failed")
 
     return render(request, "accounts/sign-in.html")
+
+def logout_view(request:HttpRequest):
+    logout(request)
+    return redirect("accounts:sign_in_view")
 
 def terms_conditions_view(request:HttpRequest):
     
