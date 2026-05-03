@@ -26,7 +26,27 @@
 
         <div class="chat-user {% if conver.id == conversation.id %}active{% endif %}">
 
-            <div class="avatar">N</div>
+            {% if conver.user1 == request.user %}
+    
+    {% if conver.user2.freelancerprofile.avatar %}
+        <img src="{{ conver.user2.freelancerprofile.avatar.url }}" class="avatar">
+    {% elif conver.user2.clientprofile.avatar %}
+        <img src="{{ conver.user2.clientprofile.avatar.url }}" class="avatar">
+    {% else %}
+        <img src="/static/default-avatar.png" class="avatar">
+    {% endif %}
+
+{% else %}
+
+    {% if conver.user1.freelancerprofile.avatar %}
+        <img src="{{ conver.user1.freelancerprofile.avatar.url }}" class="avatar">
+    {% elif conver.user1.clientprofile.avatar %}
+        <img src="{{ conver.user1.clientprofile.avatar.url }}" class="avatar">
+    {% else %}
+        <img src="/static/default-avatar.png" class="avatar">
+    {% endif %}
+
+{% endif %}
 
             <div class="user-info">
 
@@ -41,9 +61,11 @@
                         <span class="badge">{{ conver.unread_count }}</span>
                     {% endif %}
                 </span>
-                <a href="{% url 'chat:delete_conversation' conversation.id %}"class="delete-btn">
+                {% if conversation %}
+                <a href="{% url 'chat:delete_conversation' conver.id %}"class="delete-btn">
                     Delete
                 </a>
+                {% endif %}
 
                 <span class="last-msg">
                     {% if conver.message_set.all.last %}

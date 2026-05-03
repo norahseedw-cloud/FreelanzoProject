@@ -1,6 +1,5 @@
 from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
-
 from .forms import SignUpForm,FreelancerProfileForm,PortfolioProjectForm,ClientProfileForm,ProjectForm
 from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage,Project,Category
 from django.contrib.auth import login,authenticate, logout
@@ -36,7 +35,6 @@ def sign_up_view(request):
         form = SignUpForm()
 
     return render(request, "accounts/sign-up.html", {"form": form})
-
 
 
 def sign_in_view(request):

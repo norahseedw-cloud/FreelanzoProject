@@ -27,7 +27,7 @@ class Skill(models.Model):
 
 class FreelancerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='freelancer_avatars/', blank=True, null=True)
+    avatar = models.ImageField(upload_to='freelancer_avatars/', blank=True, null=True, default='default-avatar.avif')
     job_title = models.CharField(max_length=150, blank=True)
     location = models.CharField(max_length=150, blank=True)
     about = models.TextField(blank=True)
@@ -53,7 +53,7 @@ class FreelancerProfile(models.Model):
 class ClientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
 
-    avatar = models.ImageField(upload_to='client_avatars/', blank=True, null=True)
+    avatar = models.ImageField(upload_to='client_avatars/', blank=True, null=True,default='default-avatar.avif')
     company_name = models.CharField(max_length=150, blank=True)
     job_title = models.CharField(max_length=150, blank=True)
     location = models.CharField(max_length=150, blank=True)
