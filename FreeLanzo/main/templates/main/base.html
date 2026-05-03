@@ -56,6 +56,10 @@
                 <li><a href="{%url 'marketplace:projects_view'%}">Projects</a></li>
                 <li><a href="{%url 'accounts:all_freelancer'%}">Freelancers</a></li>
                 <li><a href="{%url 'chat:contact_view'%}">Contact Us</a></li>
+
+                <li><a href="{%url 'main:about_view'%}">About Us</a></li>
+                
+
             </ul>
         </div>
 
@@ -69,9 +73,7 @@
                 {% endif %}
             </a>
 
-            <a href="{% url 'chat:chat_view' %}" class="icon-btn">
-                <i class="bi bi-chat-dots"></i>
-            </a>
+            <!--  -->
 
             {% if request.user.is_authenticated %}
 

@@ -77,6 +77,21 @@ faqButtons.forEach(function (button) {
 });
 
 
+const menuBtn = document.querySelector('.menu-btn');
+const container = document.getElementById('chatContainer');
+const overlay = document.querySelector('.overlay');
+
+if (menuBtn && container && overlay) {
+    menuBtn.addEventListener('click', () => {
+        container.classList.toggle('active');
+    });
+
+    overlay.addEventListener('click', () => {
+        container.classList.remove('active');
+    });
+}
+
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const modal = document.getElementById("roleModal");

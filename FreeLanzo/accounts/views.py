@@ -1,5 +1,6 @@
 from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
+
 from .forms import SignUpForm,FreelancerProfileForm,PortfolioProjectForm,ClientProfileForm,ProjectForm
 from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage,Project
 from django.contrib.auth import login,authenticate, logout
@@ -82,6 +83,7 @@ def sign_in_view(request):
 def logout_view(request):
     logout(request)
     return redirect("main:home")
+
 
 
 def terms_conditions_view(request:HttpRequest):
