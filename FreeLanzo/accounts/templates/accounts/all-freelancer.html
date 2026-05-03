@@ -35,33 +35,22 @@
             </div>
         </div>
 
-        <div class="cat-pill active" data-cat="all" onclick="selectCategory(this, 'all')">
-            <span class="cat-pill-left"><i class="bi bi-grid-fill"></i> All Categories</span>
-        </div>
+        <a href="{% url 'accounts:all_freelancer' %}"
+            class="cat-pill {% if not selected_category %}active{% endif %}">
+            <span class="cat-pill-left">
+                <i class="bi bi-grid-fill"></i> All Categories
+            </span>
+        </a>
 
-        <div class="cat-pill" data-cat="programming_tech" onclick="selectCategory(this, 'programming_tech')">
-            <span class="cat-pill-left"><i class="bi bi-code-slash"></i> Programming & Tech</span>
-        </div>
+        {% for category in categories %}
+        <a href="?category={{ category.id }}"
+            class="cat-pill {% if selected_category == category.id|stringformat:'s' %}active{% endif %}">
+            <span class="cat-pill-left">
+                <i class="bi bi-tag"></i> {{ category.name }}
+            </span>
+        </a>
+        {% endfor %}
 
-        <div class="cat-pill" data-cat="graphics_design" onclick="selectCategory(this, 'graphics_design')">
-            <span class="cat-pill-left"><i class="bi bi-palette2"></i> Graphics & Design</span>
-        </div>
-
-        <div class="cat-pill" data-cat="digital_marketing" onclick="selectCategory(this, 'digital_marketing')">
-            <span class="cat-pill-left"><i class="bi bi-megaphone"></i> Digital Marketing</span>
-        </div>
-
-        <div class="cat-pill" data-cat="video_animation" onclick="selectCategory(this, 'video_animation')">
-            <span class="cat-pill-left"><i class="bi bi-camera-video"></i> Video & Animation</span>
-        </div>
-
-        <div class="cat-pill" data-cat="writing_translation" onclick="selectCategory(this, 'writing_translation')">
-            <span class="cat-pill-left"><i class="bi bi-pen"></i> Writing & Translation</span>
-        </div>
-
-        <div class="cat-pill" data-cat="business" onclick="selectCategory(this, 'business')">
-            <span class="cat-pill-left"><i class="bi bi-briefcase"></i> Business</span>
-        </div>
 
         <div class="filter-group">
             <div class="filter-group-title">Minimum Rating</div>
@@ -181,13 +170,11 @@
             {% for freelancer in freelancers %}
             <a class="fl-card"
                 href="{% url 'accounts:freelancer_profile_detail' freelancer.user.id %}"
-                data-cat="{{ freelancer.category }}"
                 data-rating="5"
                 data-rate="{{ freelancer.hourly_rate|default:0 }}" data-available="true"
                 data-top="false"
                 data-name="{{ freelancer.user.first_name }} {{ freelancer.user.last_name }}"
-                data-tags="{{ freelancer.skills }}">
-
+                data-tags="{% for skill in freelancer.skills.all %}{{ skill.name }} {% endfor %}">
                 <div class="fl-card-bar"></div>
 
                 <div class="fl-card-body">
@@ -221,8 +208,10 @@
                     </div>
 
                     <div class="fl-tags">
-                        {% for skill in freelancer.skills.split %}
-                        <span class="fl-tag">{{ skill }}</span>
+                        {% for skill in freelancer.skills.all %}
+                        <span class="fl-tag">{{ skill.name }}</span>
+                        {% empty %}
+                        <span class="fl-tag">No skills yet</span>
                         {% endfor %}
                     </div>
 

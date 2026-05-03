@@ -2,7 +2,7 @@ from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
 
 from .forms import SignUpForm,FreelancerProfileForm,PortfolioProjectForm,ClientProfileForm,ProjectForm
-from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage,Project
+from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage,Project,Category
 from django.contrib.auth import login,authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
@@ -37,29 +37,6 @@ def sign_up_view(request):
 
     return render(request, "accounts/sign-up.html", {"form": form})
 
-
-
-
-
-
-# def sign_in_view(request:HttpRequest):
-    if request.method == "POST":
-        username = request.POST.get("username")
-        password = request.POST.get("password")
-
-        user = authenticate(request, username=username, password=password)
-
-        if user is not None:
-            login(request, user)
-
-            request.session['show_complete_profile'] = True
-
-            return redirect("main:home")
-
-        else:
-            print("Login failed")
-
-    return render(request, "accounts/sign-in.html")
 
 
 def sign_in_view(request):
@@ -114,18 +91,18 @@ def freelancer_profile_view(request):
 
 def all_freelancer_view(request):
     freelancers = FreelancerProfile.objects.all()
+    categories = Category.objects.all()
 
-    category = request.GET.get('category')
+    category_id = request.GET.get('category')
 
-    if category:
-        freelancers = freelancers.filter(category=category)
+    if category_id:
+        freelancers = freelancers.filter(skills__categories__id=category_id).distinct()
 
-    category_dict = dict(FreelancerProfile.CATEGORY_CHOICES)
-    category_name = category_dict.get(category)
 
     return render(request, 'accounts/all-freelancer.html', {
         'freelancers': freelancers,
-        'selected_category': category_name,
+        'categories': categories,
+        'selected_category': category_id,
     })
 
 
@@ -167,12 +144,13 @@ def add_portfolio_project(request):
             project.freelancer = profile
             project.save()
 
-            images = request.FILES.getlist('images')
-            for img in images:
-                PortfolioProjectImage.objects.create(
-                    project=project,
-                    image=img
-                )
+        images = request.FILES.getlist('images')
+
+        for img in images:
+            PortfolioProjectImage.objects.create(
+                project=project,
+                image=img
+            )
 
             return redirect("accounts:freelancer_profile")
     else:

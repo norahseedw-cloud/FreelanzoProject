@@ -126,32 +126,8 @@ function skipProfile(){
 }
 
 
-const menuBtn = document.querySelector('.menu-btn');
-const container = document.getElementById('chatContainer');
-const overlay = document.querySelector('.overlay');
-
-if (menuBtn && container && overlay) {
-    menuBtn.addEventListener('click', () => {
-        container.classList.toggle('active');
-    });
-
-    overlay.addEventListener('click', () => {
-        container.classList.remove('active');
-    });
-}
 // 
-let selectedCategory = "all";
 
-function selectCategory(element, category) {
-    selectedCategory = category;
-
-    document.querySelectorAll(".cat-pill").forEach(pill => {
-        pill.classList.remove("active");
-    });
-
-    element.classList.add("active");
-    applyFilters();
-}
 
 function applyFilters() {
     const cards = document.querySelectorAll(".fl-card");
@@ -163,13 +139,9 @@ function applyFilters() {
     let visibleCount = 0;
 
     cards.forEach(card => {
-        const cardCategory = card.dataset.cat;
         const cardRate = parseFloat(card.dataset.rate) || 0;
         const cardName = card.dataset.name.toLowerCase();
         const cardTags = card.dataset.tags.toLowerCase();
-
-        const matchCategory =
-            selectedCategory === "all" || cardCategory === selectedCategory;
 
         const matchSearch =
             cardName.includes(searchInput) || cardTags.includes(searchInput);
@@ -177,12 +149,12 @@ function applyFilters() {
         const matchRate =
             cardRate >= minRate && cardRate <= maxRate;
 
-        if (matchCategory && matchSearch && matchRate) {
-            card.style.display = "block";
-            visibleCount++;
-        } else {
-            card.style.display = "none";
-        }
+if (matchSearch && matchRate) {
+    card.style.display = "block";
+    visibleCount++;
+} else {
+    card.style.display = "none";
+}
     });
 
     document.getElementById("result-count").textContent = visibleCount;

@@ -43,7 +43,6 @@ class FreelancerProfileForm(forms.ModelForm):
             'avatar',
             'job_title',
             'location',
-            'category',
             'about',
             'skills',
             'hourly_rate',
