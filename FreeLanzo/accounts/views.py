@@ -86,8 +86,7 @@ def freelancer_profile_view(request):
         skills__in=profile.skills.all()
     ).exclude(user=request.user).distinct()[:3]
 
-        category=profile.category,
-    ).exclude(user=request.user)[:3]
+    # category=(profile.category,).exclude(user=request.user)[:3]
     
 
 
@@ -251,11 +250,11 @@ def freelancer_profile_detail(request, user_id):
                 freelancer=profile
             ).exists()
 
-    return render(request, "accounts/freelancer-profile.html", {
+    return render(request, "accounts/freelancer-profile.html",{
         "profile": profile,
         "projects": projects,
         "similar_freelancers": similar_freelancers,
-        "is_liked": is_liked
+        "is_liked": is_liked,
 
         "can_review":can_review,
         "reviews":reviews,
@@ -263,7 +262,7 @@ def freelancer_profile_detail(request, user_id):
     "reviews_count": reviews_count,
     })
 
-    })
+    
 @login_required
 def update_portfolio_project(request, project_id):
     project = get_object_or_404(PortfolioProject, id=project_id, freelancer__user=request.user)
@@ -536,6 +535,10 @@ def project_detail_view(request: HttpRequest, project_id):
     return render(request, 'marketplace/project-detail.html', {
         'project': project,
         'client_projects_count': client_projects_count,
+        'form': form,
+        'existing_proposal': existing_proposal,
+        'proposals': proposals,
+        'accepted_proposal':accepted_proposal
 
     })
 
@@ -572,13 +575,9 @@ def favorite_freelancers_view(request):
     ).select_related('freelancer__user')
 
     return render(request, 'accounts/favorite_freelancers.html', {
-        'favorites': favorites
+        'favorites': favorites,
     })
 
-        'form': form,
-        'existing_proposal': existing_proposal,
-        'proposals': proposals,
-        'accepted_proposal':accepted_proposal
-    })
+    
 
 
