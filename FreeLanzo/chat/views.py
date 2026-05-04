@@ -26,7 +26,7 @@ def contact_view(request:HttpRequest):
 
     return render(request,'chat/contact-us.html')
 
-
+@login_required(login_url='accounts:sign_in_view')
 def chat_view(request:HttpRequest, conversation_id=None):
 
     if conversation_id:

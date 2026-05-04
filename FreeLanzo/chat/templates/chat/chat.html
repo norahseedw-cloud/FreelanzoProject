@@ -18,7 +18,9 @@
 
  
         <div class="chat-sidebar mt-3 ms-2">
-
+    <button class="back-btn">
+        <i class="bi bi-arrow-left"></i>
+    </button>
             <h3>Messages</h3>
 
             {% for conver in conversations %}
@@ -88,9 +90,9 @@
 
             <div class="chat-header">
                 
-                <button class="menu-btn">
-                    <i class="bi bi-list"></i>
-                </button>
+<button class="menu-btn" id="chatToggleBtn">
+    <i class="bi bi-list"></i>
+</button>
 
                 <div class="avatar big">
 
@@ -215,19 +217,4 @@
     </div>
   </div>
 </div>
-<script>
-document.addEventListener('DOMContentLoaded', function () {
-
-    const deleteModal = document.getElementById('deleteModal');
-    const deleteForm = document.getElementById('deleteForm');
-
-    deleteModal.addEventListener('show.bs.modal', function (event) {
-        const button = event.relatedTarget;
-        const conversationId = button.getAttribute('data-id');
-
-        deleteForm.action = `/chat/${conversationId}/delete/`;
-    });
-
-});
-</script>
 {% endblock %}

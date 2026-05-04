@@ -66,24 +66,28 @@
                     </span>
                 </div>
             </div>
-            {% if request.user == profile.user %}
-            <a href="{% url 'accounts:update_client_profile' %}" class="btn-view-projects">
-                <i class="bi bi-pencil-square"></i> Edit Profile
-            </a>
-            {% endif %}
+
             <!-- Actions -->
             <div class="profile-actions">
+                {% if request.user == profile.user %}
+                <a href="{% url 'accounts:update_client_profile' %}" class="btn-hire">
+                    <i class="bi bi-pencil-square"></i> Edit Profile
+                </a>
+                {% endif %}
+
                 {% if request.user.is_authenticated and request.user != profile.user %}
-                <a href="{% url 'chat:start_chat' profile.user.id %}" class="btn-contact">
+                <a href="{% url 'chat:start_chat' profile.user.id %}" class="btn-message">
                     <i class="bi bi-chat-dots"></i> Contact
                 </a>
                 {% endif %}
-                <a class="btn-view-projects" href="#project-section">
+
+                <a href="#project-section" class="btn-message">
                     <i class="bi bi-folder2-open"></i> View Projects
                 </a>
             </div>
 
         </div>
+        <!-- End profile-top -->
 
         <!-- Stats Row -->
         <div class="profile-stats-row">
@@ -114,6 +118,7 @@
 
     </div>
 
+
     <div class="profile-grid">
 
         <!--  LEFT COLUMN  -->
@@ -130,61 +135,61 @@
                     {% else %}
                     No about information added yet.
                     {% endif %}
-                <p class="about-text" style="margin-top:12px;">
+                </p>
 
             </div>
 
             <!-- Active Projects -->
             <div class="profile-card" id="project-section">
-    <h3 class="card-title">
-        <i class="bi bi-folder2-open"></i> Active & Recent Projects
-    </h3>
+                <h3 class="card-title">
+                    <i class="bi bi-folder2-open"></i> Active & Recent Projects
+                </h3>
 
-    <div class="project-list">
-        {% for project in projects %}
-        <div class="project-item">
+                <div class="project-list">
+                    {% for project in projects %}
+                    <div class="project-item">
 
-    <div class="project-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
+                        <div class="project-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
 
-    
-        <div style="flex:1;">
-            <a href="{% url 'accounts:project_detail' project.id %}" class="text-dark">
-                <div class="project-title ">{{ project.title }}</div>
-            </a>
 
-            <div class="project-cat">{{ project.category.name }}</div>
+                            <div style="flex:1;">
+                                <a href="{% url 'accounts:project_detail' project.id %}" class="text-dark">
+                                    <div class="project-title ">{{ project.title }}</div>
+                                </a>
 
-            
-            <p class="project-desc mt-2">
-                {{ project.description|truncatewords:25 }}
-            </p>
-        </div>
+                                <div class="project-cat">{{ project.category.name }}</div>
 
-       
-        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:120px;">
 
-            <div class="project-budget">${{ project.budget }}</div>
+                                <p class="project-desc mt-2">
+                                    {{ project.description|truncatewords:25 }}
+                                </p>
+                            </div>
 
-            <span class="status-badge status-open">
-                {{ project.get_status_display }}
-            </span>
 
-            <a href="{% url 'accounts:update_project' project.id%}"
-               class="btn btn-custom">
-                Update
-            </a>
+                            <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:120px;">
 
-        </div>
+                                <div class="project-budget">${{ project.budget }}</div>
 
-    </div>
+                                <span class="status-badge status-open">
+                                    {{ project.get_status_display }}
+                                </span>
 
-</div>
-        {% empty %}
-        <p class="about-text">No projects posted yet.</p>
-        {% endfor %}
-    </div>
+                                <a href="{% url 'accounts:update_project' project.id%}"
+                                    class="btn btn-custom">
+                                    Update
+                                </a>
 
-</div>
+                            </div>
+
+                        </div>
+
+                    </div>
+                    {% empty %}
+                    <p class="about-text">No projects posted yet.</p>
+                    {% endfor %}
+                </div>
+
+            </div>
 
 
         </div>

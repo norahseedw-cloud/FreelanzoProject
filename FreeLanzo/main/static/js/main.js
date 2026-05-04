@@ -23,20 +23,7 @@ if (menuToggle && navCenter) {
     });
 }
 
-const revealElements = document.querySelectorAll(".reveal");
-
-function revealOnScroll() {
-    revealElements.forEach((element) => {
-        if (element.getBoundingClientRect().top < window.innerHeight - 100) {
-            element.classList.add("show");
-        }
-    });
-}
-
-window.addEventListener("scroll", revealOnScroll);
-window.addEventListener("load", revealOnScroll);
-
-const programTrack = document.getElementById("programTrack");
+const programTrack = document.querySelector(".program-track");
 
 if (programTrack) {
     const items = Array.from(programTrack.children);
@@ -56,24 +43,16 @@ faqButtons.forEach(function (button) {
 
 
 document.addEventListener("DOMContentLoaded", function () {
-
     const modal = document.getElementById("roleModal");
     const roleInput = document.getElementById("roleInput");
     const form = document.getElementById("signupForm");
 
     if (!modal || !roleInput || !form) return;
 
-    const selectedRole = localStorage.getItem("selectedRole");
-
-    if (!selectedRole) {
-        modal.style.display = "flex";
-    } else {
-        roleInput.value = selectedRole;
-    }
+    modal.style.display = "flex";
 
     window.selectRole = function(role) {
         roleInput.value = role;
-        localStorage.setItem("selectedRole", role);
         modal.style.display = "none";
     };
 
@@ -83,7 +62,6 @@ document.addEventListener("DOMContentLoaded", function () {
             modal.style.display = "flex";
         }
     });
-
 });
 
 function skipProfile(){
@@ -119,5 +97,71 @@ document.addEventListener("DOMContentLoaded", function () {
                 : '<i class="bi bi-eye"></i>';
         });
     }
+
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+    const revealElements = document.querySelectorAll(".reveal");
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach((entry) => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add("show");
+            }
+        });
+    }, {
+        threshold: 0.15
+    });
+
+    revealElements.forEach((element) => {
+        observer.observe(element);
+    });
+});
+document.addEventListener("DOMContentLoaded", function () {
+    const chatContainer = document.getElementById("chatContainer");
+    const btn = document.getElementById("chatToggleBtn");
+    const overlay = document.querySelector(".overlay");
+    const backBtn = document.querySelector(".back-btn");
+
+    function closeChatSidebar() {
+        chatContainer.classList.remove("active");
+
+        if (btn) {
+            btn.innerHTML = '<i class="bi bi-list"></i>';
+        }
+    }
+
+    if (chatContainer && btn) {
+        btn.addEventListener("click", function () {
+            chatContainer.classList.toggle("active");
+
+            if (chatContainer.classList.contains("active")) {
+                btn.innerHTML = '<i class="bi bi-x-lg"></i>';
+            } else {
+                btn.innerHTML = '<i class="bi bi-list"></i>';
+            }
+        });
+    }
+
+    if (overlay && chatContainer) {
+        overlay.addEventListener("click", closeChatSidebar);
+    }
+
+    if (backBtn && chatContainer) {
+        backBtn.addEventListener("click", closeChatSidebar);
+    }
+});
+
+document.addEventListener('DOMContentLoaded', function () {
+
+    const deleteModal = document.getElementById('deleteModal');
+    const deleteForm = document.getElementById('deleteForm');
+
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const conversationId = button.getAttribute('data-id');
+
+        deleteForm.action = `/chat/${conversationId}/delete/`;
+    });
 
 });

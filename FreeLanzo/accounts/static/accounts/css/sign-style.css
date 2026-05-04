@@ -16,9 +16,11 @@
   height: auto;
   border-radius: 20px;
 }
-.card.sign-style > .row {
+
+.card.sign-style>.row {
   min-height: 450px;
 }
+
 .btn.btn-outline-light:hover {
   background-color: var(--btn-color);
   color: white;
@@ -163,7 +165,7 @@
   padding-left: 18px;
 }
 
-.sign-style .bg-white > div {
+.sign-style .bg-white>div {
   width: 80% !important;
 }
 
@@ -189,6 +191,7 @@
 .custom-error-box li {
   margin-bottom: 4px;
 }
+
 .forgot-link {
   color: var(--color-navy);
   text-decoration: none;
@@ -198,7 +201,7 @@
 .forgot-link:hover {
   color: #CE2626;
 }
-=======
+
 /* =====  PAGES DARK ===== */
 /* 
 body.dark .box {
@@ -262,4 +265,3 @@ body.dark .freelancer {
 body.dark .client {
     background: #7c3aed;
 } */
-

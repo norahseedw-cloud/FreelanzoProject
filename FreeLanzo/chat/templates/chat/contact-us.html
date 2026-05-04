@@ -28,15 +28,15 @@
 
 
 <!-- FORM -->
-<div class="contact-wrapper">
-    
-    <div class="contact-card">
+<div class="message-wrapper">
+
+    <div class="message-card">
 
         <h2>Send Message</h2>
 
         <form method="POST">
             {% csrf_token %}
-            
+
             <textarea name="message" placeholder="Write your message here..." required></textarea>
 
             <button type="submit">
@@ -47,5 +47,4 @@
 
     </div>
 </div>
-
 {% endblock %}
