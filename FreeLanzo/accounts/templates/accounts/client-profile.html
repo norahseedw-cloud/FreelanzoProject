@@ -136,37 +136,55 @@
 
             <!-- Active Projects -->
             <div class="profile-card" id="project-section">
-                <h3 class="card-title">
-                    <i class="bi bi-folder2-open"></i> Active & Recent Projects
-                </h3>
+    <h3 class="card-title">
+        <i class="bi bi-folder2-open"></i> Active & Recent Projects
+    </h3>
 
-                <div class="project-list">
-                    {% for project in projects %}
-                    <a href="{% url 'accounts:project_detail' project.id %}" class="project-item">
-                        <div class="project-header">
-                            <div>
-                                <div class="project-title">{{ project.title }}</div>
-                                <div class="project-cat">{{ project.category.name }}</div>
-                            </div>
+    <div class="project-list">
+        {% for project in projects %}
+        <div class="project-item">
 
-                            <div style="text-align:right;">
-                                <div class="project-budget">${{ project.budget }}</div>
-                                <span class="status-badge status-open">
-                                    {{ project.get_status_display }}
-                                </span>
-                            </div>
-                        </div>
+    <div class="project-header" style="display:flex; justify-content:space-between; align-items:flex-start;">
 
-                        <p class="project-desc">
-                            {{ project.description|truncatewords:25 }}
-                        </p>
-                    </a>
-                    {% empty %}
-                    <p class="about-text">No projects posted yet.</p>
-                    {% endfor %}
-                </div>
+    
+        <div style="flex:1;">
+            <a href="{% url 'accounts:project_detail' project.id %}" class="text-dark">
+                <div class="project-title ">{{ project.title }}</div>
+            </a>
 
-            </div>
+            <div class="project-cat">{{ project.category.name }}</div>
+
+            
+            <p class="project-desc mt-2">
+                {{ project.description|truncatewords:25 }}
+            </p>
+        </div>
+
+       
+        <div style="display:flex; flex-direction:column; align-items:flex-end; gap:6px; min-width:120px;">
+
+            <div class="project-budget">${{ project.budget }}</div>
+
+            <span class="status-badge status-open">
+                {{ project.get_status_display }}
+            </span>
+
+            <a href="{% url 'accounts:update_project' project.id%}"
+               class="btn btn-custom">
+                Update
+            </a>
+
+        </div>
+
+    </div>
+
+</div>
+        {% empty %}
+        <p class="about-text">No projects posted yet.</p>
+        {% endfor %}
+    </div>
+
+</div>
 
 
         </div>

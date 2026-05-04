@@ -262,9 +262,11 @@
                 Amount: ${{ accepted_proposal.price }}
             </p>
 
-            <button class="btn-primary">
-                Pay Now
-            </button>
+
+        <a href="{% url 'payment:pay_project' project.id %}" class="btn btn-success">
+            Pay Now
+        </a>
+
 
         </div>
     </div>

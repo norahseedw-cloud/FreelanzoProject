@@ -107,6 +107,7 @@
   color: white;
 }
 
+
 /*  */
 .password-wrapper {
   position: relative;
@@ -197,3 +198,68 @@
 .forgot-link:hover {
   color: #CE2626;
 }
+=======
+/* =====  PAGES DARK ===== */
+/* 
+body.dark .box {
+    background: linear-gradient(
+        135deg,
+        #1f2937 0%,
+        #1e3a8a 60%,
+        #14b8a6 100%
+    );
+}
+
+
+
+body.dark .card.sign-style {
+    background: #1f2937;
+    border: 1px solid #374151;
+    color: #f9fafb;
+}
+
+
+
+body.dark .link-in a {
+    color: #60a5fa;
+}
+
+body.dark .link-up a {
+    color: #14b8a6;
+}
+
+
+body.dark .role-modal {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+
+
+body.dark .role-modal-content {
+    background: #1f2937;
+    border: 1px solid #374151;
+    color: #f9fafb;
+}
+
+
+body.dark .role-btn {
+    background: #374151;
+    color: #f9fafb;
+}
+
+body.dark .role-btn:hover {
+    opacity: 0.9;
+}
+
+
+
+body.dark .freelancer {
+    background: #14b8a6;
+}
+
+
+
+body.dark .client {
+    background: #7c3aed;
+} */
+
