@@ -32,8 +32,9 @@
             <a href="{% url 'accounts:client_profile' %}" class="btn btn-primary">Complete</a>
             {% endif %}
 
-            <button class="btn btn-link mt-2" onclick="closeModal()">Skip</button>
-
+<a href="{% url 'accounts:skip_complete_profile' %}" class="btn btn-link mt-2">
+    Skip
+</a>
         </div>
     </div>
 </div>
@@ -594,21 +595,4 @@
 <!--  CTA End  -->
 
 
-
-
-
-
-
-
-
-
-
-<script>
-    function closeModal() {
-        document.getElementById('profileModal').style.display = 'none';
-
-        const backdrop = document.querySelector('.modal-backdrop');
-        if (backdrop) backdrop.remove();
-    }
-</script>
 {% endblock %}

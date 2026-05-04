@@ -21,22 +21,25 @@
 
             <!-- Avatar -->
             <div class="avatar-wrap">
-                {% if profile.avatar %}
-                <img src="{{ profile.avatar.url }}" class="profile-avatar">
-                {% else %}
-                <img src="/media/default-avatar.avif" class="profile-avatar">
-                {% endif %}
+                <input type="file" name="avatar" id="avatarInput" hidden accept="image/*">
+
+                <label for="avatarInput">
+                    <img id="avatarPreview"
+                        src="{% if profile.avatar %}{{ profile.avatar.url }}{% else %}/media/default-avatar.avif{% endif %}"
+                        class="profile-avatar">
+                </label>
 
                 <div class="online-badge"></div>
             </div>
 
+            <!-- Identity -->
             <div class="profile-identity">
                 <div class="profile-name-row">
-
-                    <span class="profile-name"> {{ profile.user.first_name }} {{ profile.user.last_name }}</span>
-
-
+                    <span class="profile-name">
+                        {{ profile.user.first_name }} {{ profile.user.last_name }}
+                    </span>
                 </div>
+
                 <p class="profile-role">
                     {% if profile.job_title %}
                     {{ profile.job_title }}
@@ -44,45 +47,31 @@
                     Not added yet
                     {% endif %}
                 </p>
+
                 <div class="profile-meta">
                     <span class="meta-item">
                         <i class="bi bi-geo-alt"></i>
-                        {% if profile.location %}
-                        {{ profile.location }}
-                        {% else %}
-                        Not added yet
-                        {% endif %}
+                        {{ profile.location|default:"Not added yet" }}
                     </span>
-                    <span class="meta-item">
-                        <i class="bi bi-tags"></i>
-                        {% if profile.skills.all %}
-                        {% for skill in profile.skills.all %}
-                        {% for category in skill.categories.all %}
-                        <span>{{ category.name }}</span>
-                        {% endfor %}
-                        {% endfor %}
-                        {% else %}
-                        Not added yet
-                        {% endif %}
-                    </span>
-
-
                 </div>
             </div>
 
+            <!-- Actions -->
             <div class="profile-actions">
+
                 {% if request.user == profile.user %}
                 <a href="{% url 'accounts:update_freelancer_profile' %}" class="btn-hire">
                     Update Profile
                 </a>
                 {% endif %}
+
+                {% if request.user.is_authenticated and request.user != profile.user %}
                 <a class="btn-message" href="{% url 'chat:start_chat' profile.user.id %}">
                     <i class="bi bi-chat-dots"></i> Message
                 </a>
 
-                {% if request.user.is_authenticated %}
                 {% if request.user.usertype.role == 'client' %}
-                <form method="POST" action="{% url 'accounts:toggle_favorite_freelancer' profile.id %}" style="display:inline;">
+                <form method="POST" action="{% url 'accounts:toggle_favorite_freelancer' profile.id %}">
                     {% csrf_token %}
                     <button class="btn-save" type="submit">
                         <i class="bi {% if is_liked %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
@@ -90,6 +79,7 @@
                 </form>
                 {% endif %}
                 {% endif %}
+
 
                     <a href="{% url 'accounts:update_freelancer_profile' %}" class="btn-hire">
                         Update Profile
@@ -102,36 +92,43 @@
                 {% endif %}
                 <button class="btn-save"><i class="bi bi-heart"></i></button>
 
+
             </div>
 
         </div>
 
-        <!-- Stats Row -->
         <div class="profile-stats-row">
+
             <div class="pstat">
-                <i class="bi bi-briefcase-fill stat-icon" style="color:var(--teal)"></i>
-                <strong>Not added yet</strong> <span>Projects Done</span>
+                <i class="bi bi-briefcase-fill stat-icon"></i>
+                <strong>{{ projects_done }}</strong>
+                <span>Projects Done</span>
             </div>
+
             <div class="pstat">
-                <i class="bi bi-star-fill stat-icon" style="color:var(--orange)"></i>
-                <strong>Not added yet</strong> <span>Average Rating</span>
+                <i class="bi bi-star-fill stat-icon"></i>
+                <strong>{{ average_rating }}</strong>
+                <span>Average Rating</span>
             </div>
+
             <div class="pstat">
-                <i class="bi bi-people-fill stat-icon" style="color:var(--blue)"></i>
-                <strong>Not added yet</strong> <span>Happy Clients</span>
+                <i class="bi bi-people-fill stat-icon"></i>
+                <strong>{{ happy_clients }}</strong>
+                <span>Happy Clients</span>
             </div>
+
             <div class="pstat">
-                <i class="bi bi-clock-history stat-icon" style="color:var(--color-purple)"></i>
-                <strong>Not added yet</strong> <span>Experience</span>
+                <i class="bi bi-clock-history stat-icon"></i>
+                <strong>
+                    {{ profile.experience|default:"Not added yet" }}
+                </strong>
+                <span>Experience</span>
             </div>
-            <div class="pstat">
-                <i class="bi bi-trophy-fill stat-icon" style="color:var(--btn-color)"></i>
-                <strong>Top Rated</strong>
-                <span>Seller Badge</span>
-            </div>
+
         </div>
 
     </div>
+
 
     <div class="profile-grid">
 
@@ -196,181 +193,181 @@
                 </div>
 
             </div>
-           <!-- Client Reviews -->
+            <!-- Client Reviews -->
             <div class="profile-card">
                 <h3 class="card-title">
                     <i class="bi bi-chat-quote-fill"></i> Client Reviews
                 </h3>
 
                 {% if can_review %}
-            <div class="update-profile-form" style="margin-top:15px;">
+                <div class="update-profile-form" style="margin-top:15px;">
 
-                <form method="POST" action="{% url 'reviews:add_review' profile.user.id %}">
-                    {% csrf_token %}
+                    <form method="POST" action="{% url 'reviews:add_review' profile.user.id %}">
+                        {% csrf_token %}
 
-                    
-                    <div class="form-group">
-                        <label>Rating</label>
 
-                        <div class="rate">
-                            <input type="radio" id="star5_{{ profile.user.id }}" name="rating" value="5" required />
-                            <label for="star5_{{ profile.user.id }}"></label>
+                        <div class="form-group">
+                            <label>Rating</label>
 
-                            <input type="radio" id="star4_{{ profile.user.id }}" name="rating" value="4" />
-                            <label for="star4_{{ profile.user.id }}"></label>
+                            <div class="rate">
+                                <input type="radio" id="star5_{{ profile.user.id }}" name="rating" value="5" required />
+                                <label for="star5_{{ profile.user.id }}"></label>
 
-                            <input type="radio" id="star3_{{ profile.user.id }}" name="rating" value="3" />
-                            <label for="star3_{{ profile.user.id }}"></label>
+                                <input type="radio" id="star4_{{ profile.user.id }}" name="rating" value="4" />
+                                <label for="star4_{{ profile.user.id }}"></label>
 
-                            <input type="radio" id="star2_{{ profile.user.id }}" name="rating" value="2" />
-                            <label for="star2_{{ profile.user.id }}"></label>
+                                <input type="radio" id="star3_{{ profile.user.id }}" name="rating" value="3" />
+                                <label for="star3_{{ profile.user.id }}"></label>
 
-                            <input type="radio" id="star1_{{ profile.user.id }}" name="rating" value="1" />
-                            <label for="star1_{{ profile.user.id }}"></label>
+                                <input type="radio" id="star2_{{ profile.user.id }}" name="rating" value="2" />
+                                <label for="star2_{{ profile.user.id }}"></label>
+
+                                <input type="radio" id="star1_{{ profile.user.id }}" name="rating" value="1" />
+                                <label for="star1_{{ profile.user.id }}"></label>
+                            </div>
+                        </div>
+
+
+                        <div class="form-group">
+                            <label>Comment</label>
+                            <textarea name="comment" placeholder="Write your review..." required></textarea>
+                        </div>
+
+
+                        <div class="form-actions">
+                            <button type="submit" class="btn-save-profile">
+                                Submit Review
+                            </button>
+                        </div>
+
+                    </form>
+                </div>
+                {% endif %}
+
+
+                <div style="display:flex; gap:30px; align-items:center; margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid rgba(15,23,42,0.07);">
+
+                    <div style="text-align:center; flex-shrink:0;">
+
+
+                        <div style="font-size:52px; font-weight:900;">
+                            {{ average_rating }}
+                        </div>
+
+
+                        <div style="display:flex; gap:3px; justify-content:center; margin:6px 0;">
+                            {% for _ in "12345"|slice:":average_rating|floatformat:0" %}
+                            <i class="bi bi-star-fill"></i>
+                            {% endfor %}
+                        </div>
+
+
+                        <div style="font-size:12px;">
+                            {{ reviews_count }} Reviews
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <!-- Reviews List -->
+                {% for review in reviews %}
+                <div class="review-item">
+
+                    <div class="review-header">
+                        <div class="reviewer-avatar">
+
+                            <div class="avatar big">
+
+                                {% if review.reviewer.clientprofile.avatar %}
+                                <img src="{{ review.reviewer.clientprofile.avatar.url }}" class="avatar big">
+                                {% endif %}
+
+                            </div>
+
+                        </div>
+
+                        <div>
+                            <div class="reviewer-name">
+                                {{ review.reviewer.username }}
+                            </div>
+
+
+                            <div class="review-stars">
+                                {% for i in "12345" %}
+                                {% if forloop.counter <= review.rating %}
+                                    <i class="bi bi-star-fill"></i>
+                                    {% else %}
+                                    <i class="bi bi-star"></i>
+                                    {% endif %}
+                                    {% endfor %}
+                            </div>
                         </div>
                     </div>
 
-                    
-                    <div class="form-group">
-                        <label>Comment</label>
-                        <textarea name="comment" placeholder="Write your review..." required></textarea>
-                    </div>
+                    <div class="review-content d-flex justify-content-between align-items-start">
 
-                    
-                    <div class="form-actions">
-                        <button type="submit" class="btn-save-profile">
-                            Submit Review
+                        <p class="review-text m-0">
+                            {{ review.comment }}
+                        </p>
+
+
+                        {% if review.reviewer == request.user %}
+                        <button type="button"
+                            class="btn btn-sm text-danger border-0 bg-transparent"
+                            data-bs-toggle="modal"
+                            data-bs-target="#deleteModal"
+                            data-review-id="{{ review.id }}">
+                            Delete
                         </button>
+                        {% endif %}
+
                     </div>
 
-                </form>
-            </div>
-            {% endif %}
 
-    
-    <div style="display:flex; gap:30px; align-items:center; margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid rgba(15,23,42,0.07);">
+                    <span class="text-muted small">
+                        {{ review.created_at|date:"M d, Y" }}
+                    </span>
 
-    <div style="text-align:center; flex-shrink:0;">
-        
-        
-        <div style="font-size:52px; font-weight:900;">
-            {{ average_rating }}
-        </div>
 
-        
-        <div style="display:flex; gap:3px; justify-content:center; margin:6px 0;">
-            {% for _ in "12345"|slice:":average_rating|floatformat:0" %}
-                <i class="bi bi-star-fill"></i>
-            {% endfor %}
-        </div>
-
-        
-        <div style="font-size:12px;">
-            {{ reviews_count }} Reviews
-        </div>
-
-    </div>
-
-</div>
-
-    <!-- Reviews List -->
-    {% for review in reviews %}
-    <div class="review-item">
-
-        <div class="review-header">
-            <div class="reviewer-avatar">
-
-            <div class="avatar big">
-
-                {% if review.reviewer.clientprofile.avatar %}
-                    <img src="{{ review.reviewer.clientprofile.avatar.url }}" class="avatar big">
-                {% endif %}
-
-            </div>
-
-        </div>
-
-            <div>
-                <div class="reviewer-name">
-                    {{ review.reviewer.username }}
                 </div>
 
-                
-                <div class="review-stars">
-                    {% for i in "12345" %}
-                        {% if forloop.counter <= review.rating %}
-                            <i class="bi bi-star-fill"></i>
-                        {% else %}
-                            <i class="bi bi-star"></i>
-                        {% endif %}
-                    {% endfor %}
+                {% empty %}
+                <p class="text-muted">No reviews yet</p>
+                {% endfor %}
+
+                <div class="modal fade" id="deleteModal" tabindex="-1">
+                    <div class="modal-dialog modal-dialog-centered">
+                        <div class="modal-content">
+
+                            <div class="modal-header">
+                                <h5 class="modal-title">Delete Review</h5>
+                                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                            </div>
+
+                            <div class="modal-body">
+                                Are you sure you want to delete this review?
+                            </div>
+
+                            <div class="modal-footer">
+
+                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                                    Cancel
+                                </button>
+
+                                <form method="POST" id="deleteForm">
+                                    {% csrf_token %}
+                                    <button type="submit" class="btn btn-danger">
+                                        Delete
+                                    </button>
+                                </form>
+
+                            </div>
+
+                        </div>
+                    </div>
                 </div>
             </div>
-        </div>
-
-        <div class="review-content d-flex justify-content-between align-items-start">
-
-            <p class="review-text m-0">
-                {{ review.comment }}
-            </p>
-
-
-            {% if review.reviewer == request.user %}
-            <button type="button" 
-                    class="btn btn-sm text-danger border-0 bg-transparent"
-                    data-bs-toggle="modal" 
-                    data-bs-target="#deleteModal"
-                    data-review-id="{{ review.id }}">
-                Delete
-            </button>
-            {% endif %}
-
-        </div>
-        
-
-        <span class="text-muted small">
-            {{ review.created_at|date:"M d, Y" }}
-        </span>
-        
-
-    </div>
-
-    {% empty %}
-        <p class="text-muted">No reviews yet</p>
-    {% endfor %}
-    
-<div class="modal fade" id="deleteModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
-
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Review</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
-
-      <div class="modal-body">
-        Are you sure you want to delete this review?
-      </div>
-
-      <div class="modal-footer">
-
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancel
-        </button>
-
-        <form method="POST" id="deleteForm">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger">
-            Delete
-          </button>
-        </form>
-
-      </div>
-
-    </div>
-  </div>
-</div>
-</div>
             <!--  END LEFT COLUMN -->
         </div>
 
@@ -401,7 +398,7 @@
                         <span class="info-key">
                             <i class="bi bi-calendar-check" style="color:var(--teal)"></i> Member Since
                         </span>
-                        <span class="info-val">Jan 2021</span>
+                        <span class="info-val">{{ profile.user.date_joined|date:"M Y" }}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-key">
@@ -498,21 +495,10 @@
 
     </div>
 
+
 </div>
 
 
 
-<script>
-document.addEventListener("DOMContentLoaded", function () {
-    const deleteModal = document.getElementById("deleteModal");
-
-    deleteModal.addEventListener("show.bs.modal", function (event) {
-        const button = event.relatedTarget;
-        const reviewId = button.getAttribute("data-review-id");
-
-        const form = document.getElementById("deleteForm");
-        form.action = `/reviews/delete/${reviewId}/`;
-    });
-});
-</script>
+</div>
 {% endblock %}

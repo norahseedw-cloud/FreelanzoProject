@@ -98,7 +98,6 @@
                 </select>
             </div>
 
-            <!-- Keep category when applying filters -->
             {% if selected_category %}
             <input type="hidden" name="category" value="{{ selected_category }}">
             {% endif %}
@@ -110,7 +109,6 @@
         </aside>
     </form>
 
-    <!-- Content -->
     <div class="content-area">
 
         <div class="content-toolbar">
@@ -164,11 +162,17 @@
                     </div>
 
                     <div class="fl-tags">
-                        {% for skill in freelancer.skills.all %}
+
+                        {% for skill in freelancer.skills.all|slice:":3" %}
                         <span class="fl-tag">{{ skill.name }}</span>
-                        {% empty %}
-                        <span class="fl-tag">No skills yet</span>
                         {% endfor %}
+
+                        {% if freelancer.skills.count > 3 %}
+                        <span class="fl-tag more">
+                            +{{ freelancer.skills.count|add:"-3" }}
+                        </span>
+                        {% endif %}
+
                     </div>
 
                     <div class="fl-card-footer">

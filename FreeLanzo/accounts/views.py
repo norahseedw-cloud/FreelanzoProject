@@ -51,7 +51,16 @@ def sign_in_view(request):
 
         if user is not None:
             login(request, user)
+
+            if not user.usertype.has_seen_profile_prompt:
+                request.session["show_complete_profile"] = True
+                user.usertype.has_seen_profile_prompt = True
+                user.usertype.save()
+            else:
+                request.session["show_complete_profile"] = False
+
             return redirect("main:home")
+
         else:
             return render(request, "accounts/sign-in.html", {
                 "error": "Username or password is incorrect"
@@ -59,12 +68,13 @@ def sign_in_view(request):
 
     return render(request, "accounts/sign-in.html")
 
-
 def logout_view(request):
     logout(request)
     return redirect("main:home")
 
-
+def skip_complete_profile(request):
+    request.session['show_complete_profile'] = False
+    return redirect('main:home')
 
 def terms_conditions_view(request:HttpRequest):
     
@@ -81,21 +91,38 @@ def freelancer_profile_view(request):
     profile, created = FreelancerProfile.objects.get_or_create(user=request.user)
     projects = profile.portfolio_projects.all()
 
-    similar_freelancers = FreelancerProfile.objects.filter(
+    reviews = Review.objects.filter(reviewed_user=profile.user)
+    average_rating = reviews.aggregate(avg=Avg('rating'))['avg'] or 0
+    reviews_count = reviews.count()
 
+    projects_done = Proposal.objects.filter(
+        freelancer=profile,
+        project__status='completed'
+    ).count()
+
+    happy_clients = Proposal.objects.filter(
+        freelancer=profile,
+        status='accepted'
+    ).values('project__client').distinct().count()
+
+    experience_years = max(1, profile.user.date_joined.year)
+
+    similar_freelancers = FreelancerProfile.objects.filter(
         skills__in=profile.skills.all()
     ).exclude(user=request.user).distinct()[:3]
-
-    # category=(profile.category,).exclude(user=request.user)[:3]
-    
-
 
     return render(request, "accounts/freelancer-profile.html", {
         "profile": profile,
         "projects": projects,
         "similar_freelancers": similar_freelancers,
+        "reviews": reviews,
+        "average_rating": round(average_rating, 1),
+        "reviews_count": reviews_count,
+        "projects_done": projects_done,
+        "happy_clients": happy_clients,
+        "experience_years": "1+ Years",
+        "is_liked": False,
     })
-
 
 def all_freelancer_view(request):
     freelancers = FreelancerProfile.objects.all()
@@ -167,21 +194,19 @@ def portfolio_project_detail(request, project_id):
 
 @login_required
 def update_freelancer_profile(request):
-    profile, created = FreelancerProfile.objects.get_or_create(user=request.user)
+    profile = request.user.freelancerprofile
 
-    if request.method == "POST":
+    if request.method == 'POST':
         form = FreelancerProfileForm(request.POST, request.FILES, instance=profile)
-
         if form.is_valid():
             form.save()
             return redirect('accounts:freelancer_profile')
-
     else:
         form = FreelancerProfileForm(instance=profile)
 
     return render(request, 'accounts/update-profile.html', {
         'form': form,
-        'profile':profile,
+        'profile': profile
     })
 
 
@@ -250,6 +275,18 @@ def freelancer_profile_detail(request, user_id):
                 freelancer=profile
             ).exists()
 
+    projects_done = Proposal.objects.filter(
+        freelancer=profile,
+        project__status='completed'
+    ).count()
+
+    happy_clients = Proposal.objects.filter(
+        freelancer=profile,
+        status='accepted'
+    ).values('project__client').distinct().count()
+
+    experience_years = "1+ Years"
+
     return render(request, "accounts/freelancer-profile.html",{
         "profile": profile,
         "projects": projects,
@@ -259,7 +296,10 @@ def freelancer_profile_detail(request, user_id):
         "can_review":can_review,
         "reviews":reviews,
         "average_rating": round(average_rating, 1),
-    "reviews_count": reviews_count,
+        "reviews_count": reviews_count,
+        "projects_done": projects_done,
+        "happy_clients": happy_clients,
+        "experience_years": experience_years,
     })
 
     

@@ -46,7 +46,8 @@ class FreelancerProfileForm(forms.ModelForm):
             'skills',
             'hourly_rate',
             'availability',
-            'languages'
+            'languages',
+            'experience'
         ]
         
         widgets = {
