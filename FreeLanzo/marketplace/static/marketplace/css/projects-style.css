@@ -1028,3 +1028,7 @@ body.dark .projects-count,
 body.dark .projects-count span {
     color: #f9fafb !important;
 }
+
+body.dark .text-dark{
+    color: white !important;
+}

@@ -387,6 +387,7 @@ def client_profile_view(request, user_id=None):
     projects = Project.objects.filter(client=profile).order_by('-created_at')
 
     total_spent = projects.filter(status='completed').aggregate(total=Sum('budget'))['total'] or 0
+    total_spent=round(total_spent,2)
 
     freelancers_hired = Proposal.objects.filter(
         project__client=profile,

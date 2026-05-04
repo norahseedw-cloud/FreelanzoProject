@@ -34,7 +34,7 @@ def contact_view(request:HttpRequest):
 
 
 
-
+@login_required
 def chat_view(request: HttpRequest, conversation_id=None):
 
     if conversation_id:

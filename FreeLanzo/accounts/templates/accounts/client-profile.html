@@ -174,10 +174,11 @@
                                     {{ project.get_status_display }}
                                 </span>
 
-                                <a href="{% url 'accounts:update_project' project.id%}"
-                                    class="btn btn-custom">
+                                {% if request.user.is_authenticated and request.user == project.client.user %}
+                                <a href="{% url 'accounts:update_project' project.id %}" class="btn btn-custom">
                                     Update
                                 </a>
+                                {% endif %}
 
                             </div>
 

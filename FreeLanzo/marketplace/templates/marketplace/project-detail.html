@@ -102,10 +102,11 @@
                     <i class="bi bi-chat-dots "></i> Contact
                 </a>
                 {% endif %}
-
+                {% if request.user.is_authenticated %}
                 <a href="{% url 'accounts:client_profile_detail' project.client.user.id %}" class="btn-outline">
                     View Profile
                 </a>
+                {% endif %}
             </div>
         </div>
 

@@ -85,9 +85,11 @@
                 <span class="material-symbols-outlined">light_mode</span>
                 {% endif %}
             </a>
+            {% if user.is_authenticated %}
             <a href="{% url 'chat:chat_view' %}" class="icon-btn">
                 <i class="bi bi-chat-dots"></i>
             </a>
+            {% endif %}
 
             
 
