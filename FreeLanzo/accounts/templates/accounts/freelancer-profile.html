@@ -94,7 +94,7 @@
                     <a href="{% url 'accounts:update_freelancer_profile' %}" class="btn-hire">
                         Update Profile
                     </a>
-                {% endif %} 
+                
                 {% if request.user != profile.user %}
                 <a class="btn-message" href="{% url 'chat:start_chat' profile.user.id %}">
                     <i class="bi bi-chat-dots"></i> Message

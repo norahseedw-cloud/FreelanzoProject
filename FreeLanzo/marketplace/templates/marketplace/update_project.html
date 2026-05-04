@@ -1,0 +1,57 @@
+{% extends 'main/base.html' %}
+
+{% block title %}Update Project{% endblock %}
+
+{% block content %}
+
+<section class="update-profile-section">
+    <div class="update-profile-card">
+
+        <div class="update-profile-header">
+            <h2>Update Project</h2>
+            <p>Edit your project details.</p>
+        </div>
+
+        <form method="POST" class="update-profile-form">
+            {% csrf_token %}
+
+            <div class="form-group">
+                <label>Project Title</label>
+                {{ form.title }}
+            </div>
+
+            <div class="form-group">
+                <label>Description</label>
+                {{ form.description }}
+            </div>
+
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Skills</label>
+                    <div class="skills-box">
+                        {{ form.skills }}
+                    </div>
+                </div>
+
+                <div class="form-group">
+                    <label>Budget</label>
+                    {{ form.budget }}
+                </div>
+            </div>
+
+            <div class="form-actions">
+                <a href="{% url 'accounts:project_detail' project.id %}" class="btn-cancel">
+                    Cancel
+                </a>
+
+                <button type="submit" class="btn-save-profile">
+                    Save Changes
+                </button>
+            </div>
+
+        </form>
+
+    </div>
+</section>
+
+{% endblock %}

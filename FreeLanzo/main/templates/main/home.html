@@ -89,15 +89,15 @@
 
         <div class="hero-stats">
             <div>
-                <strong>500+</strong>
+                <strong>{{ freelancers_count }}</strong>
                 <span>Freelancers</span>
             </div>
             <div>
-                <strong>120+</strong>
+                <strong>{{ projects_count }}</strong>
                 <span>Projects</span>
             </div>
             <div>
-                <strong>6</strong>
+                <strong>{{ categories_count }}</strong>
                 <span>Categories</span>
             </div>
         </div>
@@ -207,7 +207,7 @@
 
 
 <!--  Categories Start ===== -->
-<section class="home-section categories-section reveal">
+<section class="home-section categories-section reveal" id="categories-section">
     <div class="section-heading">
         <span>Browse Categories</span>
         <h2>Find talent across every field</h2>
@@ -215,101 +215,44 @@
 
     <div class="categories-grid">
 
-        <a href="{% url 'accounts:all_freelancer' %}?category=2" class="category-card" style="--cat-color: var(--teal)">
-            <div class="cat-icon"><i class="bi bi-code-slash"></i></div>
-            <h4>Programming & Tech</h4>
-            <span>48 Freelancers</span>
-        </a>
+{% for category in categories %}
+<a href="{% url 'accounts:all_freelancer' %}?category={{ category.id }}"
+   class="category-card
+   {% if forloop.counter == 1 %}cat1
+   {% elif forloop.counter == 2 %}cat2
+   {% elif forloop.counter == 3 %}cat3
+   {% elif forloop.counter == 4 %}cat4
+   {% elif forloop.counter == 5 %}cat5
+   {% elif forloop.counter == 6 %}cat6
+   {% endif %}">
+        
 
-        <a href="{% url 'accounts:all_freelancer' %}?category=1" class="category-card" style="--cat-color: var(--blue)">
-            <div class="cat-icon"><i class="bi bi-palette2"></i></div>
-            <h4>Graphic Design</h4>
-            <span>72 Freelancers</span>
-        </a>
-
-        <a href="{% url 'accounts:all_freelancer' %}?category=3" class="category-card" style="--cat-color: var(--color-orange)">
-            <div class="cat-icon"><i class="bi bi-megaphone"></i></div>
-            <h4>Digital Marketing</h4>
-            <span>35 Freelancers</span>
-        </a>
-
-        <a href="{% url 'accounts:all_freelancer' %}?category=5" class="category-card" style="--cat-color: var(--btn-color)">
-            <div class="cat-icon"><i class="bi bi-camera-video"></i></div>
-            <h4>Video & Animation</h4>
-            <span>29 Freelancers</span>
-        </a>
-
-        <a href="{% url 'accounts:all_freelancer' %}?category=4" class="category-card" style="--cat-color: var(--color-purple)">
-            <div class="cat-icon"><i class="bi bi-pen"></i></div>
-            <h4>Content Writing</h4>
-            <span>41 Freelancers</span>
-        </a>
-
-        <a href="{% url 'accounts:all_freelancer' %}?category=6" class="category-card" style="--cat-color: var(--color-green)">
-            <div class="cat-icon"><i class="bi bi-bar-chart-line"></i></div>
-            <h4>SEO & Analytics</h4>
-            <span>22 Freelancers</span>
-        </a>
-
+    <div class="cat-icon">
+        {% if forloop.counter == 1 %}
+            <i class="bi bi-code-slash"></i>
+        {% elif forloop.counter == 2 %}
+            <i class="bi bi-palette2"></i>
+        {% elif forloop.counter == 3 %}
+            <i class="bi bi-megaphone"></i>
+        {% elif forloop.counter == 4 %}
+            <i class="bi bi-camera-video"></i>
+        {% elif forloop.counter == 5 %}
+            <i class="bi bi-pen"></i>
+        {% elif forloop.counter == 6 %}
+            <i class="bi bi-bar-chart-line"></i>
+        {% endif %}
     </div>
+
+    <h4>{{ category.name }}</h4>
+    <span>{{ category.freelancers_count }} Freelancers</span>
+
+</a>
+{% endfor %}
+
+</div>
 </section>
 <!--  Categories End  -->
 
-
-
-<!--  Services Start  -->
-<section class="home-section services-section reveal">
-    <div class="section-heading">
-        <span>Popular Services</span>
-        <h2>Services clients search for most</h2>
-    </div>
-
-    <div class="services-grid-new">
-
-        <div class="service-card-new">
-            <div class="service-card-top">
-                <h3>Web Development</h3>
-            </div>
-            <div class="service-card-img">
-                <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&q=80">
-            </div>
-        </div>
-
-        <div class="service-card-new">
-            <div class="service-card-top">
-                <h3>Graphic Design</h3>
-            </div>
-            <div class="service-card-img">
-                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&q=80">
-            </div>
-        </div>
-
-        <div class="service-card-new">
-            <div class="service-card-top">
-                <h3>Digital Marketing</h3>
-            </div>
-            <div class="service-card-img">
-                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&q=80">
-            </div>
-        </div>
-
-        <div class="service-card-new">
-            <div class="service-card-top">
-                <h3>Video Editing</h3>
-            </div>
-            <div class="service-card-img">
-                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400&q=80">
-            </div>
-        </div>
-
-    </div>
-
-    <div class="services-explore">
-        <a href="{% url 'accounts:all_freelancer' %}" class="btn-explore">Explore more services</a>
-    </div>
-
-</section>
-<!-- Services End -->
 
 
 <!-- How It Works Start  -->
@@ -377,11 +320,11 @@
 
         <div class="features-stats">
             <div class="fstat">
-                <strong>500+</strong>
+                <strong>{{ freelancers_count }}+</strong>
                 <span>Active Freelancers</span>
             </div>
             <div class="fstat">
-                <strong>98%</strong>
+                <strong>{{ satisfaction }}%</strong>
                 <span>Client Satisfaction</span>
             </div>
         </div>
@@ -440,117 +383,94 @@
 <!--  Top Freelancers Start   -->
 <section class="home-section freelancers-section reveal">
     <div class="section-heading">
-        <span>Top Freelancers</span>
-        <h2>Meet our skilled freelancers</h2>
+        <span>Top Freelancers</span> 
+        <h2>Meet our skilled freelancers</h2> 
     </div>
-
     <div class="freelancers-grid">
 
+        {% for freelancer in top_freelancers %}
         <div class="freelancer-card">
-            <div class="freelancer-bg" style="--card-color: var(--teal)"></div>
+
+            <div class="freelancer-bg"
+                style="--card-color:
+                {% if forloop.counter == 1 %}var(--teal)
+                {% elif forloop.counter == 2 %}var(--blue)
+                {% elif forloop.counter == 3 %}var(--color-purple)
+                {% endif %}">
+            </div>
+
             <div class="freelancer-avatar">
-                <img src="{% static 'images/avatar/men.jpg' %}" alt="Sarah Ahmed">
-                <div class="freelancer-badge" style="--card-color: var(--teal)">
+                <img src="{{ freelancer.avatar.url }}" alt="{{ freelancer.user.username }}">
+
+                <div class="freelancer-badge"
+                    style="--card-color:
+                    {% if forloop.counter == 1 %}var(--teal)
+                    {% elif forloop.counter == 2 %}var(--blue)
+                    {% elif forloop.counter == 3 %}var(--color-purple)
+                    {% endif %}">
                     <i class="bi bi-patch-check-fill"></i>
                 </div>
             </div>
+
             <div class="freelancer-info">
-                <h3>Sarah Ahmed</h3>
-                <p class="freelancer-role">UI/UX Designer</p>
+                <h3>{{ freelancer.user.first_name }} {{ freelancer.user.last_name }}</h3>
+
+                <p class="freelancer-role">
+                    {{ freelancer.job_title|default:"Freelancer" }}
+                </p>
+
                 <div class="freelancer-tags">
-                    <span>Figma</span>
-                    <span>Prototyping</span>
-                    <span>Branding</span>
+                    {% for skill in freelancer.skills.all|slice:":3" %}
+                        <span>{{ skill.name }}</span>
+                    {% endfor %}
                 </div>
+
                 <div class="freelancer-footer">
                     <div class="freelancer-rating">
                         <i class="bi bi-star-fill"></i>
-                        <strong>4.9</strong>
-                        <span>(120 reviews)</span>
+                        <strong>{{ freelancer.avg_rating|default:0|floatformat:1 }}</strong>
+                        <span>({{ freelancer.user.received_reviews.count }} reviews)</span>
                     </div>
-                    <a href="#" class="freelancer-btn" style="--card-color: var(--teal)">View Profile</a>
-                </div>
-            </div>
-        </div>
 
-        <div class="freelancer-card">
-            <div class="freelancer-bg" style="--card-color: var(--blue)"></div>
-            <div class="freelancer-avatar">
-                <img src="{% static 'images/avatar/wemon.jpg' %}" alt="Mohammed Ali">
-                <div class="freelancer-badge" style="--card-color: var(--blue)">
-                    <i class="bi bi-patch-check-fill"></i>
+                    <a href="{% url 'accounts:freelancer_profile_detail' freelancer.user.id %}"
+                    class="freelancer-btn"
+                    style="--card-color:
+                    {% if forloop.counter == 1 %}var(--teal)
+                    {% elif forloop.counter == 2 %}var(--blue)
+                    {% elif forloop.counter == 3 %}var(--color-purple)
+                    {% endif %}">
+                    View Profile
+                    </a>
                 </div>
             </div>
-            <div class="freelancer-info">
-                <h3>Mohammed Ali</h3>
-                <p class="freelancer-role">Web Developer</p>
-                <div class="freelancer-tags">
-                    <span>Django</span>
-                    <span>React</span>
-                    <span>Python</span>
-                </div>
-                <div class="freelancer-footer">
-                    <div class="freelancer-rating">
-                        <i class="bi bi-star-fill"></i>
-                        <strong>5.0</strong>
-                        <span>(98 reviews)</span>
-                    </div>
-                    <a href="#" class="freelancer-btn" style="--card-color: var(--blue)">View Profile</a>
-                </div>
-            </div>
-        </div>
 
-        <div class="freelancer-card">
-            <div class="freelancer-bg" style="--card-color: var(--color-purple)"></div>
-            <div class="freelancer-avatar">
-                <img src="{% static 'images/avatar/men2.jpg' %}" alt="Lina Khalid">
-                <div class="freelancer-badge" style="--card-color: var(--color-purple)">
-                    <i class="bi bi-patch-check-fill"></i>
-                </div>
-            </div>
-            <div class="freelancer-info">
-                <h3>Lina Khalid</h3>
-                <p class="freelancer-role">Brand Designer</p>
-                <div class="freelancer-tags">
-                    <span>Logo</span>
-                    <span>Identity</span>
-                    <span>Illustrator</span>
-                </div>
-                <div class="freelancer-footer">
-                    <div class="freelancer-rating">
-                        <i class="bi bi-star-fill"></i>
-                        <strong>4.8</strong>
-                        <span>(85 reviews)</span>
-                    </div>
-                    <a href="#" class="freelancer-btn" style="--card-color: var(--color-purple)">View Profile</a>
-                </div>
-            </div>
         </div>
+        {% endfor %}
 
-    </div>
-</section>
+        </div>
+        </section>
 <!--  Top Freelancers End  -->
 
 
 <!--  Stats Banner Start  -->
 <section class="stats-banner reveal">
     <div class="stat-item">
-        <strong>500+</strong>
+        <strong>{{ freelancers_count }}+</strong>
         <span>Skilled Freelancers</span>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-item">
-        <strong>120+</strong>
+        <strong>{{ completed_projects }}+</strong>
         <span>Projects Completed</span>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-item">
-        <strong>6</strong>
+        <strong>{{ categories_count }}</strong>
         <span>Service Categories</span>
     </div>
     <div class="stat-divider"></div>
     <div class="stat-item">
-        <strong>98%</strong>
+         <strong>{{ satisfaction }}%</strong>
         <span>Client Satisfaction</span>
     </div>
 </section>
@@ -566,61 +486,38 @@
 
     <div class="testimonials-grid">
 
-        <div class="testimonial-card">
-            <div class="testimonial-stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-            </div>
-            <p>"Freelanzo made it incredibly easy to find a talented designer. Within 24 hours I had 5 proposals and hired the perfect person."</p>
-            <div class="testimonial-author">
-                <div class="testimonial-avatar" style="background: var(--teal)">A</div>
-                <div>
-                    <strong>Ahmed Al-Rashid</strong>
-                    <span>Startup Founder</span>
-                </div>
-            </div>
-        </div>
+{% for review in testimonials %}
+<div class="testimonial-card {% if forloop.counter == 2 %}featured{% endif %}">
 
-        <div class="testimonial-card featured">
-            <div class="testimonial-stars">
+    <div class="testimonial-stars">
+        {% for i in "12345" %}
+            {% if forloop.counter <= review.rating %}
                 <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-            </div>
-            <p>"As a freelancer, Freelanzo gave me access to quality clients I never would have found on my own. My income doubled in 3 months."</p>
-            <div class="testimonial-author">
-                <div class="testimonial-avatar" style="background: var(--blue)">S</div>
-                <div>
-                    <strong>Sara Mohammed</strong>
-                    <span>UI/UX Designer</span>
-                </div>
-            </div>
-        </div>
-
-        <div class="testimonial-card">
-            <div class="testimonial-stars">
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-fill"></i>
-                <i class="bi bi-star-half"></i>
-            </div>
-            <p>"The secure payment system gave me full confidence. I knew my money was safe until I was 100% happy with the work."</p>
-            <div class="testimonial-author">
-                <div class="testimonial-avatar" style="background: var(--color-purple)">K</div>
-                <div>
-                    <strong>Khalid Nasser</strong>
-                    <span>E-commerce Owner</span>
-                </div>
-            </div>
-        </div>
-
+            {% else %}
+                <i class="bi bi-star"></i>
+            {% endif %}
+        {% endfor %}
     </div>
+
+    <p>"{{ review.comment }}"</p>
+
+    <div class="testimonial-author">
+        {% if review.reviewer.clientprofile.avatar %}
+            <img class="testimonial-avatar"
+                src="{{ review.reviewer.clientprofile.avatar.url }}">
+        {% else %}
+        {%endif%}
+
+        <div>
+            <strong>{{ review.reviewer.get_full_name|default:review.reviewer.username }}</strong>
+            <span>Client</span>
+        </div>
+    </div>
+
+</div>
+{% endfor %}
+
+</div>
 </section>
 <!--  Testimonials End  -->
 

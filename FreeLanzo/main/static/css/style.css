@@ -709,7 +709,7 @@ body.dark .theme-toggle-btn {
 
 
 /* ===== SERVICES ===== */
-.services-section {
+/* .services-section {
     width: 90%;
     margin: 80px auto;
 }
@@ -821,7 +821,7 @@ body.dark .theme-toggle-btn {
 
 .accent-purple i {
     color: var(--purple);
-}
+} */
 
 /* ===== HOW ===== */
 .how-section {
@@ -1441,6 +1441,13 @@ body.dark .theme-toggle-btn {
     transition: transform 0.3s;
 }
 
+.cat1 { --cat-color: var(--teal); }
+.cat2 { --cat-color: var(--blue); }
+.cat3 { --cat-color: var(--color-orange); }
+.cat4 { --cat-color: var(--btn-color); }
+.cat5 { --cat-color: var(--color-purple); }
+.cat6 { --cat-color: var(--color-green); }
+
 .category-card:hover {
     transform: translateY(-6px);
     box-shadow: 0 16px 40px rgba(15, 23, 42, 0.10);
@@ -1573,6 +1580,7 @@ body.dark .theme-toggle-btn {
     font-size: 16px;
     flex-shrink: 0;
 }
+
 
 .testimonial-author strong {
     display: block;
@@ -5699,6 +5707,7 @@ body.dark .theme-toggle-btn {
     .gallery-item {
         height: 220px;
     }
+    
 }
 
 /* ==========================UPDATE END======================================= */
@@ -6149,8 +6158,8 @@ body.dark .theme-toggle-btn {
 
 .no-skill {
     font-size: 12px;
-    color: #aaa;
-=======
+    color: #aaa;}
+
 /* Rating*/
 
 .rate {
@@ -6194,3 +6203,110 @@ body.dark .theme-toggle-btn {
     justify-content: center;
     font-weight: 700;
 }
+
+@media (max-width: 768px) {
+    .freelancers-grid {
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.nav-links {
+    display: flex;
+}
+
+.features-section {
+    gap: 80px;
+}
+.cta-section {
+    padding: 80px 60px;
+}   
+}
+
+/* ===== FINAL DARK MODE =====
+
+body.dark {
+    background: #1f2937;
+    color: #f9fafb;
+}
+
+
+body.dark section,
+body.dark .main-content,
+body.dark .features-section,
+body.dark .categories-section,
+body.dark .freelancers-section,
+body.dark .testimonials-section,
+body.dark .how-section {
+    background: #1f2937 !important;
+}
+
+
+body.dark .profile-card,
+body.dark .freelancer-card,
+body.dark .testimonial-card,
+body.dark .category-card,
+body.dark .step-content,
+body.dark .project-item,
+body.dark .faq-item,
+body.dark .tool-card,
+body.dark .contact-right {
+    background: #1f2937 !important;
+    border: 1px solid #374151;
+    box-shadow: none;
+}
+
+
+
+body.dark .main-navbar {
+    background: rgba(31, 41, 55, 0.9);
+}
+
+
+body.dark .dropdown-menu {
+    background: #1f2937;
+}
+
+
+
+body.dark input,
+body.dark textarea {
+    background: #1f2937;
+    border: 1px solid #374151;
+    color: #f9fafb;
+}
+
+
+
+body.dark h1,
+body.dark h2,
+body.dark h3,
+body.dark h4,
+body.dark strong {
+    color: #ffffff;
+}
+
+body.dark p,
+body.dark span,
+body.dark a {
+    color: #d1d5db;
+}
+
+
+body.dark .main-footer {
+    background: #1f2937;
+}
+
+
+
+body.dark * {
+    border-color: rgba(255,255,255,0.08);
+}
+
+
+
+body.dark .hero-overlay {
+    background: linear-gradient(
+        135deg,
+        rgba(31,41,55,0.8),
+        rgba(31,41,55,0.6)
+    );
+} */

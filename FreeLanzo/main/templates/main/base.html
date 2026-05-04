@@ -140,27 +140,19 @@
             <!-- Links -->
             <div class="footer-links">
                 <h4>Explore</h4>
-                <a href="#">Projects</a>
+                <a href="{% url 'accounts:all_projects'%}">Projects</a>
                 <a href="{% url 'accounts:all_freelancer'%}">Freelancers</a>
-                <a href="#">Categories</a>
+                <a href="{% url 'main:home' %}#categories-section">Categories</a>
             </div>
 
             <div class="footer-links">
                 <h4>Company</h4>
-                <a href="#">About Us</a>
-                <a href="#">Contact</a>
-                <a href="#">Privacy Policy</a>
+                <a href="{% url 'main:about_view'%}">About Us</a>
+                <a href="{% url 'chat:contact_view'%}">Contact</a>
+                <a href="{% url 'accounts:privacy_policy_view'%}">Privacy Policy</a>
             </div>
 
-            <!-- Social -->
-            <div class="footer-social">
-                <h4>Follow Us</h4>
-                <div class="social-icons">
-                    <a href="#"><i class="bi bi-instagram"></i></a>
-                    <a href="#"><i class="bi bi-twitter-x"></i></a>
-                    <a href="#"><i class="bi bi-linkedin"></i></a>
-                </div>
-            </div>
+            
 
         </div>
 

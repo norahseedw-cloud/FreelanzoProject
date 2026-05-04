@@ -542,6 +542,24 @@ def project_detail_view(request: HttpRequest, project_id):
 
     })
 
+@login_required
+def update_project_view(request, project_id):
+    project = get_object_or_404(Project, id=project_id, client__user=request.user)
+
+    if request.method == 'POST':
+        form = ProjectForm(request.POST, instance=project)
+
+        if form.is_valid():
+            form.save()
+            return redirect('accounts:project_detail', project_id=project.id)
+
+    else:
+        form = ProjectForm(instance=project)
+
+    return render(request, 'marketplace/update_project.html', {
+        'form': form,
+        'project': project,
+    })
 
 @login_required
 def toggle_favorite_freelancer(request, freelancer_id):
