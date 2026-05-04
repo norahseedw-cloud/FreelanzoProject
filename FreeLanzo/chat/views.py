@@ -3,10 +3,26 @@ from django.http import HttpRequest,HttpResponse
 from django.contrib.auth.models import User
 from .models import Conversation, Message
 from django.db.models import Q, Max, Count
+from django.contrib.auth.decorators import login_required
 
 # Create your views here.
-
+@login_required(login_url='accounts:sign_in_view')
 def contact_view(request:HttpRequest):
+    if request.method == "POST":
+        text = request.POST.get("message")
+
+        admin_user = User.objects.filter(is_superuser=True).first()
+
+       
+        conversation = Conversation.objects.filter(user1=request.user,user2=admin_user).first() or Conversation.objects.filter(user1=admin_user,user2=request.user).first()
+
+       
+        if not conversation:conversation = Conversation.objects.create(user1=request.user,user2=admin_user)
+
+       
+        Message.objects.create(conversation=conversation,sender=request.user,content=text)
+
+        return redirect('chat:chat_view', conversation.id)
 
     return render(request,'chat/contact-us.html')
 
@@ -41,7 +57,10 @@ def chat_view(request:HttpRequest, conversation_id=None):
         "conversations":conversations,
         })
 
-def delete_conversation(request, conversation_id):
+
+
+@login_required
+def delete_conversation(request:HttpResponse, conversation_id):
     conversation = Conversation.objects.get(pk=conversation_id)
 
     if request.user == conversation.user1 or request.user == conversation.user2:

@@ -23,18 +23,19 @@
         <form method="POST" enctype="multipart/form-data" class="update-profile-form">
             {% csrf_token %}
 
-            <div class="form-avatar-preview">
-                {% if profile.avatar %}
-                <img src="{{ profile.avatar.url }}" alt="{{ request.user.username }}">
-                {% else %}
-                <img src="{% static 'images/avatar/default.png' %}" alt="{{ request.user.username }}">
-                {% endif %}
-            </div>
+            <div class="avatar-upload">
 
-            <div class="form-group">
-                <label>Profile Image</label>
-                {{ form.avatar }}
-            </div>
+    <input type="file" name="avatar" id="avatarInput" hidden>
+
+    <label for="avatarInput" class="avatar-label">
+        <img src="{{ profile.avatar.url }}" class="profile-avatar">
+
+        <div class="avatar-overlay">
+           Change Your Avatar
+        </div>
+    </label>
+
+</div>
 
             <div class="form-row">
                 <div class="form-group">
@@ -74,5 +75,7 @@
     </div>
 
 </section>
+
+
 
 {% endblock %}

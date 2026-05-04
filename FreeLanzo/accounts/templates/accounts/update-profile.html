@@ -21,21 +21,23 @@
             <div class="profile-top">
 
                 <!-- Avatar -->
-                <div class="update-avatar-box">
-                    <div class="avatar-preview">
-                        {% if form.instance.avatar %}
-                        <img src="{{ form.instance.avatar.url }}" alt="Profile Image">
-                        {% else %}
-                        <img src="{% static 'images/avatar/default.png' %}" alt="Default Image">
-                        {% endif %}
+                
+                    <div class="avatar-upload mt-3">
+
+                <input type="file" name="avatar" id="avatarInput" hidden>
+
+                <label for="avatarInput" class="avatar-label">
+
+                    <img src="{{ profile.avatar.url|default:'/media/default-avatar.avif' }}" class="profile-avatar">
+
+                    <div class="avatar-overlay">
+                    Change Your Avatar
                     </div>
 
-                    <div class="avatar-upload">
-                        <label>Profile Image</label>
-                        {{ form.avatar }}
-                    </div>
+                </label>
+
                 </div>
-
+            
                 <!-- Identity -->
                 <div class="profile-identity">
 

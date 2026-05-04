@@ -115,7 +115,9 @@
             <div class="project-card">
                 <div class="card-header">
                     <h3 class="project-title">{{ project.title }}</h3>
-                    <span class="status open">{{ project.get_status_display }}</span>
+                    <span class="status {{ project.status }}">
+                        {{ project.get_status_display }}
+                    </span>
                 </div>
 
                 <p class="desc">

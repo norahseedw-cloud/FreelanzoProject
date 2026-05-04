@@ -17,55 +17,43 @@
         <div class="overlay"></div>
 
  
-        <div class="chat-sidebar">
+        <div class="chat-sidebar mt-3 ms-2">
 
-    <h3>Messages</h3>
+            <h3>Messages</h3>
 
-    {% for conver in conversations %}
-    <a href="{% url 'chat:chat_view' conver.id %}">
+            {% for conver in conversations %}
+            <div class="chat-user {% if conver.id == conversation.id %}active{% endif %}">
 
-        <div class="chat-user {% if conver.id == conversation.id %}active{% endif %}">
 
+            <a href="{% url 'chat:chat_view' conver.id %}" class="text-decoration-none d-flex align-items-center w-100">
+
+       
             {% if conver.user1 == request.user %}
-    
-    {% if conver.user2.freelancerprofile.avatar %}
-        <img src="{{ conver.user2.freelancerprofile.avatar.url }}" class="avatar">
-    {% elif conver.user2.clientprofile.avatar %}
-        <img src="{{ conver.user2.clientprofile.avatar.url }}" class="avatar">
-    {% else %}
-        <img src="/static/default-avatar.png" class="avatar">
-    {% endif %}
+                {% if conver.user2.freelancerprofile.avatar %}
+                    <img src="{{ conver.user2.freelancerprofile.avatar.url }}" class="avatar">
+                {% elif conver.user2.clientprofile.avatar %}
+                    <img src="{{ conver.user2.clientprofile.avatar.url }}" class="avatar">
+                {% else %}
+                    <img src="/static/default-avatar.png" class="avatar">
+                {% endif %}
+            {% else %}
+            {% if conver.user1.freelancerprofile.avatar %}
+                <img src="{{ conver.user1.freelancerprofile.avatar.url }}" class="avatar">
+            {% elif conver.user1.clientprofile.avatar %}
+                <img src="{{ conver.user1.clientprofile.avatar.url }}" class="avatar">
+            {% else %}
+                <img src="/static/default-avatar.png" class="avatar">
+            {% endif %}
+            {% endif %}
 
-{% else %}
-
-    {% if conver.user1.freelancerprofile.avatar %}
-        <img src="{{ conver.user1.freelancerprofile.avatar.url }}" class="avatar">
-    {% elif conver.user1.clientprofile.avatar %}
-        <img src="{{ conver.user1.clientprofile.avatar.url }}" class="avatar">
-    {% else %}
-        <img src="/static/default-avatar.png" class="avatar">
-    {% endif %}
-
-{% endif %}
-
-            <div class="user-info">
-
+            <div class="user-info ms-2">
                 <span class="name">
                     {% if conver.user1 == request.user %}
-                        {{ conver.user2.first_name }}
-                    {% else %}
-                        {{ conver.user1.first_name }}
-                    {% endif %}
-
-                    {% if conver.unread_count > 0 %}
-                        <span class="badge">{{ conver.unread_count }}</span>
-                    {% endif %}
-                </span>
-                {% if conversation %}
-                <a href="{% url 'chat:delete_conversation' conver.id %}"class="delete-btn">
-                    Delete
-                </a>
-                {% endif %}
+                    {{ conver.user2.first_name }} 
+                    {% else %} {{ conver.user1.first_name }} 
+                    {% endif %} {% if conver.unread_count > 0 %}
+                    <span class="badge">{{ conver.unread_count }}</span> 
+                    {% endif %} </span>
 
                 <span class="last-msg">
                     {% if conver.message_set.all.last %}
@@ -74,15 +62,27 @@
                         No messages yet
                     {% endif %}
                 </span>
-
             </div>
 
+            </a>
+
+   
+            {% if conversation %}
+            <button 
+                class="btn btn-sm text-danger border-0 bg-transparent ms-2"
+                data-bs-toggle="modal"
+                data-bs-target="#deleteModal"
+                data-id="{{ conver.id }}"
+            >
+                Delete
+            </button>
+            {% endif %}
+
         </div>
+            
+            {% endfor %}
 
-    </a>
-    {% endfor %}
-
-</div>
+        </div>
 
         <div class="chat-area">
 
@@ -92,7 +92,31 @@
                     <i class="bi bi-list"></i>
                 </button>
 
-                <div class="avatar big">N</div>
+                <div class="avatar big">
+
+                {% if conversation.user1 == request.user %}
+
+                    {% if conversation.user2.freelancerprofile.avatar %}
+                        <img src="{{ conversation.user2.freelancerprofile.avatar.url }}">
+                    {% elif conversation.user2.clientprofile.avatar %}
+                        <img src="{{ conversation.user2.clientprofile.avatar.url }}">
+                    {% else %}
+                        {{ conversation.user2.first_name|first }}
+                    {% endif %}
+
+                {% else %}
+
+                    {% if conversation.user1.freelancerprofile.avatar %}
+                        <img src="{{ conversation.user1.freelancerprofile.avatar.url }}">
+                    {% elif conversation.user1.clientprofile.avatar %}
+                        <img src="{{ conversation.user1.clientprofile.avatar.url }}">
+                    {% else %}
+                        {{ conversation.user1.first_name|first }}
+                    {% endif %}
+
+                {% endif %}
+
+            </div>
 
                 <div>
                     <h4>
@@ -145,7 +169,11 @@
             {% else %}
 
                 <div class="empty-chat">
-                    <p>Select a conversation to start chatting</p>
+                    <div class="empty-box">
+                        <i class="bi bi-chat-dots"></i>
+                        <h5>No conversation selected</h5>
+                        <p>Select a chat from the sidebar to start messaging</p>
+                    </div>
                 </div>
 
             {% endif %}
@@ -153,8 +181,53 @@
         
 
     </div>
+    
 
 </div>
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
 
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Conversation</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
 
+      <div class="modal-body">
+        Are you sure you want to delete this conversation?
+      </div>
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+
+        <form method="POST" id="deleteForm">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">
+            Delete
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+<script>
+document.addEventListener('DOMContentLoaded', function () {
+
+    const deleteModal = document.getElementById('deleteModal');
+    const deleteForm = document.getElementById('deleteForm');
+
+    deleteModal.addEventListener('show.bs.modal', function (event) {
+        const button = event.relatedTarget;
+        const conversationId = button.getAttribute('data-id');
+
+        deleteForm.action = `/chat/${conversationId}/delete/`;
+    });
+
+});
+</script>
 {% endblock %}
