@@ -14,8 +14,6 @@ if (categoryToggle && categoryMenu) {
     });
 }
 
-
-
 const menuToggle = document.getElementById("menuToggle");
 const navCenter = document.querySelector(".nav-center");
 
@@ -47,26 +45,6 @@ if (programTrack) {
     });
 }
 
-const saveBtn = document.querySelector(".btn-save");
-
-if (saveBtn) {
-    saveBtn.addEventListener("click", function () {
-        const icon = this.querySelector("i");
-
-        if (!icon) return;
-
-        if (icon.classList.contains("bi-heart")) {
-            icon.classList.replace("bi-heart", "bi-heart-fill");
-            this.style.color = "var(--btn-color)";
-            this.style.borderColor = "var(--btn-color)";
-        } else {
-            icon.classList.replace("bi-heart-fill", "bi-heart");
-            this.style.color = "";
-            this.style.borderColor = "";
-        }
-    });
-}
-
 const faqButtons = document.querySelectorAll(".faq-question");
 
 faqButtons.forEach(function (button) {
@@ -76,35 +54,70 @@ faqButtons.forEach(function (button) {
     });
 });
 
+
 document.addEventListener("DOMContentLoaded", function () {
 
     const modal = document.getElementById("roleModal");
     const roleInput = document.getElementById("roleInput");
     const form = document.getElementById("signupForm");
 
-    
-    if (modal && roleInput && form) {
+    if (!modal || !roleInput || !form) return;
 
-        
+    const selectedRole = localStorage.getItem("selectedRole");
+
+    if (!selectedRole) {
         modal.style.display = "flex";
-
-        
-        window.selectRole = function(role) {
-            roleInput.value = role;
-            modal.style.display = "none";
-        };
-
-        
-        form.addEventListener("submit", function(e) {
-            if (!roleInput.value) {
-                e.preventDefault();
-                alert("Please choose a role first");
-            }
-        });
+    } else {
+        roleInput.value = selectedRole;
     }
+
+    window.selectRole = function(role) {
+        roleInput.value = role;
+        localStorage.setItem("selectedRole", role);
+        modal.style.display = "none";
+    };
+
+    form.addEventListener("submit", function(e) {
+        if (!roleInput.value) {
+            e.preventDefault();
+            modal.style.display = "flex";
+        }
+    });
 
 });
 
 function skipProfile(){
     document.getElementById("completeProfileModal").style.display = "none";
 }
+
+document.addEventListener("DOMContentLoaded", function () {
+    const deleteModal = document.getElementById("deleteModal");
+    const deleteForm = document.getElementById("deleteForm");
+
+    if (deleteModal && deleteForm) {
+        deleteModal.addEventListener("show.bs.modal", function (event) {
+            const button = event.relatedTarget;
+            const reviewId = button.getAttribute("data-review-id");
+
+            deleteForm.action = `/reviews/delete/${reviewId}/`;
+        });
+    }
+});
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const togglePassword = document.getElementById("togglePassword");
+    const passwordInput = document.getElementById("passwordInput");
+
+    if (togglePassword && passwordInput) {
+        togglePassword.addEventListener("click", function () {
+            const isPassword = passwordInput.type === "password";
+            passwordInput.type = isPassword ? "text" : "password";
+
+            this.innerHTML = isPassword
+                ? '<i class="bi bi-eye-slash"></i>'
+                : '<i class="bi bi-eye"></i>';
+        });
+    }
+
+});

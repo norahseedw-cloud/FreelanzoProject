@@ -1,7 +1,7 @@
 {% extends 'main/base.html' %}
 {% load static %}
 
-{% block title %}Update Profile{% endblock %}
+{% block title %}Update Freelancer Profile{% endblock %}
 
 {% block content %}
 
@@ -11,102 +11,97 @@
         <div class="cover-dots"></div>
     </div>
 </div>
-<div class="profile-main">
 
-    <form method="POST" enctype="multipart/form-data">
-        {% csrf_token %}
+<section class="update-profile-section">
 
-        <div class="profile-header-card">
+    <div class="update-profile-card">
 
-            <div class="profile-top">
+        <div class="update-profile-header">
+            <h2>Update Freelancer Profile</h2>
+            <p>Complete your freelancer profile to attract more clients.</p>
+        </div>
 
-                <!-- Avatar -->
-                
-                    <div class="avatar-upload mt-3">
+        <form method="POST" enctype="multipart/form-data" class="update-profile-form">
+            {% csrf_token %}
 
+            <!-- Avatar -->
+            <div class="avatar-upload">
                 <input type="file" name="avatar" id="avatarInput" hidden>
 
                 <label for="avatarInput" class="avatar-label">
-
-                    <img src="{{ profile.avatar.url|default:'/media/default-avatar.avif' }}" class="profile-avatar">
+                    {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}" class="profile-avatar">
+                    {% else %}
+                    <img src="/media/default-avatar.avif" class="profile-avatar">
+                    {% endif %}
 
                     <div class="avatar-overlay">
-                    Change Your Avatar
+                        Change Your Avatar
                     </div>
-
                 </label>
-
-                </div>
-            
-                <!-- Identity -->
-                <div class="profile-identity">
-
-                    <input type="text" name="job_title" placeholder="Job Title"
-                        value="{{ form.job_title.value|default:'' }}" class="form-control mb-2">
-
-                    <div class="mb-2">
-                        <label>Skills</label>
-                        {{ form.skills }}
-                    </div>
-
-
-                    <input type="text" name="location" placeholder="Location"
-                        value="{{ form.location.value|default:'' }}" class="form-control mb-2">
-
-                </div>
-
-                <!-- Actions -->
-                <div class="profile-actions">
-                    <button type="submit" class="btn-hire">Save</button>
-                </div>
-
             </div>
 
-        </div>
+            <!-- About -->
+            <div class="form-group">
+                <label>About</label>
+                {{ form.about }}
+            </div>
+            <!-- Skills -->
+            <div class="form-group">
+                <label>Skills</label>
+                <div class="skills-pills">
+                    {{ form.skills }}
+                </div>
+            </div>
+            <!-- Location -->
+            <div class="form-group">
+                <label>Location</label>
+                {{ form.location }}
+            </div>
 
-        <div class="profile-grid">
-
-            <!-- LEFT -->
-            <div>
-
-                <!-- About -->
-                <div class="profile-card">
-                    <h3 class="card-title">About Me</h3>
-                    <textarea name="about" class="form-control" rows="5"
-                        placeholder="Write about yourself">{{ form.about.value|default:'' }}</textarea>
+            <!-- Row -->
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Availability</label>
+                    {{ form.availability }}
                 </div>
 
-                <a href="{% url 'accounts:add_portfolio_project' %}" class="btn-hire" style="display:inline-block; margin-bottom:20px;">
-                    Add Project
+                <div class="form-group">
+                    <label>Languages</label>
+                    {{ form.languages }}
+                </div>
+
+                <div class="form-group">
+                    <label>Job Title</label>
+                    {{ form.job_title }}
+                </div>
+
+                <div class="form-group">
+                    <label>Experience</label>
+                    {{ form.experience }}
+                </div>
+
+                <div class="form-group">
+                    <label>Hourly Rate</label>
+                    {{ form.hourly_rate }}
+                </div>
+            </div>
+
+            <!-- Actions -->
+            <div class="form-actions">
+                <a href="{% url 'accounts:freelancer_profile' %}" class="btn-cancel">
+                    Cancel
                 </a>
+
+                <button type="submit" class="btn-save-profile">
+                    Save Changes
+                </button>
             </div>
 
-            <!-- RIGHT -->
-            <div>
+        </form>
 
-                <div class="profile-card">
-                    <h3 class="card-title">Quick Info</h3>
+    </div>
 
-                    <input type="text" name="availability" class="form-control mb-2"
-                        placeholder="Availability"
-                        value="{{ form.availability.value|default:'' }}">
-
-                    <input type="number" name="hourly_rate" class="form-control mb-2"
-                        placeholder="Hourly Rate"
-                        value="{{ form.hourly_rate.value|default:'' }}">
-
-                    <input type="text" name="languages" class="form-control"
-                        placeholder="Languages"
-                        value="{{ form.languages.value|default:'' }}">
-
-                </div>
-
-            </div>
-
-        </div>
-
-    </form>
-
-</div>
+</section>
 
 {% endblock %}

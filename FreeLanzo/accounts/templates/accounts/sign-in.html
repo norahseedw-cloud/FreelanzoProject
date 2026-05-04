@@ -13,7 +13,7 @@
 
     <div class="card shadow-lg overflow-hidden sign-style">
 
-        <div class="row g-0  h-100">
+        <div class="row g-0">
 
             <div class="col-md-6 d-flex align-items-center justify-content-center bg-white">
 
@@ -30,12 +30,20 @@
                             <input type="text" class="form-control" placeholder="Username" name="username" required>
                         </div>
 
-                        <div class="mb-4">
-                            <input type="password" class="form-control" placeholder="Password" name="password" required>
+                        <div class="mb-4 auth-field">
+                            <div class="password-wrapper">
+                                <input type="password" class="form-control" id="passwordInput" placeholder="Password" name="password" required>
+
+                                <button type="button" class="toggle-password" id="togglePassword">
+                                    <i class="bi bi-eye"></i>
+                                </button>
+                            </div>
                         </div>
 
                         <div class="mb-4 text-center link-in">
-                            <a href="#" class="text-linke">Did you forget your password?</a>
+                            <a href="{% url 'accounts:password_reset' %}" class="forgot-link">
+                                Did you forget your password?
+                            </a>
                         </div>
 
                         <button type="submit" class="btn btn-custom w-100">Sign in</button>

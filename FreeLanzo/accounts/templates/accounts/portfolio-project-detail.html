@@ -5,54 +5,85 @@
 
 {% block content %}
 
-<section class="project-detail-page">
-    <div class="project-detail-card">
+<section class="portfolio-detail-page">
 
-        <div class="project-detail-header">
-            <span class="project-badge">Portfolio Project</span>
-            <h1>{{ project.title }}</h1>
-        </div>
+    <div class="portfolio-detail-container">
 
-        {% if project.image %}
-        <div class="main-project-image">
-            <img src="{{ project.image.url }}" alt="{{ project.title }}">
-        </div>
-        {% endif %}
+        <div class="portfolio-detail-card">
 
-        {% if project.images.exists %}
-        <div class="project-gallery">
-            {% for img in project.images.all %}
-            <div class="gallery-item">
-                <img src="{{ img.image.url }}" alt="{{ project.title }}">
+            <div class="portfolio-detail-header">
+                <span class="project-badge">
+                    <i class="bi bi-grid-1x2-fill"></i>
+                    Portfolio Project
+                </span>
+
+                <h1>{{ project.title }}</h1>
+
+
             </div>
-            {% endfor %}
-        </div>
-        {% endif %}
 
-        <div class="project-description-box">
-            <h3>Description</h3>
-            <p>{{ project.description }}</p>
-        </div>
-
-        <div class="project-actions">
-            {% if project.project_url %}
-            <a href="{{ project.project_url }}" target="_blank" class="btn-hire">
-                Visit Project Link
-            </a>
+            {% if project.image %}
+            <div class="main-project-image">
+                <img src="{{ project.image.url }}" alt="{{ project.title }}">
+            </div>
             {% endif %}
 
-            {% if request.user == project.freelancer.user %}
-            <a href="{% url 'accounts:update_portfolio_project' project.id %}" class="btn-hire">
-                Update
-            </a>
+            {% if project.images.exists %}
+            <div class="project-gallery-section">
+                <h3>Project Gallery</h3>
 
-            <a href="{% url 'accounts:delete_portfolio_project' project.id %}" class="btn-message danger-btn">
-                Delete
-            </a>
+                <div class="project-gallery">
+                    {% for img in project.images.all %}
+                    <div class="gallery-item">
+                        <img src="{{ img.image.url }}" alt="{{ project.title }}">
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
             {% endif %}
+
+            <div class="project-description-box">
+                <h3>
+                    <i class="bi bi-card-text"></i>
+                    Description
+                </h3>
+
+                <p>
+                    {% if project.description %}
+                    {{ project.description }}
+                    {% else %}
+                    No description added yet.
+                    {% endif %}
+                </p>
+            </div>
+
+            <div class="project-actions">
+
+                {% if project.project_url %}
+                <a href="{{ project.project_url }}" target="_blank" class="btn-hire">
+                    <i class="bi bi-box-arrow-up-right"></i>
+                    Visit Project
+                </a>
+                {% endif %}
+
+                {% if request.user == project.freelancer.user %}
+                <a href="{% url 'accounts:update_portfolio_project' project.id %}" class="btn-hire">
+                    <i class="bi bi-pencil-square"></i>
+                    Update
+                </a>
+
+                <a href="{% url 'accounts:delete_portfolio_project' project.id %}" class="btn-message danger-btn">
+                    <i class="bi bi-trash"></i>
+                    Delete
+                </a>
+                {% endif %}
+
+            </div>
+
         </div>
 
     </div>
+
 </section>
 
 {% endblock %}

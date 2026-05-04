@@ -116,40 +116,52 @@
             </span>
         </div>
 
-        <div class="projects-grid">
-
+        <div class="projects-list">
             {% for project in projects %}
             <div class="project-card">
 
-                <div class="card-header">
+                <div class="project-card-bar"></div>
 
-                    <h3 class="project-title">{{ project.title }}</h3>
-                    <span class="status {{ project.status }}">
-                        {{ project.get_status_display }}
-                    </span>
+                <div class="project-card-body">
 
-                </div>
+                    <!-- LEFT -->
+                    <div class="project-left">
+                        <h3 class="project-title">{{ project.title }}</h3>
 
-                <p class="desc">
-                    {{ project.description|truncatewords:18 }}
-                </p>
+                        <span class="status {{ project.status }}">
+                            {{ project.get_status_display }}
+                        </span>
 
-                <div class="info">
-                    <span class="budget">${{ project.budget }}</span>
+                        <p class="desc">
+                            {{ project.description|truncatewords:18 }}
+                        </p>
+                    </div>
 
-                    <div class="skills-list">
-                        {% for skill in project.skills.all %}
-                        <span class="skill-tag">{{ skill.name }}</span>
-                        {% empty %}
-                        <span class="no-skill">No skills</span>
-                        {% endfor %}
+                    <!-- MIDDLE -->
+                    <div class="project-middle">
+                        <div class="skills-list">
+                            {% for skill in project.skills.all|slice:":3" %}
+                            <span class="skill-tag">{{ skill.name }}</span>
+                            {% endfor %}
+
+                            {% if project.skills.count > 3 %}
+                            <span class="skill-tag more">
+                                +{{ project.skills.count|add:"-3" }}
+                            </span>
+                            {% endif %}
+                        </div>
+                    </div>
+
+                    <!-- RIGHT -->
+                    <div class="project-right">
+                        <span class="budget">${{ project.budget }}</span>
+
+                        <a href="{% url 'accounts:project_detail' project.id %}" class="view-btn">
+                            View Details
+                        </a>
                     </div>
 
                 </div>
-
-                <a href="{% url 'accounts:project_detail' project.id %}" class="view-btn">
-                    View Details
-                </a>
 
             </div>
             {% empty %}
