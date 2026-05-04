@@ -7,38 +7,36 @@
 {% if request.user.is_authenticated and request.session.show_complete_profile %}
 
 <div class="modal fade show" id="profileModal" style="display:block;" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content p-4 text-center">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content p-4 text-center">
 
-      <h5 class="mb-2">
-        {% if request.user.usertype.role == 'freelancer' %}
-          Complete your freelancer profile
-        {% else %}
-          Complete your client profile
-        {% endif %}
-      </h5>
+            <h5 class="mb-2">
+                {% if request.user.usertype.role == 'freelancer' %}
+                Complete your freelancer profile
+                {% else %}
+                Complete your client profile
+                {% endif %}
+            </h5>
 
-      <p class="text-muted">
-        {% if request.user.usertype.role == 'freelancer' %}
-          Add your skills to get hired faster.
-        {% else %}
-          Tell us what you need to find the right talent.
-        {% endif %}
-      </p>
+            <p class="text-muted">
+                {% if request.user.usertype.role == 'freelancer' %}
+                Add your skills to get hired faster.
+                {% else %}
+                Tell us what you need to find the right talent.
+                {% endif %}
+            </p>
 
-      {% if request.user.usertype.role == 'freelancer' %}
-        <a href="{% url 'accounts:freelancer_profile' %}" class="btn btn-primary">Complete</a>
-      {% else %}
-        <a href="{% url 'accounts:client_profile' %}" class="btn btn-primary">Complete</a>
-      {% endif %}
+            {% if request.user.usertype.role == 'freelancer' %}
+            <a href="{% url 'accounts:freelancer_profile' %}" class="btn btn-primary">Complete</a>
+            {% else %}
+            <a href="{% url 'accounts:client_profile' %}" class="btn btn-primary">Complete</a>
+            {% endif %}
 
-      <button class="btn btn-link mt-2" onclick="closeModal()">Skip</button>
+            <button class="btn btn-link mt-2" onclick="closeModal()">Skip</button>
 
+        </div>
     </div>
-  </div>
 </div>
-
-
 
 {% endif %}
 
@@ -72,19 +70,19 @@
         <div class="hero-actions">
             {% if request.user.is_authenticated %}
 
-                {% if request.user.usertype and request.user.usertype.role == 'client' %}
-                    <a href="{% url 'accounts:create_project' %}" class="btn-primary-custom">
-                        Post a Project
-                    </a>
-                {% endif %}
+            {% if request.user.usertype and request.user.usertype.role == 'client' %}
+            <a href="{% url 'accounts:create_project' %}" class="btn-primary-custom">
+                Post a Project
+            </a>
+            {% endif %}
 
             {% else %}
-                <a href="{% url 'accounts:sign_in_view' %}?next={{ request.path }}" class="btn-primary-custom">
-                    Post a Project
-                </a>
+            <a href="{% url 'accounts:sign_in_view' %}?next={{ request.path }}" class="btn-primary-custom">
+                Post a Project
+            </a>
             {% endif %}
-            
-            
+
+
 
             <a href="{% url 'accounts:all_freelancer'%}" class="btn-outline-custom">Browse Freelancers</a>
         </div>
@@ -107,7 +105,6 @@
     </div>
 </section>
 <!-- Hero Section End  -->
-
 
 
 <!--  Programs Used Start  -->
@@ -209,6 +206,57 @@
 <!--  Programs Used End  -->
 
 
+<!--  Categories Start ===== -->
+<section class="home-section categories-section reveal">
+    <div class="section-heading">
+        <span>Browse Categories</span>
+        <h2>Find talent across every field</h2>
+    </div>
+
+    <div class="categories-grid">
+
+        <a href="{% url 'accounts:all_freelancer' %}?category=2" class="category-card" style="--cat-color: var(--teal)">
+            <div class="cat-icon"><i class="bi bi-code-slash"></i></div>
+            <h4>Programming & Tech</h4>
+            <span>48 Freelancers</span>
+        </a>
+
+        <a href="{% url 'accounts:all_freelancer' %}?category=1" class="category-card" style="--cat-color: var(--blue)">
+            <div class="cat-icon"><i class="bi bi-palette2"></i></div>
+            <h4>Graphic Design</h4>
+            <span>72 Freelancers</span>
+        </a>
+
+        <a href="{% url 'accounts:all_freelancer' %}?category=3" class="category-card" style="--cat-color: var(--color-orange)">
+            <div class="cat-icon"><i class="bi bi-megaphone"></i></div>
+            <h4>Digital Marketing</h4>
+            <span>35 Freelancers</span>
+        </a>
+
+        <a href="{% url 'accounts:all_freelancer' %}?category=5" class="category-card" style="--cat-color: var(--btn-color)">
+            <div class="cat-icon"><i class="bi bi-camera-video"></i></div>
+            <h4>Video & Animation</h4>
+            <span>29 Freelancers</span>
+        </a>
+
+        <a href="{% url 'accounts:all_freelancer' %}?category=4" class="category-card" style="--cat-color: var(--color-purple)">
+            <div class="cat-icon"><i class="bi bi-pen"></i></div>
+            <h4>Content Writing</h4>
+            <span>41 Freelancers</span>
+        </a>
+
+        <a href="{% url 'accounts:all_freelancer' %}?category=6" class="category-card" style="--cat-color: var(--color-green)">
+            <div class="cat-icon"><i class="bi bi-bar-chart-line"></i></div>
+            <h4>SEO & Analytics</h4>
+            <span>22 Freelancers</span>
+        </a>
+
+    </div>
+</section>
+<!--  Categories End  -->
+
+
+
 <!--  Services Start  -->
 <section class="home-section services-section reveal">
     <div class="section-heading">
@@ -218,46 +266,46 @@
 
     <div class="services-grid-new">
 
-        <a href="/services/web-development/" class="service-card-new">
+        <div class="service-card-new">
             <div class="service-card-top">
                 <h3>Web Development</h3>
             </div>
             <div class="service-card-img">
-                <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&q=80" alt="Web Development">
+                <img src="https://images.unsplash.com/photo-1547658719-da2b51169166?w=400&q=80">
             </div>
-        </a>
+        </div>
 
-        <a href="/services/graphic-design/" class="service-card-new">
+        <div class="service-card-new">
             <div class="service-card-top">
                 <h3>Graphic Design</h3>
             </div>
             <div class="service-card-img">
-                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&q=80" alt="Graphic Design">
+                <img src="https://images.unsplash.com/photo-1561070791-2526d30994b5?w=400&q=80">
             </div>
-        </a>
+        </div>
 
-        <a href="/services/digital-marketing/" class="service-card-new">
+        <div class="service-card-new">
             <div class="service-card-top">
                 <h3>Digital Marketing</h3>
             </div>
             <div class="service-card-img">
-                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&q=80" alt="Digital Marketing">
+                <img src="https://images.unsplash.com/photo-1611162617474-5b21e879e113?w=400&q=80">
             </div>
-        </a>
+        </div>
 
-        <a href="/services/video-editing/" class="service-card-new">
+        <div class="service-card-new">
             <div class="service-card-top">
                 <h3>Video Editing</h3>
             </div>
             <div class="service-card-img">
-                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400&q=80" alt="Video Editing">
+                <img src="https://images.unsplash.com/photo-1574717024653-61fd2cf4d44d?w=400&q=80">
             </div>
-        </a>
+        </div>
 
     </div>
 
     <div class="services-explore">
-        <a href="/services/" class="btn-explore">Explore more services</a>
+        <a href="{% url 'accounts:all_freelancer' %}" class="btn-explore">Explore more services</a>
     </div>
 
 </section>
@@ -509,56 +557,6 @@
 <!--  Stats Banner End  -->
 
 
-<!--  Categories Start ===== -->
-<section class="home-section categories-section reveal">
-    <div class="section-heading">
-        <span>Browse Categories</span>
-        <h2>Find talent across every field</h2>
-    </div>
-
-    <div class="categories-grid">
-
-        <a href="#" class="category-card" style="--cat-color: var(--teal)">
-            <div class="cat-icon"><i class="bi bi-code-slash"></i></div>
-            <h4>Web Development</h4>
-            <span>48 Freelancers</span>
-        </a>
-
-        <a href="#" class="category-card" style="--cat-color: var(--blue)">
-            <div class="cat-icon"><i class="bi bi-palette2"></i></div>
-            <h4>Graphic Design</h4>
-            <span>72 Freelancers</span>
-        </a>
-
-        <a href="#" class="category-card" style="--cat-color: var(--color-orange)">
-            <div class="cat-icon"><i class="bi bi-megaphone"></i></div>
-            <h4>Digital Marketing</h4>
-            <span>35 Freelancers</span>
-        </a>
-
-        <a href="#" class="category-card" style="--cat-color: var(--btn-color)">
-            <div class="cat-icon"><i class="bi bi-camera-video"></i></div>
-            <h4>Video Editing</h4>
-            <span>29 Freelancers</span>
-        </a>
-
-        <a href="#" class="category-card" style="--cat-color: var(--color-purple)">
-            <div class="cat-icon"><i class="bi bi-pen"></i></div>
-            <h4>Content Writing</h4>
-            <span>41 Freelancers</span>
-        </a>
-
-        <a href="#" class="category-card" style="--cat-color: var(--color-green)">
-            <div class="cat-icon"><i class="bi bi-bar-chart-line"></i></div>
-            <h4>SEO & Analytics</h4>
-            <span>22 Freelancers</span>
-        </a>
-
-    </div>
-</section>
-<!--  Categories End  -->
-
-
 <!--  Testimonials Start  -->
 <section class="testimonials-section reveal">
     <div class="section-heading">
@@ -682,7 +680,7 @@
 
 
 <!--  CTA Start  -->
-  {% if not request.user.is_authenticated %}
+{% if not request.user.is_authenticated %}
 <section class="cta-section reveal">
     <div class="cta-bg"></div>
     <div class="cta-content">
@@ -697,12 +695,23 @@
 </section>
 {%endif%}
 <!--  CTA End  -->
-  <script>
-function closeModal() {
-  document.getElementById('profileModal').style.display = 'none';
 
-  const backdrop = document.querySelector('.modal-backdrop');
-  if (backdrop) backdrop.remove();
-}
+
+
+
+
+
+
+
+
+
+
+<script>
+    function closeModal() {
+        document.getElementById('profileModal').style.display = 'none';
+
+        const backdrop = document.querySelector('.modal-backdrop');
+        if (backdrop) backdrop.remove();
+    }
 </script>
 {% endblock %}

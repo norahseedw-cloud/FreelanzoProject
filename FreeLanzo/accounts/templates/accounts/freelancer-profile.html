@@ -22,9 +22,9 @@
             <!-- Avatar -->
             <div class="avatar-wrap">
                 {% if profile.avatar %}
-                    <img src="{{ profile.avatar.url }}" class="profile-avatar">
+                <img src="{{ profile.avatar.url }}" class="profile-avatar">
                 {% else %}
-                    <img src="/media/default-avatar.avif" class="profile-avatar">
+                <img src="/media/default-avatar.avif" class="profile-avatar">
                 {% endif %}
 
                 <div class="online-badge"></div>
@@ -35,7 +35,7 @@
 
                     <span class="profile-name"> {{ profile.user.first_name }} {{ profile.user.last_name }}</span>
 
-                    
+
                 </div>
                 <p class="profile-role">
                     {% if profile.job_title %}
@@ -55,8 +55,12 @@
                     </span>
                     <span class="meta-item">
                         <i class="bi bi-tags"></i>
-                        {% if profile.category %}
-                        {{ profile.get_category_display }}
+                        {% if profile.skills.all %}
+                        {% for skill in profile.skills.all %}
+                        {% for category in skill.categories.all %}
+                        <span>{{ category.name }}</span>
+                        {% endfor %}
+                        {% endfor %}
                         {% else %}
                         Not added yet
                         {% endif %}
@@ -68,6 +72,25 @@
 
             <div class="profile-actions">
                 {% if request.user == profile.user %}
+                <a href="{% url 'accounts:update_freelancer_profile' %}" class="btn-hire">
+                    Update Profile
+                </a>
+                {% endif %}
+                <a class="btn-message" href="{% url 'chat:start_chat' profile.user.id %}">
+                    <i class="bi bi-chat-dots"></i> Message
+                </a>
+
+                {% if request.user.is_authenticated %}
+                {% if request.user.usertype.role == 'client' %}
+                <form method="POST" action="{% url 'accounts:toggle_favorite_freelancer' profile.id %}" style="display:inline;">
+                    {% csrf_token %}
+                    <button class="btn-save" type="submit">
+                        <i class="bi {% if is_liked %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                    </button>
+                </form>
+                {% endif %}
+                {% endif %}
+
                     <a href="{% url 'accounts:update_freelancer_profile' %}" class="btn-hire">
                         Update Profile
                     </a>
@@ -78,6 +101,7 @@
                 </a>
                 {% endif %}
                 <button class="btn-save"><i class="bi bi-heart"></i></button>
+
             </div>
 
         </div>
@@ -134,16 +158,17 @@
                     <i class="bi bi-lightning-charge-fill"></i> Skills & Technologies
                 </h3>
                 <div class="skills-cloud">
-                    {% if profile.skills %}
-                    {% for skill in profile.skills.split %}
-                    <span class="skill-tag">{{ skill }}</span>
+                    {% if profile.skills.all %}
+                    {% for skill in profile.skills.all %}
+                    <span class="skill-tag">{{ skill.name }}</span>
+                    {% empty %}
+                    <span class="skill-tag">Not added yet</span>
                     {% endfor %}
                     {% else %}
                     <span class="skill-tag">Not added yet</span>
                     {% endif %}
                 </div>
             </div>
-
             <!-- Portfolio -->
             <div class="profile-card">
                 <h3 class="card-title">

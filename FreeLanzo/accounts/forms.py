@@ -35,7 +35,6 @@ class SignUpForm(forms.ModelForm):
         return password
     
 
-
 class FreelancerProfileForm(forms.ModelForm):
     class Meta:
         model = FreelancerProfile
@@ -43,21 +42,22 @@ class FreelancerProfileForm(forms.ModelForm):
             'avatar',
             'job_title',
             'location',
-            'category',
             'about',
             'skills',
             'hourly_rate',
             'availability',
             'languages'
         ]
-
+        
+        widgets = {
+            'skills': forms.CheckboxSelectMultiple(),
+        }
 
 
 class PortfolioProjectForm(forms.ModelForm):
     class Meta:
         model = PortfolioProject
         fields = ['title', 'description', 'image', 'project_url']
-
 
 
 class ClientProfileForm(forms.ModelForm):
@@ -75,4 +75,11 @@ class ClientProfileForm(forms.ModelForm):
 class ProjectForm(forms.ModelForm):
     class Meta:
         model = Project
-        fields = ['title', 'description', 'category', 'budget']
+        fields = ['title', 'description', 'skills', 'budget']
+
+        widgets = {
+            'skills': forms.CheckboxSelectMultiple()
+        }
+
+
+

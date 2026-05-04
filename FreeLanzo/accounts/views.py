@@ -1,14 +1,15 @@
 from django.shortcuts import render,redirect
 from django.http import HttpRequest,HttpResponse
 from .forms import SignUpForm,FreelancerProfileForm,PortfolioProjectForm,ClientProfileForm,ProjectForm
-from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage,Project
+from .models import UserType, FreelancerProfile, ClientProfile,PortfolioProject, PortfolioProjectImage,PortfolioProjectImage,Project,Category,FavoriteFreelancer
 from django.contrib.auth import login,authenticate, logout
 from django.contrib.auth.decorators import login_required
 from django.shortcuts import get_object_or_404
 from marketplace.forms import ProposalForms, DeliveryForm
 from marketplace.models import Proposal
 from review.models import Review
-from django.db.models import Avg, Sum
+from django.db.models import Avg, Sum, Q
+
 
 # Create your views here.
 
@@ -81,9 +82,14 @@ def freelancer_profile_view(request):
     projects = profile.portfolio_projects.all()
 
     similar_freelancers = FreelancerProfile.objects.filter(
+
+        skills__in=profile.skills.all()
+    ).exclude(user=request.user).distinct()[:3]
+
         category=profile.category,
     ).exclude(user=request.user)[:3]
     
+
 
     return render(request, "accounts/freelancer-profile.html", {
         "profile": profile,
@@ -94,18 +100,60 @@ def freelancer_profile_view(request):
 
 def all_freelancer_view(request):
     freelancers = FreelancerProfile.objects.all()
+    categories = Category.objects.all()
 
-    category = request.GET.get('category')
+    category_id = request.GET.get('category')
+    search = request.GET.get('search')
+    min_rate = request.GET.get('min_rate')
+    max_rate = request.GET.get('max_rate')
+    sort = request.GET.get('sort')
+    query = request.GET.get('q')
 
-    if category:
-        freelancers = freelancers.filter(category=category)
+    if query:
+        freelancers = freelancers.filter(
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query) |
+            Q(skills__name__icontains=query)
+        ).distinct()
 
-    category_dict = dict(FreelancerProfile.CATEGORY_CHOICES)
-    category_name = category_dict.get(category)
+
+    if category_id and category_id.isdigit():
+        freelancers = freelancers.filter(
+            skills__categories__id=int(category_id)
+        ).distinct()
+
+    if search:
+        freelancers = freelancers.filter(
+            user__first_name__icontains=search
+        ) | freelancers.filter(
+            user__last_name__icontains=search
+        ) | freelancers.filter(
+            job_title__icontains=search
+        ) | freelancers.filter(
+            skills__name__icontains=search
+        )
+        freelancers = freelancers.distinct()
+
+    if min_rate:
+        freelancers = freelancers.filter(hourly_rate__gte=min_rate)
+
+    if max_rate:
+        freelancers = freelancers.filter(hourly_rate__lte=max_rate)
+
+    if sort == "low":
+        freelancers = freelancers.order_by("hourly_rate")
+    elif sort == "high":
+        freelancers = freelancers.order_by("-hourly_rate")
 
     return render(request, 'accounts/all-freelancer.html', {
         'freelancers': freelancers,
-        'selected_category': category_name,
+        'categories': categories,
+        'selected_category': category_id,
+        'search': search,
+        'min_rate': min_rate,
+        'max_rate': max_rate,
+        'sort': sort,
     })
 
 
@@ -150,12 +198,13 @@ def add_portfolio_project(request):
             project.freelancer = profile
             project.save()
 
-            images = request.FILES.getlist('images')
-            for img in images:
-                PortfolioProjectImage.objects.create(
-                    project=project,
-                    image=img
-                )
+        images = request.FILES.getlist('images')
+
+        for img in images:
+            PortfolioProjectImage.objects.create(
+                project=project,
+                image=img
+            )
 
             return redirect("accounts:freelancer_profile")
     else:
@@ -187,26 +236,34 @@ def freelancer_profile_detail(request, user_id):
         if has_relation:
             can_review = True
 
-    if profile.category:
-        similar_freelancers = FreelancerProfile.objects.filter(
-            category=profile.category
-        ).exclude(user=profile.user)[:3]
-    else:
-        similar_freelancers = FreelancerProfile.objects.exclude(
-            user=profile.user
-        )[:3]
+    similar_freelancers = FreelancerProfile.objects.filter(
+        skills__in=profile.skills.all()
+    ).exclude(user=profile.user).distinct()[:3]
+
+    is_liked = False
+
+    if request.user.is_authenticated:
+        client_profile = ClientProfile.objects.filter(user=request.user).first()
+
+        if client_profile:
+            is_liked = FavoriteFreelancer.objects.filter(
+                client=client_profile,
+                freelancer=profile
+            ).exists()
 
     return render(request, "accounts/freelancer-profile.html", {
         "profile": profile,
         "projects": projects,
         "similar_freelancers": similar_freelancers,
+        "is_liked": is_liked
+
         "can_review":can_review,
         "reviews":reviews,
         "average_rating": round(average_rating, 1),
     "reviews_count": reviews_count,
     })
 
-
+    })
 @login_required
 def update_portfolio_project(request, project_id):
     project = get_object_or_404(PortfolioProject, id=project_id, freelancer__user=request.user)
@@ -305,8 +362,20 @@ def create_project_view(request):
         if form.is_valid():
             project = form.save(commit=False)
             project.client = profile
+
+            skills = form.cleaned_data.get('skills')
+
+            if skills:
+                first_skill = skills.first()
+                project.category = first_skill.categories.first()
+
             project.save()
+            form.save_m2m()
+
             return redirect('accounts:client_profile')
+        else:
+            print(form.errors)
+
     else:
         form = ProjectForm()
 
@@ -314,27 +383,45 @@ def create_project_view(request):
         'form': form
     })
 
+
+
 def all_projects_view(request):
     projects = Project.objects.all().order_by('-created_at')
+    categories = Category.objects.all()
 
-    category = request.GET.get('category')
+    category_id = request.GET.get('category')
     search = request.GET.get('search')
+    min_budget = request.GET.get('min_budget')
+    max_budget = request.GET.get('max_budget')
+    sort = request.GET.get('sort')
 
-    if category:
-        projects = projects.filter(category=category)
+    if category_id and category_id.isdigit():
+        projects = projects.filter(category_id=int(category_id))
+    else:
+        category_id = None
 
     if search:
         projects = projects.filter(title__icontains=search)
 
-    category_dict = dict(FreelancerProfile.CATEGORY_CHOICES)
-    selected_category_name = category_dict.get(category)
+    if min_budget:
+        projects = projects.filter(budget__gte=min_budget)
+
+    if max_budget:
+        projects = projects.filter(budget__lte=max_budget)
+
+    if sort == "low":
+        projects = projects.order_by("budget")
+    elif sort == "high":
+        projects = projects.order_by("-budget")
 
     return render(request, 'marketplace/projects.html', {
         'projects': projects,
-        'categories': FreelancerProfile.CATEGORY_CHOICES,
-        'selected_category': category,
-        'selected_category_name': selected_category_name,
+        'categories': categories,
+        'selected_category': category_id,
         'search': search,
+        'min_budget': min_budget,
+        'max_budget': max_budget,
+        'sort': sort,
     })
 
 def project_detail_view(request: HttpRequest, project_id):
@@ -449,9 +536,49 @@ def project_detail_view(request: HttpRequest, project_id):
     return render(request, 'marketplace/project-detail.html', {
         'project': project,
         'client_projects_count': client_projects_count,
+
+    })
+
+
+@login_required
+def toggle_favorite_freelancer(request, freelancer_id):
+    freelancer = get_object_or_404(FreelancerProfile, id=freelancer_id)
+
+    client_profile = ClientProfile.objects.filter(user=request.user).first()
+
+    if not client_profile:
+        return redirect('accounts:all_freelancer')
+
+    favorite, created = FavoriteFreelancer.objects.get_or_create(
+        client=client_profile,
+        freelancer=freelancer
+    )
+
+    if not created:
+        favorite.delete()
+
+    return redirect(request.META.get('HTTP_REFERER', 'accounts:all_freelancer'))
+
+
+@login_required
+def favorite_freelancers_view(request):
+    client_profile = ClientProfile.objects.filter(user=request.user).first()
+
+    if not client_profile:
+        return redirect('accounts:all_freelancer')
+
+    favorites = FavoriteFreelancer.objects.filter(
+        client=client_profile
+    ).select_related('freelancer__user')
+
+    return render(request, 'accounts/favorite_freelancers.html', {
+        'favorites': favorites
+    })
+
         'form': form,
         'existing_proposal': existing_proposal,
         'proposals': proposals,
         'accepted_proposal':accepted_proposal
     })
+
 

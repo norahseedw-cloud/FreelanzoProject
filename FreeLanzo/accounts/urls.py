@@ -25,5 +25,6 @@ path('client/<int:user_id>/', views.client_profile_view, name='client_profile_de
     path('project/create/', views.create_project_view, name='create_project'),
     path('projects/', views.all_projects_view, name='all_projects'),
     path('project/<int:project_id>/', views.project_detail_view, name='project_detail'),
-
+    path('freelancers/<int:freelancer_id>/favorite/',views.toggle_favorite_freelancer,name='toggle_favorite_freelancer'),
+    path('favorites/freelancers/',views.favorite_freelancers_view,name='favorite_freelancers'),
 ]
