@@ -122,8 +122,12 @@
             <div class="project-card">
 
                 <div class="card-header">
-                    <h3>{{ project.title }}</h3>
-                    <span class="status">{{ project.get_status_display }}</span>
+
+                    <h3 class="project-title">{{ project.title }}</h3>
+                    <span class="status {{ project.status }}">
+                        {{ project.get_status_display }}
+                    </span>
+
                 </div>
 
                 <p class="desc">

@@ -703,6 +703,20 @@
     border-radius: 20px;
 }
 
+.status.in_progress {
+    background: #fff3cd;
+    color: #856404;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
+.status.completed {
+    background: #e2e3e5;
+    color: #383d41;
+    padding: 4px 10px;
+    border-radius: 20px;
+}
+
 
 .client-top {
     display: flex;

@@ -22,31 +22,23 @@
 
             <!-- Avatar -->
             <div class="avatar-wrap">
-                {% if profile.avatar %}
                 <img src="{{ profile.avatar.url }}" alt="{{ profile.user.username }}" class="profile-avatar">
-                {% else %}
-                <img src="{% static 'images/avatar/default.png' %}" alt="{{ profile.user.username }}" class="profile-avatar">
-                {% endif %}
-
-                <div class="online-badge"></div>
             </div>
 
             <!-- Identity -->
             <div class="profile-identity">
                 <div class="profile-name-row">
                     <span class="profile-name">
-                        {% if request.user.first_name or request.user.last_name %}
-                        {{ request.user.first_name }} {{ request.user.last_name }}
+                        {% if profile.user.first_name or profile.user.last_name %}
+                        {{ profile.user.first_name }} {{ profile.user.last_name }}
                         {% else %}
-                        {{ request.user.username }}
+                        {{ profile.user.username }}
                         {% endif %}
                     </span>
                     <span class="client-type-badge">
                         <i class="bi bi-briefcase-fill"></i> Client
                     </span>
-                    <span class="verified-badge">
-                        <i class="bi bi-patch-check-fill"></i> Verified
-                    </span>
+                    
                 </div>
                 <p class="profile-role"> {% if profile.job_title %}
                     {{ profile.job_title }}
@@ -63,31 +55,32 @@
                         <i class="bi bi-geo-alt" style="color:var(--teal)"></i>
                         {% if profile.location %}{{ profile.location }}{% else %}No location added{% endif %}
                     </span>
-                    <span class="meta-item">
-                        <i class="bi bi-star-fill" style="color:var(--orange)"></i>
-                        <strong>4.9</strong>&nbsp;(42 reviews given)
-                    </span>
+                    
                     <span class="meta-item">
                         <i class="bi bi-clock" style="color:var(--blue)"></i>
                         Member since {{ request.user.date_joined|date:"M Y" }}
                     </span>
                     <span class="meta-item">
                         <i class="bi bi-folder" style="color:var(--color-purple)"></i>
-                        {{ profile.projects_posted }} Projects Posted
+                        {{ projects|length }} Projects Posted
                     </span>
                 </div>
             </div>
+            {% if request.user == profile.user %}
             <a href="{% url 'accounts:update_client_profile' %}" class="btn-view-projects">
                 <i class="bi bi-pencil-square"></i> Edit Profile
             </a>
+            {% endif %}
             <!-- Actions -->
             <div class="profile-actions">
-                <button class="btn-contact">
+                {% if request.user.is_authenticated and request.user != profile.user %}
+                <a href="{% url 'chat:start_chat' profile.user.id %}" class="btn-contact">
                     <i class="bi bi-chat-dots"></i> Contact
-                </button>
-                <button class="btn-view-projects">
+                </a>
+                {% endif %}
+                <a class="btn-view-projects" href="#project-section">
                     <i class="bi bi-folder2-open"></i> View Projects
-                </button>
+                </a>
                 <button class="btn-save"><i class="bi bi-bookmark"></i></button>
             </div>
 
@@ -97,29 +90,27 @@
         <div class="profile-stats-row">
             <div class="pstat">
                 <i class="bi bi-folder-fill stat-icon" style="color:var(--teal)"></i>
-                <strong>{{ profile.projects_posted }}</strong>
+                <strong> {{ projects|length }}</strong>
                 <span>Projects Posted</span>
             </div>
             <div class="pstat">
                 <i class="bi bi-currency-dollar stat-icon" style="color:var(--btn-color)"></i>
-                <strong>${{ profile.total_spent }}</strong>
+                <strong>${{ total_spent }}</strong>
                 <span>Total Spent</span>
             </div>
             <div class="pstat">
                 <i class="bi bi-people-fill stat-icon" style="color:var(--blue)"></i>
-                <strong>{{ profile.freelancers_hired }}</strong>
+                <strong>{{ freelancers_hired }}</strong>
                 <span>Freelancers Hired</span>
             </div>
-            <div class="pstat">
-                <i class="bi bi-star-fill stat-icon" style="color:var(--orange)"></i>
-                <strong>4.9</strong>
-                <span>Avg. Rating Given</span>
-            </div>
+            
+            {% if is_top_client %}
             <div class="pstat">
                 <i class="bi bi-trophy-fill stat-icon" style="color:var(--color-purple)"></i>
                 <strong>Top Client</strong>
                 <span>Trusted Badge</span>
             </div>
+            {% endif %}
         </div>
 
     </div>
@@ -145,7 +136,7 @@
             </div>
 
             <!-- Active Projects -->
-            <div class="profile-card">
+            <div class="profile-card" id="project-section">
                 <h3 class="card-title">
                     <i class="bi bi-folder2-open"></i> Active & Recent Projects
                 </h3>
@@ -178,75 +169,7 @@
 
             </div>
 
-            <!-- Reviews Given -->
-            <div class="profile-card">
-                <h3 class="card-title">
-                    <i class="bi bi-chat-quote-fill"></i> Reviews Given to Freelancers
-                </h3>
-
-                <!-- Review 1 -->
-                <div class="given-review-item">
-                    <div class="given-review-header">
-                        <img class="freelancer-mini-av" src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=100&q=80" alt="Mohammed Ali">
-                        <div>
-                            <div class="given-review-name">Mohammed Ali</div>
-                            <div class="given-review-meta">Web Developer · E-commerce Project</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                    </div>
-                    <p class="review-text">
-                    </p>
-                </div>
-
-                <!-- Review 2 -->
-                <div class="given-review-item">
-                    <div class="given-review-header">
-                        <img class="freelancer-mini-av" src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=100&q=80" alt="Sarah Ahmed">
-                        <div>
-                            <div class="given-review-name">Sarah Ahmed</div>
-                            <div class="given-review-meta">UI/UX Designer · Mobile App Design</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                    </div>
-                    <p class="review-text">
-                    </p>
-                </div>
-
-                <!-- Review 3 -->
-                <div class="given-review-item">
-                    <div class="given-review-header">
-                        <img class="freelancer-mini-av" src="https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?w=100&q=80" alt="Omar Khalil">
-                        <div>
-                            <div class="given-review-name">Omar Khalil</div>
-                            <div class="given-review-meta">Digital Marketer · Social Campaign</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-half"></i>
-                    </div>
-                    <p class="review-text">
-
-                    </p>
-                </div>
-
-            </div>
-
+            
         </div>
         <!--  END LEFT COLUMN  -->
 
@@ -258,14 +181,16 @@
 
             <div class="spending-card">
                 <div class="spending-label">Total Spent</div>
-                <div class="spending-amount">${{ profile.total_spent }} <span>lifetime</span></div>
+                <div class="spending-amount">${{ total_spent }} <span>lifetime</span></div>
                 <p class="spending-desc">
                     Across {{ profile.projects_posted }} projects with {{ profile.freelancers_hired }} freelancers
                 </p>
 
+                {% if request.user == profile.user %}
                 <a href="{% url 'accounts:create_project' %}" class="btn-post-project">
                     <i class="bi bi-plus-circle-fill"></i> Post New Project
                 </a>
+                {% endif %}
             </div>
 
             <!-- Quick Info -->
@@ -278,13 +203,19 @@
                         <span class="info-key">
                             <i class="bi bi-calendar-check" style="color:var(--teal)"></i> Member Since
                         </span>
-                        <span class="info-val">{{ request.user.date_joined|date:"M Y" }}</span>
+                        <span class="info-val">{{  request.user.date_joined|date:"M Y" }}</span>
                     </div>
                     <div class="info-row">
                         <span class="info-key">
                             <i class="bi bi-activity" style="color:var(--blue)"></i> Status
                         </span>
-                        <span class="active-badge">Active</span>
+                        <span class="active-badge">
+                            {% if profile.user.last_login %}
+                                Active
+                            {% else %}
+                                Inactive
+                            {% endif %}
+                        </span>
                     </div>
                     <div class="info-row">
                         <span class="info-key">
@@ -310,7 +241,6 @@
 
                 </div>
             </div>
-
 
 
         </div>

@@ -26,14 +26,18 @@
     </div>
 </div>
 
+
 <!-- FORM -->
 <div class="contact-wrapper">
+    
     <div class="contact-card">
 
         <h2>Send Message</h2>
 
-        <form>
-            <textarea placeholder="Write your message here..."></textarea>
+        <form method="POST">
+            {% csrf_token %}
+            
+            <textarea name="message" placeholder="Write your message here..." required></textarea>
 
             <button type="submit">
                 <i class="bi bi-send-fill"></i>

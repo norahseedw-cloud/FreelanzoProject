@@ -3196,6 +3196,35 @@ body.dark .theme-toggle-btn {
     font-size: 12px;
 }
 
+.avatar-upload {
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.avatar-label {
+    position: relative;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.profile-avatar {
+    width: 120px;   
+    height: 120px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid #eee;
+    transition: 0.3s;
+}
+
+
+
+
+.avatar-label:hover .profile-avatar {
+    transform: scale(1.05);
+}
+
+
+
 
 
 /* ===== RESPONSIVE ===== */
@@ -4157,7 +4186,7 @@ body.dark .theme-toggle-btn {
 }
 
 .about-left {
-    max-width: 400px;
+    max-width: 800px;
 }
 
 .about-left h1 {
@@ -5952,6 +5981,7 @@ body.dark .theme-toggle-btn {
     }
 }
 
+
 /* ====================favorite freelancers start=======================================*/
 .btn-save {
     width: 42px;
@@ -6120,4 +6150,47 @@ body.dark .theme-toggle-btn {
 .no-skill {
     font-size: 12px;
     color: #aaa;
+=======
+/* Rating*/
+
+.rate {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: start;
+    gap: 2px;
+}
+
+.rate input {
+    display: none !important;
+}
+
+.rate label {
+    font-size: 30px;
+    color: #ccc;
+    cursor: pointer;
+}
+
+.rate label::before {
+    content: "★";
+}
+
+.rate input:checked ~ label {
+    color: #ffc700;
+}
+
+.rate label:hover,
+.rate label:hover ~ label {
+    color: #deb217;
+}
+
+.reviewer-avatar .avatar.big {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background: var(--blue);
+    color: #fff;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 700;
 }

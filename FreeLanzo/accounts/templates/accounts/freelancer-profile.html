@@ -90,6 +90,18 @@
                 </form>
                 {% endif %}
                 {% endif %}
+
+                    <a href="{% url 'accounts:update_freelancer_profile' %}" class="btn-hire">
+                        Update Profile
+                    </a>
+                {% endif %} 
+                {% if request.user != profile.user %}
+                <a class="btn-message" href="{% url 'chat:start_chat' profile.user.id %}">
+                    <i class="bi bi-chat-dots"></i> Message
+                </a>
+                {% endif %}
+                <button class="btn-save"><i class="bi bi-heart"></i></button>
+
             </div>
 
         </div>
@@ -184,128 +196,181 @@
                 </div>
 
             </div>
-            <!-- Client Reviews -->
+           <!-- Client Reviews -->
             <div class="profile-card">
                 <h3 class="card-title">
                     <i class="bi bi-chat-quote-fill"></i> Client Reviews
                 </h3>
 
-                <!-- Rating Summary -->
-                <div style="display:flex; gap:30px; align-items:center; margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid rgba(15,23,42,0.07);">
-                    <div style="text-align:center; flex-shrink:0;">
-                        <div style="font-size:52px; font-weight:900; color:var(--main-dark); line-height:1;">5.0</div>
-                        <div style="display:flex; gap:3px; justify-content:center; margin:6px 0;">
-                            <i class="bi bi-star-fill" style="color:var(--orange); font-size:14px;"></i>
-                            <i class="bi bi-star-fill" style="color:var(--orange); font-size:14px;"></i>
-                            <i class="bi bi-star-fill" style="color:var(--orange); font-size:14px;"></i>
-                            <i class="bi bi-star-fill" style="color:var(--orange); font-size:14px;"></i>
-                            <i class="bi bi-star-fill" style="color:var(--orange); font-size:14px;"></i>
-                        </div>
-                        <div style="font-size:12px; color:var(--gray);">98 Reviews</div>
-                    </div>
-                    <div style="flex:1;">
-                        <div class="star-bars">
-                            <div class="star-bar-row">
-                                <span>5★</span>
-                                <div class="star-bar-track">
-                                    <div class="star-bar-fill" style="width:88%"></div>
-                                </div>
-                                <span>86</span>
-                            </div>
-                            <div class="star-bar-row">
-                                <span>4★</span>
-                                <div class="star-bar-track">
-                                    <div class="star-bar-fill" style="width:10%; opacity:0.6"></div>
-                                </div>
-                                <span>10</span>
-                            </div>
-                            <div class="star-bar-row">
-                                <span>3★</span>
-                                <div class="star-bar-track">
-                                    <div class="star-bar-fill" style="width:2%; opacity:0.4"></div>
-                                </div>
-                                <span>2</span>
-                            </div>
-                            <div class="star-bar-row">
-                                <span>2★</span>
-                                <div class="star-bar-track">
-                                    <div class="star-bar-fill" style="width:0%"></div>
-                                </div>
-                                <span>0</span>
-                            </div>
-                            <div class="star-bar-row">
-                                <span>1★</span>
-                                <div class="star-bar-track">
-                                    <div class="star-bar-fill" style="width:0%"></div>
-                                </div>
-                                <span>0</span>
-                            </div>
-                        </div>
-                    </div>
-                </div>
+                {% if can_review %}
+            <div class="update-profile-form" style="margin-top:15px;">
 
-                <!-- Review 1 -->
-                <div class="review-item">
-                    <div class="review-header">
-                        <div class="reviewer-avatar" style="background:var(--teal);">A</div>
-                        <div>
-                            <div class="reviewer-name">Ahmed Al-Rashid</div>
-                            <div class="review-meta">Startup Founder · 2 weeks ago</div>
+                <form method="POST" action="{% url 'reviews:add_review' profile.user.id %}">
+                    {% csrf_token %}
+
+                    
+                    <div class="form-group">
+                        <label>Rating</label>
+
+                        <div class="rate">
+                            <input type="radio" id="star5_{{ profile.user.id }}" name="rating" value="5" required />
+                            <label for="star5_{{ profile.user.id }}"></label>
+
+                            <input type="radio" id="star4_{{ profile.user.id }}" name="rating" value="4" />
+                            <label for="star4_{{ profile.user.id }}"></label>
+
+                            <input type="radio" id="star3_{{ profile.user.id }}" name="rating" value="3" />
+                            <label for="star3_{{ profile.user.id }}"></label>
+
+                            <input type="radio" id="star2_{{ profile.user.id }}" name="rating" value="2" />
+                            <label for="star2_{{ profile.user.id }}"></label>
+
+                            <input type="radio" id="star1_{{ profile.user.id }}" name="rating" value="1" />
+                            <label for="star1_{{ profile.user.id }}"></label>
                         </div>
                     </div>
-                    <div class="review-stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                    </div>
-                    <p class="review-text">
 
-                    </p>
-                </div>
+                    
+                    <div class="form-group">
+                        <label>Comment</label>
+                        <textarea name="comment" placeholder="Write your review..." required></textarea>
+                    </div>
 
-                <!-- Review 2 -->
-                <div class="review-item">
-                    <div class="review-header">
-                        <div class="reviewer-avatar" style="background:var(--blue);">S</div>
-                        <div>
-                            <div class="reviewer-name">Sara Mohammed</div>
-                            <div class="review-meta">E-commerce Owner · 1 month ago</div>
-                        </div>
+                    
+                    <div class="form-actions">
+                        <button type="submit" class="btn-save-profile">
+                            Submit Review
+                        </button>
                     </div>
-                    <div class="review-stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                    </div>
-                    <p class="review-text">
-                    </p>
-                </div>
 
-                <!-- Review 3 -->
-                <div class="review-item">
-                    <div class="review-header">
-                        <div class="reviewer-avatar" style="background:var(--color-purple);">K</div>
-                        <div>
-                            <div class="reviewer-name">Khalid Nasser</div>
-                            <div class="review-meta">Tech Lead · 2 months ago</div>
-                        </div>
-                    </div>
-                    <div class="review-stars">
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                        <i class="bi bi-star-fill"></i>
-                    </div>
-                    <p class="review-text">
-                    </p>
-                </div>
+                </form>
+            </div>
+            {% endif %}
+
+    
+    <div style="display:flex; gap:30px; align-items:center; margin-bottom:24px; padding-bottom:24px; border-bottom:1px solid rgba(15,23,42,0.07);">
+
+    <div style="text-align:center; flex-shrink:0;">
+        
+        
+        <div style="font-size:52px; font-weight:900;">
+            {{ average_rating }}
+        </div>
+
+        
+        <div style="display:flex; gap:3px; justify-content:center; margin:6px 0;">
+            {% for _ in "12345"|slice:":average_rating|floatformat:0" %}
+                <i class="bi bi-star-fill"></i>
+            {% endfor %}
+        </div>
+
+        
+        <div style="font-size:12px;">
+            {{ reviews_count }} Reviews
+        </div>
+
+    </div>
+
+</div>
+
+    <!-- Reviews List -->
+    {% for review in reviews %}
+    <div class="review-item">
+
+        <div class="review-header">
+            <div class="reviewer-avatar">
+
+            <div class="avatar big">
+
+                {% if review.reviewer.clientprofile.avatar %}
+                    <img src="{{ review.reviewer.clientprofile.avatar.url }}" class="avatar big">
+                {% endif %}
 
             </div>
+
+        </div>
+
+            <div>
+                <div class="reviewer-name">
+                    {{ review.reviewer.username }}
+                </div>
+
+                
+                <div class="review-stars">
+                    {% for i in "12345" %}
+                        {% if forloop.counter <= review.rating %}
+                            <i class="bi bi-star-fill"></i>
+                        {% else %}
+                            <i class="bi bi-star"></i>
+                        {% endif %}
+                    {% endfor %}
+                </div>
+            </div>
+        </div>
+
+        <div class="review-content d-flex justify-content-between align-items-start">
+
+            <p class="review-text m-0">
+                {{ review.comment }}
+            </p>
+
+
+            {% if review.reviewer == request.user %}
+            <button type="button" 
+                    class="btn btn-sm text-danger border-0 bg-transparent"
+                    data-bs-toggle="modal" 
+                    data-bs-target="#deleteModal"
+                    data-review-id="{{ review.id }}">
+                Delete
+            </button>
+            {% endif %}
+
+        </div>
+        
+
+        <span class="text-muted small">
+            {{ review.created_at|date:"M d, Y" }}
+        </span>
+        
+
+    </div>
+
+    {% empty %}
+        <p class="text-muted">No reviews yet</p>
+    {% endfor %}
+    
+<div class="modal fade" id="deleteModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content">
+
+      <div class="modal-header">
+        <h5 class="modal-title">Delete Review</h5>
+        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+      </div>
+
+      <div class="modal-body">
+        Are you sure you want to delete this review?
+      </div>
+
+      <div class="modal-footer">
+
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+          Cancel
+        </button>
+
+        <form method="POST" id="deleteForm">
+          {% csrf_token %}
+          <button type="submit" class="btn btn-danger">
+            Delete
+          </button>
+        </form>
+
+      </div>
+
+    </div>
+  </div>
+</div>
+</div>
             <!--  END LEFT COLUMN -->
         </div>
 
@@ -434,4 +499,20 @@
     </div>
 
 </div>
+
+
+
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    const deleteModal = document.getElementById("deleteModal");
+
+    deleteModal.addEventListener("show.bs.modal", function (event) {
+        const button = event.relatedTarget;
+        const reviewId = button.getAttribute("data-review-id");
+
+        const form = document.getElementById("deleteForm");
+        form.action = `/reviews/delete/${reviewId}/`;
+    });
+});
+</script>
 {% endblock %}
