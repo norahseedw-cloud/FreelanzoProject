@@ -53,6 +53,10 @@
                 </a>
             </div>
 
+            <form method="POST" action="{% url 'accounts:toggle_favorite_freelancer' item.freelancer.id %}">
+                {% csrf_token %}
+
+            </form>
         </div>
         {% empty %}
         <div class="empty-saved">

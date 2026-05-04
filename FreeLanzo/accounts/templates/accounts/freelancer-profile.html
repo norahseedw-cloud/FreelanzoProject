@@ -66,23 +66,23 @@
                 {% endif %}
 
                 {% if request.user.is_authenticated and request.user != profile.user %}
-                <a class="btn-message" href="{% url 'chat:start_chat' profile.user.id %}">
+                <a href="{% url 'chat:start_chat' profile.user.id %}" class="btn-message">
                     <i class="bi bi-chat-dots"></i> Message
                 </a>
+                {% endif %}
 
-                {% if request.user.usertype.role == 'client' %}
+                {% if request.user.is_authenticated and request.user.usertype.role == 'client' %}
                 <form method="POST" action="{% url 'accounts:toggle_favorite_freelancer' profile.id %}">
                     {% csrf_token %}
-                    <button class="btn-save" type="submit">
-                        <i class="bi {% if is_liked %}bi-heart-fill{% else %}bi-heart{% endif %}"></i>
+                    <button type="submit" class="btn-save">
+                        {% if is_liked %}
+                        <i class="bi bi-heart-fill"></i>
+                        {% else %}
+                        <i class="bi bi-heart"></i>
+                        {% endif %}
                     </button>
                 </form>
                 {% endif %}
-                {% endif %}
-
-
-                
-
 
             </div>
 
@@ -157,11 +157,22 @@
                     {% endif %}
                 </div>
             </div>
+
             <!-- Portfolio -->
             <div class="profile-card">
-                <h3 class="card-title">
-                    <i class="bi bi-grid-1x2-fill"></i> Portfolio
-                </h3>
+                <div class="portfolio-header">
+
+                    <h3 class="card-title">
+                        <i class="bi bi-grid-1x2-fill"></i> Portfolio
+                    </h3>
+
+                    {% if request.user == profile.user %}
+                    <a href="{% url 'accounts:add_portfolio_project' %}" class="btn-add-project">
+                        + Add
+                    </a>
+                    {% endif %}
+
+                </div>
 
                 <div class="portfolio-grid">
                     {% for project in projects %}

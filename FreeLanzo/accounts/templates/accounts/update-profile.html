@@ -47,12 +47,7 @@
                 {{ form.about }}
             </div>
             <!-- Skills -->
-            <div class="form-group">
-                <label>Skills</label>
-                <div class="skills-pills">
-                    {{ form.skills }}
-                </div>
-            </div>
+            {% include 'includes/skills_field.html' %}
             <!-- Location -->
             <div class="form-group">
                 <label>Location</label>
