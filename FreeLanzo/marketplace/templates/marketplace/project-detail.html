@@ -213,7 +213,12 @@
 
         <div class="delivery-box" style="margin-bottom:10px;">
 
-            <p><strong>Freelancer:</strong> {{ proposal.freelancer.user.username }}</p>
+           <p>
+                <strong>Freelancer:</strong> 
+                <a href="{% url 'accounts:freelancer_profile_detail' proposal.freelancer.user.id %}" class="text-dark">
+                    {{ proposal.freelancer.user.username }}
+                </a>
+            </p>
 
             <p><strong>Price:</strong> ${{ proposal.price }}</p>
 

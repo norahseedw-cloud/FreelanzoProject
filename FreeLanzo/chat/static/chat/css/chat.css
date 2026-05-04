@@ -603,8 +603,8 @@
 
 body.dark .message-card {
     background: #1f2937;
-    border: 1px solid #374151;
-    box-shadow: none;
+    border-color: #374151;
+    color: #f9fafb;
 }
 
 body.dark .message-card h2 {
@@ -614,26 +614,29 @@ body.dark .message-card h2 {
 
 body.dark .message-card textarea {
     background: #111827;
-    border: 1px solid #374151;
+    border-color: #374151;
     color: #f9fafb;
 }
 
-
+body.dark .contact-card textarea::placeholder {
+    color: #9ca3af;
+}
 
 body.dark .form-note {
     color: #9ca3af;
 }
 
-
 body.dark .chat-container {
     background: #1f2937;
-    border: 1px solid #374151;
-    box-shadow: none;
+    border-color: #374151;
 }
-
 
 body.dark .chat-sidebar {
     background: #1f2937;
+}
+
+body.dark .chat-sidebar h3 {
+    color: #f9fafb;
 }
 
 body.dark .chat-user:hover {
@@ -644,7 +647,6 @@ body.dark .chat-user.active {
     background: rgba(20,184,166,0.2);
 }
 
-
 body.dark .user-info .name {
     color: #f9fafb;
 }
@@ -653,25 +655,21 @@ body.dark .user-info .last-msg {
     color: #9ca3af;
 }
 
-
 body.dark .chat-header {
-    border-bottom: 1px solid #374151;
+    border-color: #374151;
 }
 
+body.dark .chat-header span {
+    color: #9ca3af;
+}
 
 body.dark .message.other {
     background: #374151;
     color: #f9fafb;
 }
 
-body.dark .message.you {
-    background: #14b8a6;
-    color: #fff;
-}
-
-
 body.dark .chat-input {
-    border-top: 1px solid #374151;
+    border-color: #374151;
 }
 
 body.dark .chat-input input {
@@ -679,24 +677,9 @@ body.dark .chat-input input {
     color: #f9fafb;
 }
 
-body.dark .chat-input button {
-    background: #14b8a6;
+body.dark .chat-input input::placeholder {
+    color: #9ca3af;
 }
-
-body.dark .chat-input button:hover {
-    background: #0d9488;
-}
-
-
-body.dark .chat-sidebar {
-    background: #1f2937;
-}
-
-body.dark .overlay {
-    background: rgba(0,0,0,0.6);
-}
-
-
 
 body.dark .empty-box i {
     color: #9ca3af;
@@ -704,4 +687,8 @@ body.dark .empty-box i {
 
 body.dark .empty-box p {
     color: #9ca3af;
-} */
+}
+
+body.dark .chat-sidebar {
+    background: #1f2937;
+}

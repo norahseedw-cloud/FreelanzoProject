@@ -135,7 +135,7 @@
             <div class="chat-messages">
                 {% if conversation %}
 
-                {%for message in messages%}
+                {%for message in chat_messages%}
 
                 {%if message.sender == request.user%}
 

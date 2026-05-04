@@ -9,6 +9,7 @@ from marketplace.forms import ProposalForms, DeliveryForm
 from marketplace.models import Proposal
 from review.models import Review
 from django.db.models import Avg, Sum, Q
+from django.contrib import messages
 
 
 # Create your views here.
@@ -31,9 +32,11 @@ def sign_up_view(request):
             else:
                 ClientProfile.objects.create(user=user)
 
+            messages.success(request, "Your account has been created successfully. You can now log in.", "alert-success")
             return redirect("accounts:sign_in_view")
 
         else:
+            messages.error(request, "Registration failed. Please check the form and try again.",  "alert-danger")
             print(form.errors) 
 
     else:
@@ -47,10 +50,15 @@ def sign_in_view(request):
         username = request.POST.get("username")
         password = request.POST.get("password")
 
+        if not username or not password:
+            messages.error(request, "Please fill in all fields." , "alert-danger")
+            return render(request, "accounts/sign-in.html")
+
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
+            messages.success(request, "You have logged in successfully.", "alert-success")
 
             if not user.usertype.has_seen_profile_prompt:
                 request.session["show_complete_profile"] = True
@@ -62,6 +70,7 @@ def sign_in_view(request):
             return redirect("main:home")
 
         else:
+            messages.error(request, "Username or password is incorrect.", "alert-danger")
             return render(request, "accounts/sign-in.html", {
                 "error": "Username or password is incorrect"
             })
@@ -70,10 +79,12 @@ def sign_in_view(request):
 
 def logout_view(request):
     logout(request)
+    messages.success(request, "You have been logged out successfully.", "alert-success")
     return redirect("main:home")
 
 def skip_complete_profile(request):
     request.session['show_complete_profile'] = False
+    messages.info(request, "You skipped completing your profile. You can update it later.", "alert-info")
     return redirect('main:home')
 
 def terms_conditions_view(request:HttpRequest):
@@ -127,6 +138,10 @@ def freelancer_profile_view(request):
 def all_freelancer_view(request):
     freelancers = FreelancerProfile.objects.all()
     categories = Category.objects.all()
+    for f in freelancers:
+        reviews = f.user.received_reviews.all()
+        f.avg_rating = reviews.aggregate(avg=Avg('rating'))['avg'] or 0
+        f.review_count = reviews.count()
 
     category_id = request.GET.get('category')
     search = request.GET.get('search')
@@ -160,17 +175,26 @@ def all_freelancer_view(request):
             skills__name__icontains=search
         )
         freelancers = freelancers.distinct()
+        
+    if min_rate and not str(min_rate).isdigit():
+        messages.error(request, "Minimum rate must be a valid number.", "alert-danger")
+    else:
+        if min_rate:
+            freelancers = freelancers.filter(hourly_rate__gte=min_rate)
 
-    if min_rate:
-        freelancers = freelancers.filter(hourly_rate__gte=min_rate)
-
-    if max_rate:
-        freelancers = freelancers.filter(hourly_rate__lte=max_rate)
+    if max_rate and not str(max_rate).isdigit():
+        messages.error(request, "Maximum rate must be a valid number.", "alert-danger")
+    else:
+        if max_rate:
+            freelancers = freelancers.filter(hourly_rate__lte=max_rate)
 
     if sort == "low":
         freelancers = freelancers.order_by("hourly_rate")
     elif sort == "high":
         freelancers = freelancers.order_by("-hourly_rate")
+
+    if not freelancers.exists():
+        messages.info(request, "No freelancers found matching your criteria.", "alert-info")
 
     return render(request, 'accounts/all-freelancer.html', {
         'freelancers': freelancers,
@@ -200,7 +224,10 @@ def update_freelancer_profile(request):
         form = FreelancerProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
+            messages.success(request, "Your profile has been updated successfully.", "alert-success")
             return redirect('accounts:freelancer_profile')
+        else:
+            messages.error(request, "Please correct the errors below." , "alert-danger")
     else:
         form = FreelancerProfileForm(instance=profile)
 
@@ -222,15 +249,17 @@ def add_portfolio_project(request):
             project.freelancer = profile
             project.save()
 
-        images = request.FILES.getlist('images')
+            images = request.FILES.getlist('images')
 
-        for img in images:
-            PortfolioProjectImage.objects.create(
-                project=project,
-                image=img
-            )
-
+            for img in images:
+                PortfolioProjectImage.objects.create(
+                    project=project,
+                    image=img
+                )
+            messages.success(request, "Your project has been added successfully.", "alert-success")
             return redirect("accounts:freelancer_profile")
+        else:
+            messages.error(request, "Please correct the errors in the form.", "alert-danger")
     else:
         form = PortfolioProjectForm()
 
@@ -259,6 +288,7 @@ def freelancer_profile_detail(request, user_id):
 
         if has_relation:
             can_review = True
+        messages.warning(request, "You can only review freelancers you have worked with." ," alert-warning")
 
     similar_freelancers = FreelancerProfile.objects.filter(
         skills__in=profile.skills.all()
@@ -317,7 +347,10 @@ def update_portfolio_project(request, project_id):
             for img in images:
                 PortfolioProjectImage.objects.create(project=project, image=img)
 
+            messages.success(request, "Project updated successfully.", "alert-success")
             return redirect("accounts:portfolio_project_detail", project_id=project.id)
+        else:
+            messages.error(request, "Please correct the errors in the form.", "alert-danger")
     else:
         form = PortfolioProjectForm(instance=project)
 
@@ -334,6 +367,7 @@ def delete_portfolio_project(request, project_id):
 
     if request.method == "POST":
         project.delete()
+        messages.success(request, "Project deleted successfully.", "alert-success")
         return redirect("accounts:freelancer_profile")
 
     return render(request, "accounts/delete-portfolio-project.html", {
@@ -380,7 +414,10 @@ def update_client_profile_view(request):
         form = ClientProfileForm(request.POST, request.FILES, instance=profile)
         if form.is_valid():
             form.save()
+            messages.success(request, "Your profile has been updated successfully.","alert-success")
             return redirect('accounts:client_profile')
+        else:
+            messages.error(request, "Please correct the errors below.", "alert-danger")
 
     else:
         form = ClientProfileForm(instance=profile)
@@ -407,12 +444,16 @@ def create_project_view(request):
             if skills:
                 first_skill = skills.first()
                 project.category = first_skill.categories.first()
+            else:
+                messages.warning(request, "No skills selected. Category may not be assigned.", "alert-warning")
 
             project.save()
             form.save_m2m()
 
+            messages.success(request, "Your project has been created successfully." , "alert-success")
             return redirect('accounts:client_profile')
         else:
+            messages.error(request, "Please correct the errors in the form.", "alert-danger")
             print(form.errors)
 
     else:
@@ -443,15 +484,24 @@ def all_projects_view(request):
         projects = projects.filter(title__icontains=search)
 
     if min_budget:
-        projects = projects.filter(budget__gte=min_budget)
-
+        if str(min_budget).isdigit():
+            projects = projects.filter(budget__gte=min_budget)
+        else:
+            messages.error(request, "Minimum budget must be a valid number.", "alert-danger")
+        
     if max_budget:
-        projects = projects.filter(budget__lte=max_budget)
+        if str(max_budget).isdigit():
+            projects = projects.filter(budget__lte=max_budget)
+        else:
+            messages.error(request, "Maximum budget must be a valid number.", "alert-danger")
 
     if sort == "low":
         projects = projects.order_by("budget")
     elif sort == "high":
         projects = projects.order_by("-budget")
+
+    if not projects.exists():
+        messages.info(request, "No projects found matching your criteria.", "alert-info")
 
     return render(request, 'marketplace/projects.html', {
         'projects': projects,
@@ -470,9 +520,7 @@ def project_detail_view(request: HttpRequest, project_id):
 
     client_projects_count = Project.objects.filter(client=project.client).count()
     
-
     existing_proposal = None
-
     
     if request.user.is_authenticated and request.user.usertype.role == 'freelancer':
         existing_proposal = project.proposals.filter(freelancer=request.user.freelancerprofile).first()
@@ -501,9 +549,13 @@ def project_detail_view(request: HttpRequest, project_id):
                     project.save()
                     project.refresh_from_db()
 
+                    messages.success(request, "Proposal accepted successfully.", "alert-success")
+
                 elif action == 'reject':
                     proposal.status = 'rejected'
                     proposal.save()
+
+                    messages.info(request, "Proposal rejected.", "alert-info")
                     
             return redirect('accounts:project_detail', project_id=project.id)
         
@@ -514,17 +566,21 @@ def project_detail_view(request: HttpRequest, project_id):
                 project.status = 'completed'
                 project.save()
 
+                messages.success(request, "Project marked as completed.", "alert-success")
+
             return redirect('accounts:project_detail', project_id=project.id)
         
         if 'delivery_submit' in request.POST:
 
    
             if not request.user.is_authenticated or request.user.usertype.role != 'freelancer':
+                messages.error(request, "You are not authorized to submit delivery.", "alert-danger")
                 return redirect('main:home')
 
             proposal = project.proposals.filter(freelancer=request.user.freelancerprofile,status='accepted').first()
 
             if not proposal:
+                messages.error(request, "No accepted proposal found." , "alert-danger")
                 return redirect('accounts:project_detail', project_id=project.id)
 
             form = DeliveryForm(request.POST, request.FILES)
@@ -533,19 +589,22 @@ def project_detail_view(request: HttpRequest, project_id):
 
                
                 if not form.cleaned_data['file'] and not form.cleaned_data['url']:
+                    messages.warning(request, "Please provide a file or a URL.","alert-warning")
                     return redirect('accounts:project_detail', project_id=project.id)
 
                 
                 if hasattr(proposal, 'delivery'):
+                    messages.info(request, "Delivery already submitted.", "alert-info")
                     return redirect('accounts:project_detail', project_id=project.id)
 
                 delivery = form.save(commit=False)
                 delivery.proposal = proposal
                 delivery.save()
-
-                
-                
+     
                 project.save()
+                messages.success(request, "Delivery submitted successfully.", "alert-success")
+            else:
+                messages.error(request, "Invalid delivery data.", "alert-danger")
 
             return redirect('accounts:project_detail', project_id=project.id)
 
@@ -554,6 +613,7 @@ def project_detail_view(request: HttpRequest, project_id):
 
             
             if existing_proposal:
+                messages.warning(request, "You have already submitted a proposal for this project.", "alert-warning")
                 return redirect('accounts:project_detail', project_id=project.id)
 
             form = ProposalForms(request.POST)
@@ -563,6 +623,10 @@ def project_detail_view(request: HttpRequest, project_id):
                 proposal.project = project
                 proposal.freelancer = request.user.freelancerprofile
                 proposal.save()
+
+                messages.success(request, "Your proposal has been submitted successfully.", "alert-success")
+            else:
+                messages.error(request, "Please correct the errors in your proposal.", "alert-danger")
 
                 return redirect('accounts:project_detail', project_id=project.id)
 
@@ -591,7 +655,10 @@ def update_project_view(request, project_id):
 
         if form.is_valid():
             form.save()
+            messages.success(request, "Project updated successfully.", "alert-success")
             return redirect('accounts:project_detail', project_id=project.id)
+        else:
+            messages.error(request, "Please correct the errors in the form.", "alert-danger")
 
     else:
         form = ProjectForm(instance=project)
@@ -608,6 +675,7 @@ def toggle_favorite_freelancer(request, freelancer_id):
     client_profile = ClientProfile.objects.filter(user=request.user).first()
 
     if not client_profile:
+        messages.error(request, "Only clients can add freelancers to favorites.", "alert-danger")
         return redirect('accounts:all_freelancer')
 
     favorite, created = FavoriteFreelancer.objects.get_or_create(
@@ -615,8 +683,11 @@ def toggle_favorite_freelancer(request, freelancer_id):
         freelancer=freelancer
     )
 
-    if not created:
+    if created:
+        messages.success(request, "Freelancer added to favorites.", "alert-success")
+    else:
         favorite.delete()
+        messages.info(request, "Freelancer removed from favorites.", "alert-info")
 
     return redirect(request.META.get('HTTP_REFERER', 'accounts:all_freelancer'))
 
@@ -626,11 +697,15 @@ def favorite_freelancers_view(request):
     client_profile = ClientProfile.objects.filter(user=request.user).first()
 
     if not client_profile:
+        messages.error(request, "Only clients can view favorite freelancers.", "alert-danger")
         return redirect('accounts:all_freelancer')
 
     favorites = FavoriteFreelancer.objects.filter(
         client=client_profile
     ).select_related('freelancer__user')
+
+    if not favorites.exists():
+        messages.info(request, "You have no favorite freelancers yet.", "alert-info")
 
     return render(request, 'accounts/favorite_freelancers.html', {
         'favorites': favorites,
