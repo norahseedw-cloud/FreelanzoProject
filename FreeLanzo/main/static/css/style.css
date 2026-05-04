@@ -6287,3 +6287,12 @@ body.dark .auth-link:hover {
 body.dark .errorlist {
     color: #f87171;
 }
+
+body.dark .fl-rating span {
+    color: white
+}
+
+body.dark .btn-view-profile{
+    color: white;
+}
+

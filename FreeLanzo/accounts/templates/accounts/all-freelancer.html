@@ -154,8 +154,9 @@
                             </div>
 
                             <div class="fl-rating">
-                                <i class="bi bi-star-fill"></i> 5.0
-                                <span>(0 reviews)</span>
+                                <i class="bi bi-star-fill"></i> 
+                                <span>{{ freelancer.avg_rating|floatformat:1 }}</span>
+                                <span>({{ freelancer.review_count }} reviews)</span>
                             </div>
                         </div>
 

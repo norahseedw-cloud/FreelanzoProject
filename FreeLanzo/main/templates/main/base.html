@@ -21,8 +21,11 @@
 
 <body id="top" {% if "mode" in request.COOKIES and request.COOKIES.mode == "dark" %} class="dark" {% endif %}>
 
+  
+
     <!-- nav start  -->
     <nav class="main-navbar">
+        
 
         <!-- Logo -->
         <a href="{% url 'main:home' %}" class="nav-logo">
@@ -118,10 +121,19 @@
         </div>
 
     </nav>
+    
     <!-- footer end -->
 
 
     <main class="main-content">
+        {% if messages%}
+        {% for message in messages %}
+          <div class="alert {{message.tags}} alert-dismissible fade show" role="alert">
+            {{message}}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+          </div>
+        {% endfor %}
+      {% endif %}
         {% block content %}
         {% endblock %}
     </main>

@@ -81,16 +81,7 @@
                 {% endif %}
 
 
-                    <a href="{% url 'accounts:update_freelancer_profile' %}" class="btn-hire">
-                        Update Profile
-                    </a>
                 
-                {% if request.user != profile.user %}
-                <a class="btn-message" href="{% url 'chat:start_chat' profile.user.id %}">
-                    <i class="bi bi-chat-dots"></i> Message
-                </a>
-                {% endif %}
-                <button class="btn-save"><i class="bi bi-heart"></i></button>
 
 
             </div>
