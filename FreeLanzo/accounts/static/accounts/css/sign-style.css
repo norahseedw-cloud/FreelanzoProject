@@ -199,67 +199,55 @@
   color: #CE2626;
 }
 
-/* =====  PAGES DARK ===== */
-/* 
-body.dark .box {
-    background: linear-gradient(
-        135deg,
-        #1f2937 0%,
-        #1e3a8a 60%,
-        #14b8a6 100%
-    );
-}
-
-
-
 body.dark .card.sign-style {
-    background: #1f2937;
-    border: 1px solid #374151;
-    color: #f9fafb;
+  background: #1f2937;
+  color: #f9fafb;
 }
 
+body.dark .card.sign-style .bg-white {
+  background: #1f2937 !important;
+}
 
+body.dark .link-in a,
+body.dark .link-in .forgot-link,
+body.dark .forgot-link {
+  color: #9ca3af;
+}
 
-body.dark .link-in a {
-    color: #60a5fa;
+body.dark .link-in a:hover,
+body.dark .forgot-link:hover {
+  color: var(--teal);
 }
 
 body.dark .link-up a {
-    color: #14b8a6;
+  color: var(--teal);
 }
 
-
-body.dark .role-modal {
-    background: rgba(0, 0, 0, 0.7);
+body.dark .link-up a:hover {
+  color: #5eead4;
 }
-
-
 
 body.dark .role-modal-content {
-    background: #1f2937;
-    border: 1px solid #374151;
-    color: #f9fafb;
+  background: #1f2937;
+  color: #f9fafb;
 }
 
-
-body.dark .role-btn {
-    background: #374151;
-    color: #f9fafb;
+body.dark .toggle-password {
+  color: #9ca3af;
 }
 
-body.dark .role-btn:hover {
-    opacity: 0.9;
+body.dark .toggle-password:hover {
+  color: #f87171;
 }
 
-
-
-body.dark .freelancer {
-    background: #14b8a6;
+body.dark .alert.alert-danger {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.4);
+  color: #f87171;
 }
 
-
-
-body.dark .client {
-    background: #7c3aed;
-} */
-
+body.dark .custom-error-box {
+  background: rgba(220, 38, 38, 0.15);
+  border-color: rgba(220, 38, 38, 0.4);
+  color: #f87171;
+}
