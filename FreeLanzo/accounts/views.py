@@ -97,6 +97,16 @@ def all_freelancer_view(request):
     min_rate = request.GET.get('min_rate')
     max_rate = request.GET.get('max_rate')
     sort = request.GET.get('sort')
+    query = request.GET.get('q')
+
+    if query:
+        freelancers = freelancers.filter(
+            Q(user__username__icontains=query) |
+            Q(user__first_name__icontains=query) |
+            Q(user__last_name__icontains=query) |
+            Q(skills__name__icontains=query)
+        ).distinct()
+
 
     if category_id and category_id.isdigit():
         freelancers = freelancers.filter(

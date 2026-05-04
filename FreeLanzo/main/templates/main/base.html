@@ -30,9 +30,9 @@
 
         <!-- Center -->
         <div class="nav-center">
-            <form class="nav-search">
+            <form class="nav-search" method="GET" action="{% url 'accounts:all_freelancer' %}">
                 <i class="bi bi-search"></i>
-                <input type="text" placeholder="Search...">
+                <input type="text" name="q" placeholder="Search for freelancers , skills...">
             </form>
 
             <ul class="nav-links">
@@ -62,7 +62,7 @@
                     Favorites
                 </a>
                 {% endif %}
-                
+
                 <li><a href="{%url 'chat:contact_view'%}">Contact Us</a></li>
 
                 <li><a href="{%url 'main:about_view'%}">About Us</a></li>
