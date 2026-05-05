@@ -14,7 +14,7 @@ stripe.api_key = settings.STRIPE_SECRET_KEY
 def create_checkout_session(request:HttpRequest, project_id):
     project = get_object_or_404(Project, id=project_id)
 
-    if request.user != project.client.user:
+    if request.user != project.client:
         messages.error(request, "You are not allowed to pay for this project.", "alert-danger")
         return redirect('accounts:project_detail', project_id=project.id)
     
@@ -35,8 +35,8 @@ def create_checkout_session(request:HttpRequest, project_id):
                 'quantity': 1,
             }],
             mode='payment',
-            success_url='http://127.0.0.1:8000/success/',
-            cancel_url='http://127.0.0.1:8000/cancel/',
+            success_url=request.build_absolute_uri('/payment/success/'),
+            cancel_url=request.build_absolute_uri('/payment/cancel/'),
             metadata={
                 "project_id": project.id
             }
@@ -47,3 +47,9 @@ def create_checkout_session(request:HttpRequest, project_id):
         messages.error(request, "Payment session failed. Please try again." , "alert-danger")
         return redirect('accounts:project_detail', project_id=project.id)
 
+
+def payment_success(request:HttpRequest):
+    return HttpResponse("Payment Successful ✅")
+
+def payment_cancel(request:HttpRequest):
+    return HttpResponse("Payment Cancelled ❌")
