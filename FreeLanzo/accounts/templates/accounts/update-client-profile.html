@@ -25,17 +25,33 @@
 
             <div class="avatar-upload">
 
-    <input type="file" name="avatar" id="avatarInput" hidden>
+                <input type="file" name="avatar" id="avatarInput" hidden>
 
-    <label for="avatarInput" class="avatar-label">
-        <img src="{{ profile.avatar.url }}" class="profile-avatar">
+                <div class="avatar-upload">
+                    <input type="file" name="avatar" id="avatarInput" hidden accept="image/*">
 
-        <div class="avatar-overlay">
-           Change Your Avatar
-        </div>
-    </label>
+                    <label for="avatarInput" class="avatar-label" id="avatarPreviewBox">
 
-</div>
+                        {% if profile.avatar and profile.avatar.name %}
+                        <img src="{{ profile.avatar.url }}" class="profile-avatar">
+                        {% else %}
+                        <div class="avatar-placeholder big avatar-{{ profile.user.username|first|lower }}">
+                            {% if profile.user.first_name %}
+                            {{ profile.user.first_name|first|upper }}{{ profile.user.last_name|first|upper }}
+                            {% else %}
+                            {{ profile.user.username|first|upper }}
+                            {% endif %}
+                        </div>
+                        {% endif %}
+
+                        <div class="avatar-overlay">
+                            Change Your Avatar
+                        </div>
+
+                    </label>
+                </div>
+
+            </div>
 
             <div class="form-row">
                 <div class="form-group">

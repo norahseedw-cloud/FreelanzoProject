@@ -132,12 +132,17 @@
                     <div class="fl-avatar-row">
 
                         <div class="fl-avatar-wrap">
-                            {% if freelancer.avatar %}
+                            {% if freelancer.avatar and freelancer.avatar.name %}
                             <img class="fl-avatar" src="{{ freelancer.avatar.url }}">
                             {% else %}
-                            <img class="fl-avatar" src="{% static 'images/avatar/default.png' %}">
+                            <div class="fl-avatar avatar-placeholder avatar-{{ freelancer.user.username|first|lower }}">
+                                {% if freelancer.user.first_name %}
+                                {{ freelancer.user.first_name|first|upper }}{{ freelancer.user.last_name|first|upper }}
+                                {% else %}
+                                {{ freelancer.user.username|first|upper }}
+                                {% endif %}
+                            </div>
                             {% endif %}
-                            <div class="fl-online-dot"></div>
                         </div>
 
                         <div class="fl-identity">
@@ -154,7 +159,7 @@
                             </div>
 
                             <div class="fl-rating">
-                                <i class="bi bi-star-fill"></i> 
+                                <i class="bi bi-star-fill"></i>
                                 <span>{{ freelancer.avg_rating|floatformat:1 }}</span>
                                 <span>({{ freelancer.review_count }} reviews)</span>
                             </div>

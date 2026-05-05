@@ -17,10 +17,16 @@
         <div class="fl-card">
 
             <div class="fl-img-box">
-                {% if item.freelancer.avatar %}
+                {% if item.freelancer.avatar and item.freelancer.avatar.name %}
                 <img src="{{ item.freelancer.avatar.url }}" alt="Freelancer">
                 {% else %}
-                <img src="{% static 'images/avatar/default.png' %}" alt="Freelancer">
+                <div class="avatar-placeholder big avatar-{{ item.freelancer.user.username|first|lower }}">
+                    {% if item.freelancer.user.first_name %}
+                    {{ item.freelancer.user.first_name|first|upper }}{{ item.freelancer.user.last_name|first|upper }}
+                    {% else %}
+                    {{ item.freelancer.user.username|first|upper }}
+                    {% endif %}
+                </div>
                 {% endif %}
             </div>
 

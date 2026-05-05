@@ -29,7 +29,7 @@ class Skill(models.Model):
 
 class FreelancerProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-    avatar = models.ImageField(upload_to='freelancer_avatars/', blank=True, null=True, default='default-avatar.avif')
+    avatar = models.ImageField(upload_to='freelancer_avatars/', blank=True, null=True)
     job_title = models.CharField(max_length=150, blank=True)
     location = models.CharField(max_length=150, blank=True)
     about = models.TextField(blank=True)
@@ -42,11 +42,9 @@ class FreelancerProfile(models.Model):
     def __str__(self):
         return self.user.username
 
-
 class ClientProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
-
-    avatar = models.ImageField(upload_to='client_avatars/', blank=True, null=True,default='default-avatar.avif')
+    avatar = models.ImageField(upload_to='freelancer_avatars/', blank=True, null=True)
     company_name = models.CharField(max_length=150, blank=True)
     job_title = models.CharField(max_length=150, blank=True)
     location = models.CharField(max_length=150, blank=True)
@@ -55,7 +53,6 @@ class ClientProfile(models.Model):
     
     def __str__(self):
         return self.user.username
-
 
 class PortfolioProject(models.Model):
     freelancer = models.ForeignKey(FreelancerProfile, on_delete=models.CASCADE, related_name="portfolio_projects")
@@ -74,7 +71,6 @@ class PortfolioProjectImage(models.Model):
     def __str__(self):
         return f"Image for {self.project.title}"
     
-
 class Project(models.Model):
     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE)
     title = models.CharField(max_length=200)
@@ -102,7 +98,6 @@ class Project(models.Model):
     def __str__(self):
         return self.title
     
-
 class FavoriteFreelancer(models.Model):
     client = models.ForeignKey(ClientProfile, on_delete=models.CASCADE, related_name="favorite_freelancers")
     freelancer = models.ForeignKey(FreelancerProfile, on_delete=models.CASCADE, related_name="liked_by_clients")

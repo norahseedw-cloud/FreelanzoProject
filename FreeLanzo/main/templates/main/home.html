@@ -401,29 +401,36 @@
             </div>
 
             <div class="freelancer-avatar">
-    {% if freelancer.avatar %}
-        <img src="{{ freelancer.avatar.url }}" alt="{{ freelancer.user.username }}">
-    {% else %}
-        <div class="avatar-placeholder">
-            {{ freelancer.user.username|first|upper }}
-        </div>
-    {% endif %}
 
-    <div class="freelancer-badge"
-        style="--card-color:
-        {% if forloop.counter == 1 %}var(--teal)
-        {% elif forloop.counter == 2 %}var(--blue)
-        {% elif forloop.counter == 3 %}var(--color-purple)
-        {% endif %}">
-        <i class="bi bi-patch-check-fill"></i>
-    </div>
-</div>
+                {% if freelancer.avatar and freelancer.avatar.name %}
+                <img src="{{ freelancer.avatar.url }}" alt="{{ freelancer.user.username }}">
+                {% else %}
+                <div class="avatar-placeholder avatar-{{ freelancer.user.username|first|lower }}">
+
+                    {% if freelancer.user.first_name %}
+                    {{ freelancer.user.first_name|first|upper }}{{ freelancer.user.last_name|first|upper }}
+                    {% else %}
+                    {{ freelancer.user.username|first|upper }}
+                    {% endif %}
+
+                </div>
+                {% endif %}
+
+                <div class="freelancer-badge">
+                    <i class="bi bi-patch-check-fill"></i>
+                </div>
+
+            </div>
 
             <div class="freelancer-info">
                 <h3>{{ freelancer.user.first_name }} {{ freelancer.user.last_name }}</h3>
 
                 <p class="freelancer-role">
-                    {{ freelancer.job_title|default:"Freelancer" }}
+                    {% if freelancer.job_title %}
+                    {{ freelancer.job_title }}
+                    {% else %}
+                    Freelancer
+                    {% endif %}
                 </p>
 
                 <div class="freelancer-tags">
@@ -453,10 +460,10 @@
 
         </div>
         {% empty %}
-    <div class="text-center text-muted">
-        <h3>No freelancers yet</h3>
-        <p>Check back later to discover top talent.</p>
-    </div>
+        <div class="text-center text-muted">
+            <h3>No freelancers yet</h3>
+            <p>Check back later to discover top talent.</p>
+        </div>
         {% endfor %}
 
     </div>
@@ -514,13 +521,17 @@
             <p>"{{ review.comment }}"</p>
 
             <div class="testimonial-author">
-                {% if review.reviewer.clientprofile.avatar %}
-                    <img class="testimonial-avatar"
-                        src="{{ review.reviewer.clientprofile.avatar.url }}">
+                {% if review.reviewer.clientprofile.avatar and review.reviewer.clientprofile.avatar.name %}
+                <img class="testimonial-avatar"
+                    src="{{ review.reviewer.clientprofile.avatar.url }}">
                 {% else %}
-                    <div class="avatar-placeholder">
-                        {{ review.reviewer.username|first|upper }}
-                    </div>
+                <div class="avatar-placeholder">
+                    {% if review.reviewer.first_name %}
+                    {{ review.reviewer.first_name|first|upper }}{{ review.reviewer.last_name|first|upper }}
+                    {% else %}
+                    {{ review.reviewer.username|first|upper }}
+                    {% endif %}
+                </div>
                 {% endif %}
 
                 <div>
@@ -532,7 +543,7 @@
         </div>
         {% empty %}
         <div class="text-center text-muted">
-            
+
             <h3>No testimonials yet</h3>
             <p>Be the first to share your experience.</p>
         </div>

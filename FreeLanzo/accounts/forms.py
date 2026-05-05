@@ -3,7 +3,6 @@ from django.contrib.auth.models import User
 from .models import FreelancerProfile,PortfolioProject,ClientProfile,Project
 
 
-
 class SignUpForm(forms.ModelForm):
     password = forms.CharField(widget=forms.PasswordInput)
 
@@ -49,7 +48,7 @@ class FreelancerProfileForm(forms.ModelForm):
             'languages',
             'experience'
         ]
-        
+
         widgets = {
             'skills': forms.CheckboxSelectMultiple(),
         }
