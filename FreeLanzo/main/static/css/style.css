@@ -223,7 +223,6 @@ body {
 }
 
 .dropdown-menu {
-    position: absolute;
     top: 40px;
     left: 50%;
     transform: translateX(-50%);
@@ -1242,7 +1241,9 @@ body {
     color: #fff;
     line-height: 1;
     background: linear-gradient(135deg, var(--teal), var(--blue));
+    background-clip: text;
     -webkit-background-clip: text;
+    color: transparent;
     -webkit-text-fill-color: transparent;
 }
 
@@ -5475,7 +5476,6 @@ body.dark {
     color: #f9fafb;
 }
 
-/* NAVBAR DARK */
 body.dark .main-navbar {
     background: rgba(17, 24, 39, 0.9);
     box-shadow: 0 15px 40px rgba(0, 0, 0, 0.4);
@@ -5501,7 +5501,6 @@ body.dark .nav-search input {
     color: #f9fafb;
 }
 
-/* الروابط */
 body.dark .nav-links a {
     color: #d1d5db;
 }
@@ -5510,7 +5509,6 @@ body.dark .nav-links a:hover {
     color: var(--teal);
 }
 
-/* الأيقونات */
 body.dark .icon-btn {
     color: #f9fafb;
 }
@@ -7499,49 +7497,36 @@ body.dark .btn-view-profile {
     height: 60px;
 }
 
-.main-navbar {
-    align-items: center;
-}
-
-.nav-center {
-    display: grid;
-    grid-template-rows: auto auto;
-    justify-items: center;
-    row-gap: 14px;
-}
 
 .nav-links {
     display: flex;
     align-items: center;
-    gap: 34px;
-}
-
-.nav-links li,
-.nav-links .nav-link,
-.dropbtn {
-    display: flex;
-    align-items: center;
-    height: 28px;
-}
-
-.nav-icons {
-    display: flex;
-    align-items: center;
-    gap: 12px;
-}
-
-.icon-btn,
-.theme-toggle-btn {
-    width: 38px;
-    height: 38px;
-    display: flex;
-    align-items: center;
     justify-content: center;
+    gap: 28px;
+    flex-wrap: nowrap;
+    list-style: none;
+    margin: 0;
+    padding: 0;
 }
 
-.icon-btn i,
-.theme-toggle-btn span {
-    display: block;
-    line-height: 1;
-    font-size: 20px;
+.theme-toggle-btn {
+    transform: translateY(3px);
+}
+
+@media (max-width: 768px) {
+
+    .nav-icons {
+        display: flex;
+        align-items: center;
+        gap: 4px;
+    }
+
+    .icon-btn,
+    .theme-toggle-btn {
+        width: 32px;
+        height: 32px;
+        font-size: 14px;
+        padding: 0;
+    }
+
 }
