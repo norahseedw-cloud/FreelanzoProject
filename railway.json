@@ -4,6 +4,6 @@
     "builder": "NIXPACKS"
   },
   "deploy": {
-    "startCommand": "cd FreeLanzo && python manage.py migrate && python manage.py collectstatic --noinput && gunicorn FreeLanzo.wsgi:application"
+    "startCommand": "cd FreeLanzo && python manage.py migrate --noinput && python manage.py collectstatic --noinput && gunicorn FreeLanzo.wsgi:application"
   }
 }
