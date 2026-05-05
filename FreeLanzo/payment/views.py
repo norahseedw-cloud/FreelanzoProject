@@ -49,7 +49,7 @@ def create_checkout_session(request:HttpRequest, project_id):
 
 
 def payment_success(request:HttpRequest):
-    return HttpResponse("Payment Successful ✅")
+    return HttpResponse("Payment Successful ")
 
 def payment_cancel(request:HttpRequest):
-    return HttpResponse("Payment Cancelled ❌")
+    return HttpResponse("Payment Cancelled ")
