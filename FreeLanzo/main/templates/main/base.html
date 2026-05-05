@@ -7,10 +7,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}Freelanzo{% endblock %}</title>
-    <meta name="description" content="{% block description %}Freelanzo freelance platform{% endblock %}">
-
+    <meta name="description" content="{% block description %}Freelanzo is a freelance platform that connects clients with skilled freelancers across multiple fields.{% endblock %}">
+    <meta property="og:site_name" content="Freelanzo">
     <meta property="og:title" content="{% block og_title %}Freelanzo{% endblock %}">
-    <meta property="og:description" content="{% block og_description %}Freelanzo freelance platform{% endblock %}">
+    <meta property="og:description" content="{% block og_description %}Freelanzo is a freelance platform that connects clients with skilled freelancers across multiple fields.{% endblock %}">
     <meta property="og:image" content="{% block og_image %}{% static 'images/logo.png' %}{% endblock %}">
     <meta property="og:url" content="{{ request.build_absolute_uri }}">
     <meta property="og:type" content="website">
