@@ -34,15 +34,3 @@ urlpatterns += static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
 
-from django.contrib.auth import get_user_model
-
-def create_admin():
-    User = get_user_model()
-    if not User.objects.filter(username="admin").exists():
-        User.objects.create_superuser(
-            username="admin",
-            email="admin@test.com",
-            password="12345678"
-        )
-
-create_admin()
