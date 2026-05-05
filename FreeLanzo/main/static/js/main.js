@@ -165,3 +165,29 @@ document.addEventListener('DOMContentLoaded', function () {
     });
 
 });
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const input = document.getElementById("avatarInput");
+    const box = document.getElementById("avatarPreviewBox");
+
+    if (!input || !box) return;
+
+    input.addEventListener("change", function () {
+        const file = this.files[0];
+
+        if (file) {
+            const url = URL.createObjectURL(file);
+            box.innerHTML = "";
+            const img = document.createElement("img");
+            img.src = url;
+            img.className = "profile-avatar";
+            const overlay = document.createElement("div");
+            overlay.className = "avatar-overlay";
+            overlay.innerText = "Change Your Avatar";
+            box.appendChild(img);
+            box.appendChild(overlay);
+        }
+    });
+
+});

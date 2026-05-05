@@ -13,75 +13,89 @@
 
     <div class="chat-container" id="chatContainer">
 
-  
+
         <div class="overlay"></div>
 
- 
+
         <div class="chat-sidebar mt-3 ms-2">
-    <button class="back-btn">
-        <i class="bi bi-arrow-left"></i>
-    </button>
+            <button class="back-btn">
+                <i class="bi bi-arrow-left"></i>
+            </button>
             <h3>Messages</h3>
 
             {% for conver in conversations %}
             <div class="chat-user {% if conver.id == conversation.id %}active{% endif %}">
 
 
-            <a href="{% url 'chat:chat_view' conver.id %}" class="text-decoration-none d-flex align-items-center w-100">
+                <a href="{% url 'chat:chat_view' conver.id %}" class="text-decoration-none d-flex align-items-center w-100">
 
-       
-            {% if conver.user1 == request.user %}
-                {% if conver.user2.freelancerprofile.avatar %}
-                    <img src="{{ conver.user2.freelancerprofile.avatar.url }}" class="avatar">
-                {% elif conver.user2.clientprofile.avatar %}
-                    <img src="{{ conver.user2.clientprofile.avatar.url }}" class="avatar">
-                {% else %}
-                    <img src="/static/default-avatar.png" class="avatar">
-                {% endif %}
-            {% else %}
-            {% if conver.user1.freelancerprofile.avatar %}
-                <img src="{{ conver.user1.freelancerprofile.avatar.url }}" class="avatar">
-            {% elif conver.user1.clientprofile.avatar %}
-                <img src="{{ conver.user1.clientprofile.avatar.url }}" class="avatar">
-            {% else %}
-                <img src="/static/default-avatar.png" class="avatar">
-            {% endif %}
-            {% endif %}
-
-            <div class="user-info ms-2">
-                <span class="name">
                     {% if conver.user1 == request.user %}
-                    {{ conver.user2.first_name }} 
-                    {% else %} {{ conver.user1.first_name }} 
-                    {% endif %} {% if conver.unread_count > 0 %}
-                    <span class="badge">{{ conver.unread_count }}</span> 
-                    {% endif %} </span>
 
-                <span class="last-msg">
-                    {% if conver.message_set.all.last %}
-                        {{ conver.message_set.all.last.content }}
+                    {% if conver.user2.freelancerprofile.avatar and conver.user2.freelancerprofile.avatar.name %}
+                    <img src="{{ conver.user2.freelancerprofile.avatar.url }}" class="avatar">
+                    {% elif conver.user2.clientprofile.avatar and conver.user2.clientprofile.avatar.name %}
+                    <img src="{{ conver.user2.clientprofile.avatar.url }}" class="avatar">
                     {% else %}
-                        No messages yet
+                    <div class="avatar avatar-placeholder avatar-{{ conver.user2.username|first|lower }}">
+                        {% if conver.user2.first_name %}
+                        {{ conver.user2.first_name|first|upper }}{{ conver.user2.last_name|first|upper }}
+                        {% else %}
+                        {{ conver.user2.username|first|upper }}
+                        {% endif %}
+                    </div>
                     {% endif %}
-                </span>
+
+                    {% else %}
+
+                    {% if conver.user1.freelancerprofile.avatar and conver.user1.freelancerprofile.avatar.name %}
+                    <img src="{{ conver.user1.freelancerprofile.avatar.url }}" class="avatar">
+                    {% elif conver.user1.clientprofile.avatar and conver.user1.clientprofile.avatar.name %}
+                    <img src="{{ conver.user1.clientprofile.avatar.url }}" class="avatar">
+                    {% else %}
+                    <div class="avatar avatar-placeholder avatar-{{ conver.user1.username|first|lower }}">
+                        {% if conver.user1.first_name %}
+                        {{ conver.user1.first_name|first|upper }}{{ conver.user1.last_name|first|upper }}
+                        {% else %}
+                        {{ conver.user1.username|first|upper }}
+                        {% endif %}
+                    </div>
+                    {% endif %}
+
+                    {% endif %}
+
+                    <div class="user-info ms-2">
+                        <span class="name">
+                            {% if conver.user1 == request.user %}
+                            {{ conver.user2.first_name }}
+                            {% else %} {{ conver.user1.first_name }}
+                            {% endif %} {% if conver.unread_count > 0 %}
+                            <span class="badge">{{ conver.unread_count }}</span>
+                            {% endif %} </span>
+
+                        <span class="last-msg">
+                            {% if conver.message_set.all.last %}
+                            {{ conver.message_set.all.last.content }}
+                            {% else %}
+                            No messages yet
+                            {% endif %}
+                        </span>
+                    </div>
+
+                </a>
+
+
+                {% if conversation %}
+                <button
+                    class="btn btn-sm text-danger border-0 bg-transparent ms-2"
+                    data-bs-toggle="modal"
+                    data-bs-target="#deleteModal"
+                    data-id="{{ conver.id }}">
+                    Delete
+                </button>
+                {% endif %}
+
             </div>
 
-            </a>
-
-   
-            {% if conversation %}
-            <button 
-                class="btn btn-sm text-danger border-0 bg-transparent ms-2"
-                data-bs-toggle="modal"
-                data-bs-target="#deleteModal"
-                data-id="{{ conver.id }}"
-            >
-                Delete
-            </button>
-            {% endif %}
-
-        </div>
-            
             {% endfor %}
 
         </div>
@@ -89,46 +103,51 @@
         <div class="chat-area">
 
             <div class="chat-header">
-                
-<button class="menu-btn" id="chatToggleBtn">
-    <i class="bi bi-list"></i>
-</button>
 
+                <button class="menu-btn" id="chatToggleBtn">
+                    <i class="bi bi-list"></i>
+                </button>
                 <div class="avatar big">
+                    {% if conversation.user1 == request.user %}
 
-                {% if conversation.user1 == request.user %}
-
-                    {% if conversation.user2.freelancerprofile.avatar %}
-                        <img src="{{ conversation.user2.freelancerprofile.avatar.url }}">
-                    {% elif conversation.user2.clientprofile.avatar %}
-                        <img src="{{ conversation.user2.clientprofile.avatar.url }}">
+                    {% if conversation.user2.freelancerprofile.avatar and conversation.user2.freelancerprofile.avatar.name %}
+                    <img src="{{ conversation.user2.freelancerprofile.avatar.url }}">
+                    {% elif conversation.user2.clientprofile.avatar and conversation.user2.clientprofile.avatar.name %}
+                    <img src="{{ conversation.user2.clientprofile.avatar.url }}">
                     {% else %}
-                        {{ conversation.user2.first_name|first }}
+                    {% if conversation.user2.first_name %}
+                    {{ conversation.user2.first_name|first|upper }}{{ conversation.user2.last_name|first|upper }}
+                    {% else %}
+                    {{ conversation.user2.username|first|upper }}
+                    {% endif %}
                     {% endif %}
 
-                {% else %}
-
-                    {% if conversation.user1.freelancerprofile.avatar %}
-                        <img src="{{ conversation.user1.freelancerprofile.avatar.url }}">
-                    {% elif conversation.user1.clientprofile.avatar %}
-                        <img src="{{ conversation.user1.clientprofile.avatar.url }}">
                     {% else %}
-                        {{ conversation.user1.first_name|first }}
+
+                    {% if conversation.user1.freelancerprofile.avatar and conversation.user1.freelancerprofile.avatar.name %}
+                    <img src="{{ conversation.user1.freelancerprofile.avatar.url }}">
+                    {% elif conversation.user1.clientprofile.avatar and conversation.user1.clientprofile.avatar.name %}
+                    <img src="{{ conversation.user1.clientprofile.avatar.url }}">
+                    {% else %}
+                    {% if conversation.user1.first_name %}
+                    {{ conversation.user1.first_name|first|upper }}{{ conversation.user1.last_name|first|upper }}
+                    {% else %}
+                    {{ conversation.user1.username|first|upper }}
+                    {% endif %}
                     {% endif %}
 
-                {% endif %}
-
-            </div>
+                    {% endif %}
+                </div>
 
                 <div>
                     <h4>
                         {% if conversation.user1 == request.user %}
-                            {{ conversation.user2.first_name }}
+                        {{ conversation.user2.first_name }}
                         {% else %}
-                            {{ conversation.user1.first_name }}
+                        {{ conversation.user1.first_name }}
                         {% endif %}
                     </h4>
-                    
+
                 </div>
 
             </div>
@@ -142,10 +161,10 @@
                 <div class="message you">
                     {{message.content}}
                     {% if message.is_read %}
-            <span class="seen read">✓✓</span>
-        {% else %}
-            <span class="seen">✓</span>
-        {% endif %}
+                    <span class="seen read">✓✓</span>
+                    {% else %}
+                    <span class="seen">✓</span>
+                    {% endif %}
                 </div>
 
                 {%else%}
@@ -160,61 +179,61 @@
 
             <form action="{%url 'chat:chat_view' conversation.id%}" method="post">
                 {% csrf_token %}
-            <div class="chat-input">
-                <input type="text" placeholder="Type a message..." name="content">
+                <div class="chat-input">
+                    <input type="text" placeholder="Type a message..." name="content">
 
-                <button type="submit">
-                    <i class="bi bi-send-fill"></i>
-                </button>
-            </div>
+                    <button type="submit">
+                        <i class="bi bi-send-fill"></i>
+                    </button>
+                </div>
             </form>
             {% else %}
 
-                <div class="empty-chat">
-                    <div class="empty-box">
-                        <i class="bi bi-chat-dots"></i>
-                        <h5>No conversation selected</h5>
-                        <p>Select a chat from the sidebar to start messaging</p>
-                    </div>
+            <div class="empty-chat">
+                <div class="empty-box">
+                    <i class="bi bi-chat-dots"></i>
+                    <h5>No conversation selected</h5>
+                    <p>Select a chat from the sidebar to start messaging</p>
                 </div>
+            </div>
 
             {% endif %}
         </div>
-        
+
 
     </div>
-    
+
 
 </div>
 <div class="modal fade" id="deleteModal" tabindex="-1">
-  <div class="modal-dialog modal-dialog-centered">
-    <div class="modal-content">
+    <div class="modal-dialog modal-dialog-centered">
+        <div class="modal-content">
 
-      <div class="modal-header">
-        <h5 class="modal-title">Delete Conversation</h5>
-        <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
-      </div>
+            <div class="modal-header">
+                <h5 class="modal-title">Delete Conversation</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+            </div>
 
-      <div class="modal-body">
-        Are you sure you want to delete this conversation?
-      </div>
+            <div class="modal-body">
+                Are you sure you want to delete this conversation?
+            </div>
 
-      <div class="modal-footer">
+            <div class="modal-footer">
 
-        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
-          Cancel
-        </button>
+                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">
+                    Cancel
+                </button>
 
-        <form method="POST" id="deleteForm">
-          {% csrf_token %}
-          <button type="submit" class="btn btn-danger">
-            Delete
-          </button>
-        </form>
+                <form method="POST" id="deleteForm">
+                    {% csrf_token %}
+                    <button type="submit" class="btn btn-danger">
+                        Delete
+                    </button>
+                </form>
 
-      </div>
+            </div>
 
+        </div>
     </div>
-  </div>
 </div>
 {% endblock %}
