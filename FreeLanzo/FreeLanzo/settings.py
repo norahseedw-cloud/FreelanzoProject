@@ -157,13 +157,3 @@ load_dotenv()
 STRIPE_SECRET_KEY = os.environ.get("STRIPE_SECRET_KEY")
 STRIPE_PUBLIC_KEY = os.environ.get("STRIPE_PUBLIC_KEY")
 
-from django.contrib.auth import get_user_model
-
-User = get_user_model()
-
-if not User.objects.filter(username="admin").exists():
-    User.objects.create_superuser(
-        username="admin",
-        email="admin@test.com",
-        password="12345678"
-    )
