@@ -22,7 +22,15 @@
 
             <!-- Avatar -->
             <div class="avatar-wrap">
-                <img src="{{ profile.avatar.url }}" alt="{{ profile.user.username }}" class="profile-avatar">
+                {% if profile.avatar %}
+                    <img src="{{ profile.avatar.url }}"
+                        alt="{{ profile.user.username }}"
+                        class="profile-avatar">
+                {% else %}
+                    <div class="avatar-placeholder">
+                        {{ profile.user.username|first|upper }}
+                    </div>
+                {% endif %}
             </div>
 
             <!-- Identity -->

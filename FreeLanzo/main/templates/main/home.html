@@ -403,9 +403,15 @@
             <div class="freelancer-avatar">
                 {% if freelancer.avatar %}
                 <img src="{{ freelancer.avatar.url }}" alt="{{ freelancer.user.username }}">
-                {% else %}
+                {% elif %}
                 <img src="{% static 'accounts/images/default-avatar.avif' %}" alt="{{ freelancer.user.username }}">
+                {%else%}
+                {% else %}
+                <div class="avatar-placeholder">
+                    {{ freelancer.user.username|first|upper }}
+                </div>
                 {% endif %}
+
                 <div class="freelancer-badge"
                     style="--card-color:
                     {% if forloop.counter == 1 %}var(--teal)
@@ -450,8 +456,7 @@
 
         </div>
         {% empty %}
-    <div class="no-freelancers">
-        <i class="bi bi-people"></i>
+    <div class="text-center text-muted">
         <h3>No freelancers yet</h3>
         <p>Check back later to discover top talent.</p>
     </div>
@@ -526,11 +531,11 @@
 
         </div>
         {% empty %}
-<div class="no-testimonials">
-    <i class="bi bi-chat-left-text"></i>
-    <h3>No testimonials yet</h3>
-    <p>Be the first to share your experience.</p>
-</div>
+        <div class="text-center text-muted">
+            
+            <h3>No testimonials yet</h3>
+            <p>Be the first to share your experience.</p>
+        </div>
         {% endfor %}
 
     </div>
