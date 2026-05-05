@@ -401,26 +401,23 @@
             </div>
 
             <div class="freelancer-avatar">
-                {% if freelancer.avatar %}
-                <img src="{{ freelancer.avatar.url }}" alt="{{ freelancer.user.username }}">
-                {% elif %}
-                <img src="{% static 'accounts/images/default-avatar.avif' %}" alt="{{ freelancer.user.username }}">
-                {%else%}
-                {% else %}
-                <div class="avatar-placeholder">
-                    {{ freelancer.user.username|first|upper }}
-                </div>
-                {% endif %}
+    {% if freelancer.avatar %}
+        <img src="{{ freelancer.avatar.url }}" alt="{{ freelancer.user.username }}">
+    {% else %}
+        <div class="avatar-placeholder">
+            {{ freelancer.user.username|first|upper }}
+        </div>
+    {% endif %}
 
-                <div class="freelancer-badge"
-                    style="--card-color:
-                    {% if forloop.counter == 1 %}var(--teal)
-                    {% elif forloop.counter == 2 %}var(--blue)
-                    {% elif forloop.counter == 3 %}var(--color-purple)
-                    {% endif %}">
-                    <i class="bi bi-patch-check-fill"></i>
-                </div>
-            </div>
+    <div class="freelancer-badge"
+        style="--card-color:
+        {% if forloop.counter == 1 %}var(--teal)
+        {% elif forloop.counter == 2 %}var(--blue)
+        {% elif forloop.counter == 3 %}var(--color-purple)
+        {% endif %}">
+        <i class="bi bi-patch-check-fill"></i>
+    </div>
+</div>
 
             <div class="freelancer-info">
                 <h3>{{ freelancer.user.first_name }} {{ freelancer.user.last_name }}</h3>
@@ -518,10 +515,13 @@
 
             <div class="testimonial-author">
                 {% if review.reviewer.clientprofile.avatar %}
-                <img class="testimonial-avatar"
-                    src="{{ review.reviewer.clientprofile.avatar.url }}">
+                    <img class="testimonial-avatar"
+                        src="{{ review.reviewer.clientprofile.avatar.url }}">
                 {% else %}
-                {%endif%}
+                    <div class="avatar-placeholder">
+                        {{ review.reviewer.username|first|upper }}
+                    </div>
+                {% endif %}
 
                 <div>
                     <strong>{{ review.reviewer.get_full_name|default:review.reviewer.username }}</strong>
