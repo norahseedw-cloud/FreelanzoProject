@@ -54,22 +54,11 @@
 
         <div class="client-top">
             <div class="avatar big">
-
-                {% if project.client.avatar and project.client.avatar.name %}
-                <img src="{{ project.client.avatar.url }}" class="project-client-avatar">
-
+                {% if project.client.avatar %}
+                <img src="{{ project.client.avatar.url }}" class="avatar big">
                 {% else %}
-
-                <div class="avatar-placeholder big">
-                    {% if project.client.user.first_name %}
-                    {{ project.client.user.first_name|first|upper }}{{ project.client.user.last_name|first|upper }}
-                    {% else %}
-                    {{ project.client.user.username|first|upper }}
-                    {% endif %}
-                </div>
-
+                <img src="{% static 'images/avatar/default.png' %}" class="avatar big">
                 {% endif %}
-
             </div>
 
             <div class="client-info">
