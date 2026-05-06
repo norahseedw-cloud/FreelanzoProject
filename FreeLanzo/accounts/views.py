@@ -634,7 +634,18 @@ def project_detail_view(request: HttpRequest, project_id):
     else:
         form = ProposalForms()
 
-    accepted_proposal = project.proposals.filter(status='accepted').first()
+    accepted_proposal = None
+
+    if request.user.is_authenticated and request.user.usertype.role == 'freelancer':
+        accepted_proposal = project.proposals.filter(
+            status='accepted',
+            freelancer=request.user.freelancerprofile
+        ).first()
+
+    elif request.user.is_authenticated and request.user == project.client.user:
+        accepted_proposal = project.proposals.filter(
+            status='accepted'
+        ).first()
 
    
     return render(request, 'marketplace/project-detail.html', {
