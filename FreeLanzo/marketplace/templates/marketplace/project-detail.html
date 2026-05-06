@@ -303,7 +303,7 @@
 
             <p>{{ accepted_proposal.delivery.message }}</p>
 
-            <!-- زر القبول -->
+            
             <form method="POST">
                 {% csrf_token %}
                 <button name="accept_delivery" class="btn-primary">
@@ -319,20 +319,6 @@
     {% endif %}
 
 </div>
-<script>
-    document.addEventListener("DOMContentLoaded", function () {
 
-        const btn = document.getElementById("show-form-btn");
-        const form = document.getElementById("proposal-form");
-
-        if (btn && form) {
-            btn.addEventListener("click", function () {
-                form.style.display = "block";
-                btn.style.display = "none";
-            });
-        }
-
-    });
-</script>
 
 {% endblock %}

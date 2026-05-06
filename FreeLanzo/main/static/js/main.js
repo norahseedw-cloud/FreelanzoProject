@@ -192,3 +192,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
 });
 
+document.addEventListener("DOMContentLoaded", function () {
+
+    const btn = document.getElementById("show-form-btn");
+    const form = document.getElementById("proposal-form");
+
+    if (btn && form) {
+        btn.addEventListener("click", function () {
+            form.style.display = "block";
+            btn.style.display = "none";
+        });
+    }
+
+});
